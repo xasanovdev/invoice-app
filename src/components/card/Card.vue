@@ -1,6 +1,6 @@
 <template>
   <li
-    class="w-full cursor-pointer border border-white duration-200 hover:shadow-primary shadow-md hover:border hover:border-primary p-6 bg-white md:flex md:items-center md:justify-between list-none dark:bg-dark1 rounded-[8px]"
+    class="w-full cursor-pointer border dark:border-dark1 border-white duration-200 hover:shadow-primary shadow-md hover:border hover:border-primary p-6 bg-white md:flex md:items-center md:justify-between list-none dark:bg-dark1 rounded-[8px]"
   >
     <div class="flex items-center justify-between md:gap-7">
       <p class="class=text-light4 font-bold dark:text-white">
@@ -10,9 +10,9 @@
         {{ invoice.clientName }}
       </p>
     </div>
-    <div class="flex items-center justify-between sm:gap-10">
+    <div class="flex items-center justify-between sm:gap-10 mt-6 md:mt-0">
       <div
-        class="flex flex-col md:flex-row md:items-center md:mt-0 md:gap-[82px] items-start gap-2 mt-6"
+        class="flex flex-col md:flex-row md:items-center md:gap-[82px] items-start gap-2"
       >
         <span class="text-light2 dark:text-light1 text-[13px]">{{
           `Due ${invoice.paymentDue}`
@@ -23,9 +23,15 @@
       </div>
 
       <div
-        :class="`w-[103px] py-[14px] rounded-md flex items-center justify-center gap-2 bg-[${getStatusColorClass()}] text-[${getStatusColorClass()}] bg-opacity-10 text-${getStatusColorClass()}`"
+        :class="`w-[103px] py-[14px] rounded-md flex items-center justify-center gap-2 bg-[${getStatusColorClass(
+          invoice.status
+        )}] text-[${getStatusColorClass(invoice.status)}] bg-opacity-10`"
       >
-        <p :class="`w-2 h-2 bg-[${getStatusColorClass()}] rounded-full`"></p>
+        <p
+          :class="`w-2 h-2 bg-[${getStatusColorClass(
+            invoice.status
+          )}] rounded-full`"
+        ></p>
         <p class="text-[15px] font-bold leading-[15px]">{{ invoice.status }}</p>
       </div>
     </div>
@@ -37,8 +43,8 @@ import { defineProps } from 'vue';
 
 const props = defineProps(['invoice']);
 
-const getStatusColorClass = () => {
-  switch (props.invoice.status) {
+const getStatusColorClass = (status) => {
+  switch (status) {
     case 'paid':
       return '#33D69F';
     case 'pending':
