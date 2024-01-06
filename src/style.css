@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+html,
+body {
+  font-family: 'League Spartan', sans-serif;
+}
+
 :root {
   /* Tailwind CSS Variables */
 
@@ -12,7 +19,7 @@
   /* Neutral Colors */
   --neutral-dark-1: #1e2139;
   --neutral-dark-2: #252945;
-  --neutral-dark-3: #373B53;
+  --neutral-dark-3: #373b53;
   --neutral-light-1: #dfe3fa;
   --neutral-light-2: #888eb0;
   --neutral-light-3: #7e88c3;
