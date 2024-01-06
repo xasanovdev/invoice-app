@@ -1,6 +1,6 @@
 <template>
   <li
-    class="w-full p-6 bg-white md:flex md:items-center md:justify-between list-none dark:bg-dark1 rounded-[8px] shadow-sm"
+    class="w-full cursor-pointer border border-white duration-200 hover:shadow-primary shadow-md hover:border hover:border-primary p-6 bg-white md:flex md:items-center md:justify-between list-none dark:bg-dark1 rounded-[8px]"
   >
     <div class="flex items-center justify-between md:gap-7">
       <p class="class=text-light4 font-bold dark:text-white">
