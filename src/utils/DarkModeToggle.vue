@@ -1,0 +1,22 @@
+<!-- DarkModeToggle.vue -->
+<script setup>
+import { defineEmits } from 'vue';
+
+const { isDarkMode } = defineProps(['isDarkMode']);
+const emit = defineEmits();
+
+const toggleDarkMode = () => {
+  emit('toggle');
+};
+
+</script>
+<template>
+  <button @click="toggleDarkMode">
+    <span v-if="isDarkMode"
+      ><i class="fa-regular fa-moon text-[20px] text-light3"></i
+    ></span>
+    <span v-else
+      ><i class="fa-regular fa-sun text-[20px] text-light3"></i>
+    </span>
+  </button>
+</template>
