@@ -1,8 +1,24 @@
 <template>
   <div v-if="invoice" class="overflow-y-auto w-full h-full sm:px-8 px-6 mt-8">
-    <div @click="redirectToHome" class=" inline-flex cursor-pointer items-center gap-6 hover:gap-7 duration-200">
+    <div
+      @click="redirectToHome"
+      class="inline-flex cursor-pointer items-center gap-6 hover:gap-7 duration-200"
+    >
       <i class="fa-solid fa-angle-left text-[9px] text-primary font-bold"></i>
       <h4 class="text-[15px] text-light4 leading-[15px] font-bold">Go back</h4>
+    </div>
+
+    <div class="p-6 bg-white rounded-lg mt-8 flex items-center justify-between">
+      <p class="text-light2 dark:text-light1 text-[13px]">Status</p>
+      <div
+        :class="`w-[103px] py-[14px] rounded-md flex items-center justify-center gap-2`"
+      >
+        <p :class="`w-2 h-2 rounded-full`"></p>
+
+        <p class="text-[15px] font-bold leading-[15px]">
+          {{ invoice[0].status }}
+        </p>
+      </div>
     </div>
   </div>
   <div v-else>
@@ -12,10 +28,7 @@
 </template>
 
 <script setup>
-import {
-  onMounted,
-  ref,
-} from 'vue';
+import { onMounted, ref } from 'vue';
 
 import { useRoute } from 'vue-router';
 

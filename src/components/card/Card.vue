@@ -23,16 +23,23 @@
       </div>
 
       <div
-        :class="`w-[103px] py-[14px] rounded-md flex items-center justify-center gap-2 bg-[${getStatusColorClass(
-          invoice.status
-        )}] text-[${getStatusColorClass(invoice.status)}] bg-opacity-10`"
+        :class="['w-[103px] py-[14px] rounded-md flex items-center justify-center gap-2 bg-opacity-10', getStatusBgColorClass(invoice.status)]"
       >
         <p
-          :class="`w-2 h-2 bg-[${getStatusColorClass(
-            invoice.status
-          )}] rounded-full`"
+          :class="[
+            'w-2 h-2 rounded-full',
+            getStatusBgColorClass(invoice.status),
+          ]"
         ></p>
-        <p class="text-[15px] font-bold leading-[15px]">{{ invoice.status }}</p>
+
+        <p
+          :class="[
+            'text-[15px] font-bold leading-[15px]',
+            getStatusTextColorClass(invoice.status),
+          ]"
+        >
+          {{ invoice.status }}
+        </p>
       </div>
     </div>
   </li>
@@ -43,14 +50,26 @@ import { defineProps } from 'vue';
 
 const props = defineProps(['invoice']);
 
-const getStatusColorClass = (status) => {
+const getStatusBgColorClass = (status) => {
   switch (status) {
     case 'paid':
-      return '#33D69F';
+      return 'bg-[#33D69F]';
     case 'pending':
-      return '#FF8F00';
+      return 'bg-[#FF8F00]';
     case 'draft':
-      return '#373B53';
+      return 'bg-[#373B53]';
+    default:
+      return '';
+  }
+};
+const getStatusTextColorClass = (status) => {
+  switch (status) {
+    case 'paid':
+      return 'text-[#33D69F]';
+    case 'pending':
+      return 'text-[#FF8F00]';
+    case 'draft':
+      return 'text-[#373B53]';
     default:
       return '';
   }
