@@ -1,5 +1,5 @@
 <template>
-  <main class="overflow-y-auto w-full h-full sm:px-6 px-4">
+  <main class="overflow-y-auto w-full h-full sm:px-8 px-6">
     <div class="max-w-[730px] mx-auto">
       <header>
         <nav

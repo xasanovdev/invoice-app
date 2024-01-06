@@ -1,32 +1,8 @@
 <template>
-  <div v-if="invoice">
-    <!-- i am take data please show it -->
-    <div class="flex items-center justify-between md:gap-7">
-      <p class="class=text-light4 font-bold dark:text-white">
-        <span class="text-light2">#</span> {{ invoice[0].id }}
-      </p>
-      <p class="text-light2 text-[12px] dark:text-white">
-        {{ invoice[0].clientName }}
-      </p>
-    </div>
-    <div class="flex items-center justify-between sm:gap-10">
-      <div
-        class="flex flex-col md:flex-row md:items-center md:mt-0 md:gap-[82px] items-start gap-2 mt-6"
-      >
-        <span class="text-light2 dark:text-light1 text-[13px]">{{
-          `Due ${invoice[0].dueDate}`
-        }}</span>
-        <span class="text-light4 dark:text-white text-[15px] font-bold">{{
-          `£ ${invoice[0].amount}`
-        }}</span>
-      </div>
-
-      <div
-        :class="`w-[103px] py-[14px] rounded-md flex items-center justify-center gap-2 bg-opacity-10`"
-      >
-        <p :class="`w-2 h-2 rounded-full`"></p>
-        <p class="text-[15px] font-bold leading-[15px]">{{ invoice[0].status }}</p>
-      </div>
+  <div v-if="invoice" class="overflow-y-auto w-full h-full sm:px-8 px-6 mt-8">
+    <div @click="redirectToHome" class=" inline-flex cursor-pointer items-center gap-6 hover:gap-7 duration-200">
+      <i class="fa-solid fa-angle-left text-[9px] text-primary font-bold"></i>
+      <h4 class="text-[15px] text-light4 leading-[15px] font-bold">Go back</h4>
     </div>
   </div>
   <div v-else>
@@ -44,15 +20,16 @@ import {
 import { useRoute } from 'vue-router';
 
 import { invoices } from '../../data';
+import router from '../../routers';
 
 let invoice = ref(null);
 
 const route = useRoute();
 const invoiceId = route.params.id;
 
+const redirectToHome = () => {
+  router.push('/');
+};
+
 invoice = invoices.filter((invoice) => invoice.id === invoiceId);
-
-console.log(invoice);
-
-
 </script>
