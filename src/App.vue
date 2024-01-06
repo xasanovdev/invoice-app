@@ -3,11 +3,12 @@
     class="flex bg-bgLight dark:bg-bgDark flex-col w-screen h-screen sm:flex-row md:f"
   >
     <Sidebar />
-    <MainContent />
+
+    <router-view> </router-view>
   </div>
 </template>
 
 <script setup>
-import MainContent from './components/MainContent.vue';
 import Sidebar from './components/Sidebar.vue';
+import MainContent from './pages/MainContent.vue';
 </script>

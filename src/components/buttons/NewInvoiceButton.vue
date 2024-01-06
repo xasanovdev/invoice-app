@@ -1,6 +1,6 @@
 <template>
   <button
-    class="bg-primary text-white p-2 gap-4 w-[150px] hover:bg-[#9277FF] flex items-center text-[15px] font-bold rounded-full duration-200"
+    class="bg-primary text-white p-2 gap-2 sm:gap-4 w-[80px] sm:w-[150px] hover:bg-[#9277FF] flex items-center text-[15px] font-bold rounded-full duration-200"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +16,7 @@
       />
     </svg>
 
-    <span> New Invoice</span>
+    <span> New <span class="hidden sm:inline-block">Invoice </span></span>
   </button>
 </template>
 
