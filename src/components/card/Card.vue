@@ -3,7 +3,7 @@
     class="w-full cursor-pointer border dark:border-dark1 border-white duration-200 hover:shadow-primary shadow-md hover:border hover:border-primary p-6 bg-white md:flex md:items-center md:justify-between list-none dark:bg-dark1 rounded-[8px]"
   >
     <div class="flex items-center justify-between md:gap-7">
-      <p class="class=text-light4 font-bold dark:text-white">
+      <p class="text-light4 font-bold dark:text-white">
         <span class="text-light2">#</span> {{ invoice.id }}
       </p>
       <p class="text-light2 text-[12px] dark:text-white">
@@ -23,7 +23,10 @@
       </div>
 
       <div
-        :class="['w-[103px] py-[14px] rounded-md flex items-center justify-center gap-2 bg-opacity-10', getStatusBgColorClass(invoice.status)]"
+        :class="[
+          'w-[103px] py-[14px] rounded-md flex items-center justify-center gap-2 bg-opacity-10',
+          getStatusBgColorClass(invoice.status),
+        ]"
       >
         <p
           :class="[
@@ -48,32 +51,12 @@
 <script setup>
 import { defineProps } from 'vue';
 
-const props = defineProps(['invoice']);
+import {
+  getStatusBgColorClass,
+  getStatusTextColorClass,
+} from '../../libs/useStatusColors';
 
-const getStatusBgColorClass = (status) => {
-  switch (status) {
-    case 'paid':
-      return 'bg-[#33D69F]';
-    case 'pending':
-      return 'bg-[#FF8F00]';
-    case 'draft':
-      return 'bg-[#373B53]';
-    default:
-      return '';
-  }
-};
-const getStatusTextColorClass = (status) => {
-  switch (status) {
-    case 'paid':
-      return 'text-[#33D69F]';
-    case 'pending':
-      return 'text-[#FF8F00]';
-    case 'draft':
-      return 'text-[#373B53]';
-    default:
-      return '';
-  }
-};
+const props = defineProps(['invoice']);
 </script>
 
 <style></style>
