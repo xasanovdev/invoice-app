@@ -21,7 +21,7 @@
       </div>
 
       <div
-        :class="`py-[14px] px-[30px] rounded-md flex items-center gap-2 bg-${getStatusColorClass()} bg-opacity-10 text-${getStatusColorClass()}`"
+        :class="`w-[103px] py-[14px] rounded-md flex items-center justify-center gap-2 bg-${getStatusColorClass()} bg-opacity-10 text-${getStatusColorClass()}`"
       >
         <!-- Call getStatusColorClass directly in the class binding -->
         <p :class="`w-2 h-2 bg-${getStatusColorClass()} rounded-full`"></p>

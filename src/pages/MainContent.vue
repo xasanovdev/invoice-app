@@ -17,12 +17,12 @@
           </div>
           <div>
             <div></div>
-            <new-invoice-button />
+            <NewInvoiceButton />
           </div>
         </nav>
       </header>
 
-      <invoice-wrapper />
+      <InvoiceWrapper />
     </div>
   </main>
 </template>
