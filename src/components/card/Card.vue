@@ -11,7 +11,9 @@
       </p>
     </div>
     <div class="flex items-center justify-between sm:gap-10">
-      <div class="flex flex-col md:flex-row md:items-center md:mt-0 md:gap-[82px] items-start gap-2 mt-6">
+      <div
+        class="flex flex-col md:flex-row md:items-center md:mt-0 md:gap-[82px] items-start gap-2 mt-6"
+      >
         <span class="text-light2 dark:text-light1 text-[13px]">{{
           `Due ${invoice.dueDate}`
         }}</span>
@@ -21,10 +23,9 @@
       </div>
 
       <div
-        :class="`w-[103px] py-[14px] rounded-md flex items-center justify-center gap-2 bg-${getStatusColorClass()} bg-opacity-10 text-${getStatusColorClass()}`"
+        :class="`w-[103px] py-[14px] rounded-md flex items-center justify-center gap-2 bg-[${getStatusColorClass()}] text-[${getStatusColorClass()}] bg-opacity-10 text-${getStatusColorClass()}`"
       >
-        <!-- Call getStatusColorClass directly in the class binding -->
-        <p :class="`w-2 h-2 bg-${getStatusColorClass()} rounded-full`"></p>
+        <p :class="`w-2 h-2 bg-[${getStatusColorClass()}] rounded-full`"></p>
         <p class="text-[15px] font-bold leading-[15px]">{{ invoice.status }}</p>
       </div>
     </div>
@@ -39,16 +40,15 @@ const props = defineProps(['invoice']);
 const getStatusColorClass = () => {
   switch (props.invoice.status) {
     case 'Paid':
-      return '[#33D69F]'; // Change to the desired color for Paid status
+      return '#33D69F';
     case 'Pending':
-      return '[#FF8F00]'; // Change to the desired color for Pending status
+      return '#FF8F00';
     case 'Draft':
-      return '[#373B53]'; // Change to the desired color for Draft status
+      return '#373B53';
     default:
-      return ''; // Default color or no color class
+      return '';
   }
 };
 </script>
 
-<style></style>
 <style></style>

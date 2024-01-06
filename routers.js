@@ -3,6 +3,7 @@ import {
   createWebHistory,
 } from 'vue-router';
 
+import InvoiceDetails from './src/pages/InvoiceDetails.vue';
 import MainContent from './src/pages/MainContent.vue';
 
 const router = createRouter({
@@ -11,6 +12,12 @@ const router = createRouter({
     {
       path: '/',
       component: MainContent,
+    },
+    {
+      path: '/invoice/:id', // Use a dynamic parameter for the invoice ID
+      component: InvoiceDetails,
+      name: 'InvoiceDetails',
+      props: true, // Pass the invoice ID as a prop
     },
   ],
 });
