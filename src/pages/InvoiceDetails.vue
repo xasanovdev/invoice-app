@@ -68,11 +68,14 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import {
+  onMounted,
+  ref,
+} from 'vue';
 
 import { useRoute } from 'vue-router';
 
-import { invoices } from '../../data';
+import { dataInvoices } from '../../firebase/firebase';
 import router from '../../routers';
 import {
   getStatusBgColorClass,
@@ -88,5 +91,5 @@ const redirectToHome = () => {
   router.push('/');
 };
 
-invoice = invoices.filter((invoice) => invoice.id === invoiceId);
+invoice = dataInvoices.filter((invoice) => invoice.id === invoiceId);
 </script>
