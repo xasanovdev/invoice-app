@@ -10,36 +10,43 @@
       <div class="card-loading"></div>
     </div>
 
-    <!-- Iterate over the invoices array and use the InvoiceCard component for each invoice -->
-    <Card
-      v-for="invoice in dataInvoices"
-      :key="invoice.id"
-      @click="navigateToInvoiceDetails(invoice.id)"
-      :invoice="invoice"
-    />
+    <!-- Use v-else to render the invoices once the data is loaded -->
+    <ul v-else class="flex items-center flex-col gap-4">
+      <Card
+        v-for="invoice in dataInvoices"
+        :key="invoice.id"
+        @click="navigateToInvoiceDetails(invoice.id)"
+        :invoice="invoice"
+      />
+    </ul>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import {
+  onMounted,
+  ref,
+} from 'vue';
 
-import { dataInvoices } from '../../firebase/firebase';
+import {
+  dataInvoices,
+  getInvoicesData,
+} from '../../firebase/firebase';
 import router from '../../routers';
 import Card from './card/Card.vue';
+
+const isLoading = ref(true); // Set initial loading state
+
+onMounted(async () => {
+  await getInvoicesData(); // Fetch the data asynchronously
+  console.log(dataInvoices);
+  isLoading.value = false; // Update loading state when data is ready
+});
 
 const navigateToInvoiceDetails = (id) => {
   // Use router to navigate to the details page
   router.push({ name: 'InvoiceDetails', params: { id } });
 };
-
-const isLoading = ref(true); // Set initial loading state
-
-// Simulate a 500ms loading delay
-setTimeout(() => {
-  isLoading.value = false; // Update loading state after 500ms
-}, 1000);
-
-const invoicesList = ref(dataInvoices);
 </script>
 
 <style scoped>

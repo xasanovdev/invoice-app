@@ -36,10 +36,9 @@ export const getInvoicesData = async () => {
     const firestore = getFirestore(app);
     const invoicesCollection = collection(firestore, 'invoices');
 
-    const querySnapshot = await getDocs(invoicesCollection);
-
-    // Clear existing dataInvoices array before populating it
     dataInvoices.length = 0;
+
+    const querySnapshot = await getDocs(invoicesCollection);
 
     querySnapshot.forEach((doc) => {
       dataInvoices.push(doc.data());

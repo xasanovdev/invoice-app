@@ -91,5 +91,8 @@ const redirectToHome = () => {
   router.push('/');
 };
 
-invoice = dataInvoices.filter((invoice) => invoice.id === invoiceId);
+invoice = dataInvoices
+.filter((invoice) => invoice.id === invoiceId);
+
+
 </script>
