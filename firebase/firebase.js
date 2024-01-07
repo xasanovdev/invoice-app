@@ -2,7 +2,11 @@ import { getAnalytics } from 'firebase/analytics';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 // Reference to the "invoices" collection
-import { collection, getDocs, getFirestore } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  getFirestore,
+} from 'firebase/firestore';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -27,15 +31,22 @@ export const dataInvoices = [];
 
 // Get a reference to the Firestore database
 
-const firestore = getFirestore(app);
+export const getInvoicesData = async () => {
+  try {
+    const firestore = getFirestore(app);
+    const invoicesCollection = collection(firestore, 'invoices');
 
-// Reference to the "invoices" collection
-export const invoicesCollection = collection(firestore, 'invoices');
+    const querySnapshot = await getDocs(invoicesCollection);
 
-// Get all documents from the "invoices" collection
-const querySnapshot = await getDocs(invoicesCollection);
+    // Clear existing dataInvoices array before populating it
+    dataInvoices.length = 0;
 
-// Populate the "items" array with data from the collection
-querySnapshot.forEach((doc) => {
-  dataInvoices.push(doc.data());
-});
+    querySnapshot.forEach((doc) => {
+      dataInvoices.push(doc.data());
+    });
+
+    console.log('Invoices data loaded successfully.');
+  } catch (error) {
+    console.error('Error loading invoices data:', error);
+  }
+};

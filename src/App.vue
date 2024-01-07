@@ -12,10 +12,13 @@
 import {
   analytics,
   dataInvoices,
+  getInvoicesData,
   invoicesCollection,
 } from '../firebase/firebase';
 import Sidebar from './components/Sidebar.vue';
 import MainContent from './pages/MainContent.vue';
+
+getInvoicesData();
 
 console.log(dataInvoices);
 </script>
