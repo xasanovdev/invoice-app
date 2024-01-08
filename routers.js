@@ -1,9 +1,6 @@
-import {
-  createRouter,
-  createWebHistory,
-} from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 
-import InvoiceDetails from './src/pages/InvoiceDetails.vue';
+import InvoiceDetailsVue from './src/pages/InvoiceDetails.vue';
 import MainContent from './src/pages/MainContent.vue';
 
 const router = createRouter({
@@ -15,7 +12,7 @@ const router = createRouter({
     },
     {
       path: '/invoice/:id', // Use a dynamic parameter for the invoice ID
-      component: InvoiceDetails,
+      component: InvoiceDetailsVue,
       name: 'InvoiceDetails',
       props: true, // Pass the invoice ID as a prop
     },

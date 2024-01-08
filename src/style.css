@@ -32,7 +32,9 @@ body {
   --bg-light: #f8f8fb;
   --bg-dark: #141625;
 }
-
+* {
+  white-space: nowrap;
+}
 .card-loading {
   width: 100%; /* Set the width to match the card */
   height: 120px; /* Set the height to match the card */

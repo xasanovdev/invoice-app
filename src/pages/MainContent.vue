@@ -1,11 +1,11 @@
 <template>
-  <main class="overflow-y-auto w-full h-full sm:px-8 px-6">
+  <main class="overflow-y-auto w-full h-full sm:px-8 px-6 md:mb-[105px]">
     <div class="max-w-[730px] mx-auto">
       <header>
         <nav
           class="w-full mt-[32px] md:mt-[62px] sm:mt-[36px] flex items-center justify-between"
         >
-          <div class="flex flex-col sm:gap-[6px]">
+          <div class="flex flex-col w-full sm:gap-[6px]">
             <h2
               class="text-[24px] sm:text-[36px] leading-9 font-bold text-light4 dark:text-white"
             >
