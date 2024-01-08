@@ -68,7 +68,7 @@
           >
             <div class="flex-start">
               <p class="text-light4 font-bold dark:text-white">
-                <span class="text-light2">#</span> {{ dataInvoice[0].id }}
+                <span class="text-light2">#</span> {{ dataInvoice[0].title }}
               </p>
               <p class="text-light3 text-[12px] dark:text-white">
                 {{ dataInvoice[0].description }}

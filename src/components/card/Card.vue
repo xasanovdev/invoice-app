@@ -4,7 +4,7 @@
   >
     <div class="flex items-center justify-between gap-2">
       <p class="text-light4 font-bold dark:text-white">
-        <span class="text-light2">#</span> {{ invoice.id }}
+        <span class="text-light2">#</span> {{ invoice.title }}
       </p>
       <p class="text-light2 text-[12px] dark:text-white">
         {{ invoice.clientName }}
