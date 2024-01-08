@@ -4,8 +4,11 @@ import { initializeApp } from 'firebase/app';
 // Reference to the "invoices" collection
 import {
   collection,
+  doc,
+  getDoc,
   getDocs,
   getFirestore,
+  setDoc,
 } from 'firebase/firestore';
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -27,7 +30,8 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const analytics = getAnalytics(app);
 
-export const dataInvoices = [];
+export let dataInvoices = [];
+export let dataInvoice = [];
 
 // Get a reference to the Firestore database
 
@@ -47,5 +51,68 @@ export const getInvoicesData = async () => {
     console.log('Invoices data loaded successfully.');
   } catch (error) {
     console.error('Error loading invoices data:', error);
+  }
+};
+
+export const updateInvoiceStatus = async (invoiceId, newStatus) => {
+  try {
+    console.log(
+      'Updating invoice status. ID:',
+      invoiceId,
+      'New Status:',
+      newStatus
+    );
+
+    const firestore = getFirestore(app);
+    const invoiceDocRef = doc(firestore, 'invoices', invoiceId);
+
+    // Check if the document exists before attempting to update
+    const invoiceDocSnapshot = await getDoc(invoiceDocRef);
+
+    if (invoiceDocSnapshot.exists()) {
+      // Use setDoc to update the entire document
+      await setDoc(invoiceDocRef, {
+        ...invoiceDocSnapshot.data(), // Preserve existing data
+        status: newStatus, // Update the status field
+      });
+
+      console.log(`Invoice status updated to ${newStatus} successfully.`);
+    } else {
+      console.warn(
+        `Document with ID ${invoiceId} not found. No update performed.`
+      );
+      // Handle the case where the document is not found (optional)
+    }
+  } catch (error) {
+    console.error('Error updating invoice status:', error);
+    throw error; // Re-throw the error to handle it in the calling component if needed
+  }
+};
+
+export const getInvoiceById = async (invoiceId) => {
+  try {
+    const firestore = getFirestore(app);
+    const invoiceDocRef = doc(firestore, 'invoices', invoiceId);
+
+    const invoiceDocSnapshot = await getDoc(invoiceDocRef);
+
+    if (invoiceDocSnapshot.exists()) {
+      // Clear the existing dataInvoices array
+      dataInvoice.length = 0;
+
+      // Push the data of the retrieved invoice to the dataInvoices array
+      dataInvoice.push(invoiceDocSnapshot.data());
+
+
+      return dataInvoice;
+
+      console.log(dataInvoice);
+
+      console.log(`Invoice with ID ${invoiceId} loaded successfully.`);
+    } else {
+      console.warn(`Invoice with ID ${invoiceId} not found.`);
+    }
+  } catch (error) {
+    console.error(`Error loading invoice with ID ${invoiceId}:`, error);
   }
 };

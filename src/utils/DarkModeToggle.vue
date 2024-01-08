@@ -13,10 +13,10 @@ const toggleDarkMode = () => {
 <template>
   <button @click="toggleDarkMode">
     <span v-if="isDarkMode"
-      ><i class="fa-regular fa-moon text-[20px] text-light3"></i
+      ><i class="fa-regular fa-moon text-[20px] text-light3 hover:text-light1 duration-200"></i
     ></span>
     <span v-else
-      ><i class="fa-regular fa-sun text-[20px] text-light3"></i>
+      ><i class="fa-regular fa-sun text-[20px] text-light3 hover:text-light1 duration-200"></i>
     </span>
   </button>
 </template>

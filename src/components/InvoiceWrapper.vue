@@ -51,17 +51,5 @@ const navigateToInvoiceDetails = (id) => {
 
 <style scoped>
 /* Add styles for the loading state */
-.card-loading {
-  width: 100%; /* Set the width to match the card */
-  height: 120px; /* Set the height to match the card */
-  background-color: #dfdfdf; /* Set the background color as a light gray */
-  border-radius: 8px; /* Add border-radius for rounded corners */
-  animation: loading-animation 0.4s infinite alternate; /* Apply a simple animation */
-}
 
-@keyframes loading-animation {
-  to {
-    opacity: 0.2; /* Adjust opacity for the alternating effect */
-  }
-}
 </style>
