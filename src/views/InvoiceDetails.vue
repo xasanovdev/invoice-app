@@ -208,9 +208,6 @@ import { computed, onMounted, ref } from 'vue'; // Assuming you are using Vue 3
 import { useRoute } from 'vue-router';
 
 import Button from '../components/Button/Button.vue';
-import DeleteButtonVue from '../components/buttons/DeleteButton.vue';
-import EditButtonVue from '../components/buttons/EditButton.vue';
-import MarkAsPaidButtonVue from '../components/buttons/MarkAsPaidButton.vue';
 import {
   dataInvoice,
   dataInvoices,
