@@ -32,8 +32,8 @@
             :key="index"
             @click="selectOption(option)"
             :class="[
-              'font-bold px-4 py-3 text-light4 dark:text-light2 text-[15px] hover:bg-light1 dark:bg-bg-indigo-500/50 duration-100',
-              { 'text-primary': selectedOption === option },
+              'font-bold px-4 py-3 text-light4 cursor-pointer dark:text-light2 text-[15px] hover:bg-light1 dark:bg-bg-indigo-500/50 duration-100',
+              { 'text-primary dark:text-primary': selectedOption === option },
             ]"
             role="menuitem"
           >
