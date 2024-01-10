@@ -4,13 +4,13 @@
   >
     <Sidebar />
 
-    <DropDown />
+    <ModalEdit />
 
-    <!-- <router-view> </router-view> -->
+    <router-view> </router-view>
   </div>
 </template>
 
 <script setup>
-import DropDown from './components/Form/DropDown/DropDown.vue';
+import ModalEdit from './components/ModalEdit/ModalEdit.vue';
 import Sidebar from './components/SidebarComponent.vue';
 </script>

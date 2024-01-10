@@ -1,6 +1,6 @@
 <template>
   <div class="w-[240px] relative">
-    <div class="mt-4 relative">
+    <div class="relative">
       <input
         placeholder="Select a date"
         class="border date cursor-pointer rounded-md font-bold dark:bg-dark1 dark:text-white outline-none border-none w-[240px] p-2 appearance-none"
