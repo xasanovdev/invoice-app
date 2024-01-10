@@ -55,9 +55,18 @@
             </div>
           </div>
           <div class="w-full hidden sm:flex gap-2">
-            <EditButtonVue />
-            <DeleteButtonVue />
-            <MarkAsPaidButtonVue @click="toggleInvoiceStatus" />
+            <Button class="hover:bg-light1 text-light3 bg-[#F9FAFE]"
+              >Edit</Button
+            >
+            <Button class="bg-danger text-white hover:bg-[#FF9797]"
+              >Delete</Button
+            >
+
+            <Button
+              @click="toggleInvoiceStatus"
+              class="bg-primary text-white hover:bg-[#9277FF]"
+              >Mark as {{ currentStatusText }}</Button
+            >
           </div>
         </div>
 
@@ -194,11 +203,7 @@
 </template>
 
 <script setup>
-import {
-  computed,
-  onMounted,
-  ref,
-} from 'vue'; // Assuming you are using Vue 3
+import { computed, onMounted, ref } from 'vue'; // Assuming you are using Vue 3
 
 import { useRoute } from 'vue-router';
 
