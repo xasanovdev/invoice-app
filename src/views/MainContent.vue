@@ -17,7 +17,7 @@
           </div>
           <div>
             <div></div>
-            <NewInvoiceButton />
+            <Button class="bg-primary text-white hover:bg-secondary">New Item Button</Button>
           </div>
         </nav>
       </header>
@@ -30,9 +30,12 @@
 <script setup>
 import { computed } from 'vue';
 
-import NewInvoiceButton from '../components/buttons/NewInvoiceButton.vue';
+import Button from '../components/Button/Button.vue';
 import InvoiceWrapper from '../components/InvoiceWrapper.vue';
-import { dataInvoices, getInvoicesData } from '../firebase/firebase';
+import {
+  dataInvoices,
+  getInvoicesData,
+} from '../firebase/firebase';
 
 const dataInvoiceCount = computed(() => dataInvoices.value.length);
 </script>

@@ -55,3 +55,7 @@ body {
     opacity: 0.2; /* Adjust opacity for the alternating effect */
   }
 }
+.date {
+  appearance: none;
+  -webkit-appearance: none;
+}

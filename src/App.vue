@@ -4,10 +4,12 @@
   >
     <Sidebar />
 
-    <router-view> </router-view>
+    <DatePickerVue />
+    <!-- <router-view> </router-view> -->
   </div>
 </template>
 
 <script setup>
+import DatePickerVue from './components/Form/DatePicker/DatePicker.vue';
 import Sidebar from './components/SidebarComponent.vue';
 </script>

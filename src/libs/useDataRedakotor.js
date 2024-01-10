@@ -14,5 +14,7 @@ export function formatDate(inputDate) {
   // Format the date in the desired format
   const formattedDate = `${day} ${monthAbbreviation} ${year}`;
 
+  console.log(formattedDate);
+
   return formattedDate;
 }
