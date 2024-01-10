@@ -12,7 +12,7 @@
               Invoices
             </h2>
             <p class="text-[13px] text-light2 dark:text-light1">
-              There are 7 total invoices
+              There are {{ dataInvoiceCount }} total invoices
             </p>
           </div>
           <div>
@@ -28,6 +28,11 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
+
 import NewInvoiceButton from '../components/buttons/NewInvoiceButton.vue';
 import InvoiceWrapper from '../components/InvoiceWrapper.vue';
+import { dataInvoices, getInvoicesData } from '../firebase/firebase';
+
+const dataInvoiceCount = computed(() => dataInvoices.value.length);
 </script>

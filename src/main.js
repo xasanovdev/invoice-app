@@ -2,8 +2,8 @@ import '../src/style.css';
 
 import { createApp } from 'vue';
 
-import router from '../routers.js';
 import App from './App.vue';
+import router from './routers.js';
 
 const app = createApp(App);
 

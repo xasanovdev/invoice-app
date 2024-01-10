@@ -2,7 +2,6 @@
   <div class="w-full overflow-y-auto">
     <div class="flex flex-col max-w-[730px] mx-auto">
       <div
-
         @click="router.push('/')"
         class="inline-flex z-20 p-8 cursor-pointer items-center gap-6 hover:gap-7 duration-200"
       >
@@ -175,9 +174,18 @@
           class="fixed sm:hidden w-full left-0 bottom-0 backdrop-blur-md bg-opacity-50 p-4"
         >
           <div class="w-full flex justify-between gap-2 px-4">
-            <EditButtonVue />
-            <DeleteButtonVue />
-            <MarkAsPaidButtonVue @click="toggleInvoiceStatus" />
+            <Button class="hover:bg-light1 text-light3 bg-[#F9FAFE]"
+              >Edit</Button
+            >
+            <Button class="bg-danger text-white hover:bg-[#FF9797]"
+              >Delete</Button
+            >
+
+            <Button
+              @click="toggleInvoiceStatus"
+              class="bg-primary text-white hover:bg-[#9277FF]"
+              >Mark as {{ currentStatusText }}</Button
+            >
           </div>
         </div>
       </div>
@@ -187,41 +195,47 @@
 
 <script setup>
 import {
+  computed,
   onMounted,
   ref,
-} from 'vue';
+} from 'vue'; // Assuming you are using Vue 3
 
 import { useRoute } from 'vue-router';
 
+import Button from '../components/Button/Button.vue';
+import DeleteButtonVue from '../components/buttons/DeleteButton.vue';
+import EditButtonVue from '../components/buttons/EditButton.vue';
+import MarkAsPaidButtonVue from '../components/buttons/MarkAsPaidButton.vue';
 import {
   dataInvoice,
   dataInvoices,
   getInvoiceById,
   getInvoicesData,
   updateInvoiceStatus,
-} from '../../firebase/firebase';
-import router from '../../routers';
-import DeleteButtonVue from '../components/buttons/DeleteButton.vue';
-import EditButtonVue from '../components/buttons/EditButton.vue';
-import MarkAsPaidButtonVue from '../components/buttons/MarkAsPaidButton.vue';
+} from '../firebase/firebase';
 import { formatDate } from '../libs/useDataRedakotor';
 import {
   getStatusBgColorClass,
   getStatusTextColorClass,
 } from '../libs/useStatusColors';
+import router from '../routers';
 
-let invoice = ref(null);
-const isLoading = ref(true); // Set initial loading state
+const isLoading = ref(true);
 
 const route = useRoute();
 const invoiceId = route.params.id;
 
+let newStatusText = ref('');
+
 const toggleInvoiceStatus = async () => {
   try {
-    if (dataInvoice && dataInvoice.length > 0) {
-      const invoiceId = dataInvoice[0].id;
-      const currentStatus = dataInvoice[0].status;
+    console.log();
+
+    if (dataInvoice && dataInvoice.value[0].id) {
+      const invoiceId = dataInvoice.value[0].id;
+      const currentStatus = dataInvoice.value[0].status;
       const newStatus = currentStatus === 'paid' ? 'pending' : 'paid';
+      newStatusText.value = currentStatus;
       isLoading.value = true;
       await updateInvoiceStatus(invoiceId, newStatus);
       await getInvoiceById(invoiceId);
@@ -235,9 +249,12 @@ const toggleInvoiceStatus = async () => {
   }
 };
 
+const currentStatusText = computed(() => {
+  return newStatusText.value === 'paid' ? 'Paid' : 'Pending';
+});
+
 onMounted(async () => {
-  await getInvoiceById(invoiceId); // Fetch the data asynchronously
-  console.log(dataInvoices);
-  isLoading.value = false; // Update loading state when data is ready
+  await getInvoiceById(invoiceId);
+  isLoading.value = false;
 });
 </script>

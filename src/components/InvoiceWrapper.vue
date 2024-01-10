@@ -31,8 +31,8 @@ import {
 import {
   dataInvoices,
   getInvoicesData,
-} from '../../firebase/firebase';
-import router from '../../routers';
+} from '../firebase/firebase';
+import router from '../routers';
 import Card from './card/Card.vue';
 
 const isLoading = ref(true); // Set initial loading state
@@ -51,5 +51,4 @@ const navigateToInvoiceDetails = (id) => {
 
 <style scoped>
 /* Add styles for the loading state */
-
 </style>

@@ -1,3 +1,5 @@
+import { ref } from 'vue';
+
 import { getAnalytics } from 'firebase/analytics';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
@@ -30,8 +32,8 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const analytics = getAnalytics(app);
 
-export let dataInvoices = [];
-export let dataInvoice = [];
+export let dataInvoices = ref([]);
+export let dataInvoice = ref([]);
 
 // Get a reference to the Firestore database
 
@@ -40,12 +42,12 @@ export const getInvoicesData = async () => {
     const firestore = getFirestore(app);
     const invoicesCollection = collection(firestore, 'invoices');
 
-    dataInvoices.length = 0;
+    dataInvoices.value.length = 0;
 
     const querySnapshot = await getDocs(invoicesCollection);
 
     querySnapshot.forEach((doc) => {
-      dataInvoices.push(doc.data());
+      dataInvoices.value.push(doc.data());
     });
 
     console.log('Invoices data loaded successfully.');
@@ -98,11 +100,10 @@ export const getInvoiceById = async (invoiceId) => {
 
     if (invoiceDocSnapshot.exists()) {
       // Clear the existing dataInvoices array
-      dataInvoice.length = 0;
+      dataInvoice.value.length = 0;
 
       // Push the data of the retrieved invoice to the dataInvoices array
-      dataInvoice.push(invoiceDocSnapshot.data());
-
+      dataInvoice.value.push(invoiceDocSnapshot.data());
 
       return dataInvoice;
 

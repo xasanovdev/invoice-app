@@ -24,9 +24,9 @@
 </template>
 
 <script setup>
-import router from '../../routers';
 import { useDarkMode } from '../libs/useDarkMode';
-import DarkModeToggle from '../utils/DarkModeToggle.vue';
+import router from '../routers';
+import DarkModeToggle from './darkMode/DarkModeToggle.vue';
 
 const { isDarkMode, toggleDarkMode } = useDarkMode();
 </script>

@@ -1,7 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import {
+  createRouter,
+  createWebHistory,
+} from 'vue-router';
 
-import InvoiceDetailsVue from './src/pages/InvoiceDetails.vue';
-import MainContent from './src/pages/MainContent.vue';
+import InvoiceDetailsVue from './views/InvoiceDetails.vue';
+import MainContent from './views/MainContent.vue';
 
 const router = createRouter({
   history: createWebHistory(),
