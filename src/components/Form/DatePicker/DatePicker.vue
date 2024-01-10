@@ -3,15 +3,18 @@
     <div class="mt-4 relative">
       <input
         placeholder="Select a date"
-        class="border date rounded-md font-bold w-[240px] p-2 appearance-none"
+        class="border date cursor-pointer rounded-md font-bold dark:bg-dark1 dark:text-white outline-none border-none w-[240px] p-2 appearance-none"
         v-model="formattedSelectedDate"
         @focus="openDatePicker"
         readonly
       />
-      <i class="fa-regular fa-calendar absolute text-light3 top-3 right-3"></i>
+      <i class="fa-regular pointer-events-none fa-calendar absolute text-light3 top-3 right-3"></i>
     </div>
 
-    <div v-if="isDatePickerOpen" class="absolute mt-4 shadow-lg p-6 rounded-lg">
+    <div
+      v-if="isDatePickerOpen"
+      class="absolute mt-4 bg-white dark:bg-dark2 shadow-lg p-6 rounded-lg"
+    >
       <section class="flex gap-2 justify-between items-center">
         <button class="" @click="prev">
           <i
@@ -19,7 +22,7 @@
           ></i>
         </button>
 
-        <div class="flex items-center justify-center gap-2 font-bold">
+        <div class="flex items-center dark:text-light1 justify-center gap-2 font-bold">
           <p>{{ currentMonthName }}</p>
           <p>{{ currentYear }}</p>
         </div>
@@ -33,7 +36,7 @@
       <section class="grid grid-cols-7 gap-1 mt-8">
         <p class="text-md" v-for="num in startDay()" :key="num"></p>
         <p
-          class="text-center font-extrabold p-1"
+          class="text-center font-extrabold p-1 dark:text-light1"
           v-bind:class="currentDateValidation(num)"
           v-for="num in daysInMonth()"
           :key="num"
@@ -105,9 +108,9 @@ export default {
         : null;
 
       if (calendarFullDate === currentFullDate) {
-        return 'font-bold text-primary cursor-pointer';
+        return 'font-bold text-primary dark:text-primary cursor-pointer';
       } else if (selectedDate === calendarFullDate) {
-        return 'font-bold text-secondary bg-indigo-200 rounded-full cursor-pointer';
+        return 'font-bold text-secondary dark:text-secondary bg-indigo-200 rounded-full cursor-pointer';
       } else {
         return 'cursor-pointer';
       }
@@ -118,7 +121,11 @@ export default {
     openDatePicker() {
       this.isDatePickerOpen = true;
     },
-
+  },
+  watch: {
+    selectedDate() {
+      this.$emit('selectedDate', this.selectedDate);
+    },
   },
   computed: {
     formattedSelectedDate() {
