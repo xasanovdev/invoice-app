@@ -1,19 +1,19 @@
 <template>
-  <div class="w-[240px] relative">
+  <div class="relative w-full border border-light1 focus:border-primary dark:border-dark2">
     <div class="relative">
       <input
         placeholder="Select a date"
-        class="border date cursor-pointer rounded-md font-bold dark:bg-dark1 dark:text-white outline-none border-none w-[240px] p-2 appearance-none"
+        class="border date cursor-pointer w-full rounded-md font-bold dark:bg-dark1 dark:text-white outline-none border-none py-3 px-4 appearance-none"
         v-model="formattedSelectedDate"
         @focus="openDatePicker"
         readonly
       />
-      <i class="fa-regular pointer-events-none fa-calendar absolute text-light3 top-3 right-3"></i>
+      <i class="fa-regular pointer-events-none fa-calendar absolute text-light3 top-4 right-4"></i>
     </div>
 
     <div
       v-if="isDatePickerOpen"
-      class="absolute mt-4 bg-white dark:bg-dark2 shadow-lg p-6 rounded-lg"
+      class="absolute w-full z-10 mt-4 bg-white dark:bg-dark2 shadow-lg p-6 rounded-lg"
     >
       <section class="flex gap-2 justify-between items-center">
         <button class="" @click="prev">

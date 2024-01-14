@@ -1,9 +1,10 @@
 <template>
   <div class="w-full overflow-y-auto">
+  <ModalEdit ></ModalEdit>
     <div class="flex flex-col max-w-[730px] mx-auto">
       <div
         @click="router.push('/')"
-        class="inline-flex z-20 p-8 cursor-pointer items-center gap-6 hover:gap-7 duration-200"
+        class="inline-flex p-8 cursor-pointer items-center gap-6 hover:gap-7 duration-200"
       >
         <i class="fa-solid fa-angle-left text-[9px] text-primary font-bold"></i>
         <h4
@@ -203,11 +204,16 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'; // Assuming you are using Vue 3
+import {
+  computed,
+  onMounted,
+  ref,
+} from 'vue'; // Assuming you are using Vue 3
 
 import { useRoute } from 'vue-router';
 
 import Button from '../components/Button/Button.vue';
+import ModalEdit from '../components/ModalEdit/ModalEdit.vue';
 import {
   dataInvoice,
   dataInvoices,

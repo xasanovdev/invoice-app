@@ -4,8 +4,6 @@
   >
     <Sidebar />
 
-    <ModalEdit />
-
     <router-view> </router-view>
   </div>
 </template>

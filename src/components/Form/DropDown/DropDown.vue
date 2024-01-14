@@ -1,6 +1,6 @@
 <template>
   <!-- write me dropdown using vue -->
-  <div class="w-[240px]">
+  <div class="w-[240px] border border-light1 focus:border-primary dark:border-dark2">
     <div class="relative w-full inline-block text-left">
       <div class="">
         <button
