@@ -10,12 +10,11 @@
 <script setup>
 import {
   defineProps,
+  onMounted,
   ref,
 } from 'vue';
 
 const props = defineProps(['property', 'dataObject']);
-
-console.log(props);
 
 const getPropertyValue = () => {
   const properties = props.property ? props.property.split('.') : [];
@@ -29,9 +28,9 @@ const getPropertyValue = () => {
 };
 
 const updateValue = (event) => {
-  if (props.dataObject.value && props.dataObject.value[0]) {
+  if (props.dataObject && props.dataObject[0]) {
     const properties = props.property ? props.property.split('.') : [];
-    let nestedObject = props.dataObject.value[0];
+    let nestedObject = props.dataObject[0];
 
     for (let i = 0; i < properties.length - 1; i++) {
       nestedObject = nestedObject?.[properties[i]];
@@ -51,6 +50,8 @@ const updateValue = (event) => {
     );
   }
 };
+
+// Log initial props and property value on component mount
 </script>
 
 <style></style>

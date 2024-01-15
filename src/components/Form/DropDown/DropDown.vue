@@ -1,5 +1,5 @@
 <template>
-  <!-- write me dropdown using vue -->
+  <!-- Dropdown using Vue and defineModel -->
   <div
     class="w-[240px] border border-light1 rounded-md focus:border-primary dark:border-dark2"
   >
@@ -48,24 +48,49 @@
 </template>
 
 <script setup>
-import { defineProps, ref, watch } from 'vue';
+import { defineModel, ref, watch } from 'vue';
 
-const { paymentTerms } = defineProps(['paymentTerms']);
-const paymentTermsText = ref(`Net ${paymentTerms} Days`);
+const updateInvoice = defineModel('updateInvoice');
 const isDropDownOpen = ref(false);
-const selectedOption = ref('Select Option');
+const selectedOption = ref(
+  updateInvoice.value[0]?.paymentTerms
+    ? `Net ${updateInvoice.value[0]?.paymentTerms} Days`
+    : 'Select Option'
+);
 const options = ref(['Net 1 Day', 'Net 7 Days', 'Net 14 Days', 'Net 30 Days']);
 
-// Watch for changes in paymentTerms and update paymentTermsText accordingly
-if (typeof paymentTerms !== 'undefined') {
-  paymentTermsText.value = `Net ${paymentTerms} Days`;
-  selectedOption.value = paymentTermsText.value;
-}
+// Log the structure of updateInvoice
+console.log('Initial updateInvoice:', updateInvoice.value);
+
+// Watch for changes in updateInvoice and log the structure
+watch(
+  () => updateInvoice.value,
+  (newValue) => {
+    console.log('updateInvoice changed:', newValue);
+  }
+);
+
+// Watch for changes in paymentTerms and log the value
+watch(
+  () => updateInvoice.value[0]?.paymentTerms,
+  (newValue) => {
+    console.log('Payment Terms changed:', newValue);
+    if (newValue !== undefined) {
+      selectedOption.value = `Net ${newValue} Days`;
+      console.log('Selected Option updated:', selectedOption.value);
+    }
+  }
+);
 
 const selectOption = (option) => {
   selectedOption.value = option;
   isDropDownOpen.value = false;
+  console.log('Selected Option changed:', option);
+  const numberOfDays = option.split(' ')[1];
+  updateInvoice.value[0].paymentTerms = +numberOfDays;
+  console.log(
+    'Payment Terms after selection:',
+    updateInvoice.value[0]?.paymentTerms
+  );
 };
 </script>
-
-<style></style>

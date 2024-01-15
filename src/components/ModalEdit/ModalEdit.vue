@@ -22,7 +22,7 @@
           </div>
 
           <h1 class="text-light4 text-[24px] font-bold dark:text-white">
-            Edit<span class="text-light2">#</span> {{dataInvoice[0].title}}
+            Edit<span class="text-light2">#</span> {{ updateInvoice[0].title }}
           </h1>
 
           <div class="flex flex-col items-start gap-6">
@@ -36,7 +36,7 @@
               <Input
                 id="addressBillFrom"
                 property="senderAddress.street"
-                :dataObject="dataInvoice"
+                :dataObject="updateInvoice"
               />
             </div>
             <div class="w-full grid sm:grid-cols-3 grid-cols-2 gap-6">
@@ -51,7 +51,7 @@
                 <Input
                   id="cityBillFrom"
                   property="senderAddress.city"
-                  :dataObject="dataInvoice"
+                  :dataObject="updateInvoice"
                 />
               </div>
               <div
@@ -65,7 +65,7 @@
                 <Input
                   id="costCodeBillFrom"
                   property="senderAddress.zipcode"
-                  :dataObject="dataInvoice"
+                  :dataObject="updateInvoice"
                 />
               </div>
               <div
@@ -79,7 +79,7 @@
                 <Input
                   id="countryBillFrom"
                   property="senderAddress.country"
-                  :dataObject="dataInvoice"
+                  :dataObject="updateInvoice"
                 />
               </div>
             </div>
@@ -96,7 +96,7 @@
               <Input
                 id="clientName"
                 property="clientName"
-                :dataObject="dataInvoice"
+                :dataObject="updateInvoice"
               />
             </div>
             <div class="flex items-start flex-col w-full gap-[9px]">
@@ -108,7 +108,7 @@
               <Input
                 id="clientEmail"
                 property="clientEmail"
-                :dataObject="dataInvoice"
+                :dataObject="updateInvoice"
               />
             </div>
             <div class="flex items-start flex-col w-full gap-[9px]">
@@ -120,7 +120,7 @@
               <Input
                 id="addressBillTo"
                 property="clientAddress.street"
-                :dataObject="dataInvoice"
+                :dataObject="updateInvoice"
               />
             </div>
             <div class="w-full grid sm:grid-cols-3 grid-cols-2 gap-6">
@@ -135,7 +135,7 @@
                 <Input
                   id="cityBillTo"
                   property="clientAddress.city"
-                  :dataObject="dataInvoice"
+                  :dataObject="updateInvoice"
                 />
               </div>
               <div
@@ -149,7 +149,7 @@
                 <Input
                   id="postCodeBillTo"
                   property="clientAddress.zipcode"
-                  :dataObject="dataInvoice"
+                  :dataObject="updateInvoice"
                 />
               </div>
               <div
@@ -163,7 +163,7 @@
                 <Input
                   id="countryBillTo"
                   property="clientAddress.country"
-                  :dataObject="dataInvoice"
+                  :dataObject="updateInvoice"
                 />
               </div>
             </div>
@@ -179,7 +179,7 @@
                 </label>
                 <DatePicker
                   class="w-full"
-                  :createdAt="dataInvoice[0]?.createdAt"
+                  :createdAt="updateInvoice[0]?.createdAt"
                 />
               </div>
               <div class="flex items-start w-full sm:w-1/2 flex-col gap-[9px]">
@@ -190,7 +190,7 @@
                 >
                 <DropDown
                   class="w-full"
-                  :paymentTerms="dataInvoice[0]?.paymentTerms"
+                  v-model:updateInvoice="updateInvoice"
                 />
               </div>
             </div>
@@ -203,92 +203,92 @@
               <Input
                 id="projectDescription"
                 property="description"
-                :dataObject="dataInvoice"
+                :dataObject="updateInvoice"
               />
             </div>
             <div class="flex items-start flex-col w-full gap-[9px]">
               <h3 class="text-[15px] text-primary font-bold">Item List</h3>
               <div class="w-full mb-[70px] sm:mb-0">
-                <table
-                  class="w-full text-left border-separate border-spacing-4"
-                >
-                  <thead>
-                    <tr class="grid-cols-3 sm:grid-cols-4">
-                      <th class="sm:col-span-1 col-span-3">
-                        <label
-                          class="text-[13px] text-light3 font-medium"
-                          for="projectDescription"
-                          >Item Name
-                        </label>
-                      </th>
-                      <th class="col-span-1">
-                        <label
-                          class="text-[13px] text-light3 font-medium"
-                          for="projectDescription"
-                          >Qty.
-                        </label>
-                      </th>
-                      <th class="col-span-1">
-                        <label
-                          class="text-[13px] text-light3 font-medium"
-                          for="projectDescription"
-                          >Price
-                        </label>
-                      </th>
-                      <th class="col-span-1">
-                        <label
-                          class="text-[13px] text-light3 font-medium"
-                          for="projectDescription"
-                          >Total
-                        </label>
-                      </th>
-                      <th></th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr
-                      v-for="(item, index) in dataInvoice[0]?.items"
+                <div class="w-full mb-[150px] sm:mb-0">
+                  <ul class="list-none p-0">
+                    <li
+                      v-for="(item, index) in updateInvoice[0]?.items"
                       :key="index"
                     >
-                      <td>
-                        <Input
-                          class="w-full"
-                          type="text"
-                          property="name"
-                          :dataObject="[item]"
-                        />
-                      </td>
-                      <td>
-                        <Input
-                          class="w-full"
-                          type="text"
-                          property="quantity"
-                          :dataObject="[item]"
-                        />
-                      </td>
-                      <td>
-                        <Input
-                          class="w-full"
-                          type="text"
-                          property="price"
-                          :dataObject="[item]"
-                        />
-                      </td>
-                      <td>
-                        <Input
-                          class="w-full"
-                          type="text"
-                          property="total"
-                          :dataObject="[item]"
-                        />
-                      </td>
-                      <td>
-                        <button class="text-light2 hover:text-danger duration-200"><i class="fa-solid fa-trash"></i></button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                      <div
+                        class="flex items-center justify-between gap-3 sm:gap-6"
+                      >
+                        <div class="flex flex-col w-[80%]">
+                          <label
+                            class="text-[13px] text-light3 font-medium"
+                            for="projectDescription"
+                          >
+                            Item Name
+                          </label>
+                          <Input
+                            class="w-full"
+                            type="text"
+                            property="name"
+                            :dataObject="[item]"
+                          />
+                        </div>
+                        <div class="flex flex-col">
+                          <label
+                            class="text-[13px] text-light3 font-medium"
+                            for="projectDescription"
+                          >
+                            Qty.
+                          </label>
+                          <Input
+                            class="w-full"
+                            type="text"
+                            property="quantity"
+                            :dataObject="[item]"
+                          />
+                        </div>
+                        <div class="flex flex-col">
+                          <label
+                            class="text-[13px] text-light3 font-medium"
+                            for="projectDescription"
+                          >
+                            Price
+                          </label>
+                          <Input
+                            class="w-full"
+                            type="text"
+                            property="price"
+                            :dataObject="[item]"
+                          />
+                        </div>
+                        <div class="flex flex-col flex-1">
+                          <label
+                            class="text-[13px] text-light3 font-medium"
+                            for="projectDescription"
+                          >
+                            Total
+                          </label>
+                          <span class="font-bold text-light4">
+                            {{
+                              (
+                                parseInt(item.quantity).toFixed(2) *
+                                parseInt(item.price).toFixed(2)
+                              ).toFixed(2)
+                            }}
+                          </span>
+                        </div>
+                        <div
+                          class="flex flex-col h-full items-center justify-center"
+                        >
+                          <button
+                            class="text-light2 hover:text-danger duration-200"
+                          >
+                            <i class="fa-solid fa-trash"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
 
                 <Button class="hover:bg-light1 text-light3 bg-[#F9FAFE]"
                   >+Add New Item</Button
@@ -302,13 +302,17 @@
           class="w-full sticky z-50 left-0 bottom-[68px] md:bottom-0 backdrop-blur-md bg-opacity-50 p-4"
         >
           <div class="w-full flex justify-between gap-2 px-4">
-            <Button @click="closeModalFunction" class="bg-danger text-white hover:bg-[#FF9797]"
+            <Button
+              @click="closeModalFunction"
+              class="bg-danger text-white hover:bg-[#FF9797]"
               >Cancel</Button
             >
             <Button
+              @click="saveChanges"
               class="bg-primary text-white hover:bg-[#9277FF]"
-              >Save all Changes</Button
             >
+              Save all Changes
+            </Button>
           </div>
         </div>
       </div>
@@ -320,19 +324,57 @@
 import {
   computed,
   defineProps,
+  ref,
+  watch,
 } from 'vue';
 
-import { dataInvoice } from '../../firebase/firebase';
+import {
+  dataInvoice,
+  updateInvoiceFunction,
+} from '../../firebase/firebase';
 import Button from '../Button/Button.vue';
 import DatePicker from '../Form/DatePicker/DatePicker.vue';
 import DropDown from '../Form/DropDown/DropDown.vue';
 import Input from '../Form/Input/Input.vue';
 import Modal from '../Modal/ModalContent.vue';
 
+const saveChanges = async () => {
+  try {
+    // Example: Update the title and amount of the invoice
+    await updateInvoiceFunction(updateInvoice.value[0].id, {
+      ...updateInvoice.value[0], // Ensure to pass the entire updated invoice data
+    });
+
+    console.log('Invoice updated successfully.');
+  } catch (error) {
+    console.error('Error updating invoice:', error);
+  }
+};
+
+// Initialize updateInvoice with a default value
+const updateInvoice = ref(dataInvoice);
+
+// Use watch to log changes in paymentTerms
+watch(
+  () => updateInvoice.value[0]?.paymentTerms,
+  (newValue) => {
+    console.log(newValue); // Log the updated value
+  }
+);
+
+// Use a computed property to handle optional chaining
+const selectedPaymentTerm = computed({
+  get: () => updateInvoice.value[0]?.paymentTerms,
+  set: (value) => {
+    // Handle the case where updateInvoice.value[0] is undefined
+    if (updateInvoice.value[0]) {
+      updateInvoice.value[0].paymentTerms = value;
+    }
+  },
+});
+
 const props = defineProps({
   isVisible: Boolean,
   closeModalFunction: Function,
 });
 </script>
-
-<style></style>

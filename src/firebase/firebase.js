@@ -117,3 +117,38 @@ export const getInvoiceById = async (invoiceId) => {
     console.error(`Error loading invoice with ID ${invoiceId}:`, error);
   }
 };
+
+export const updateInvoiceFunction = async (invoiceId, updatedData) => {
+  try {
+    console.log(
+      'Updating invoice. ID:',
+      invoiceId,
+      'Updated Data:',
+      updatedData
+    );
+
+    const firestore = getFirestore(app);
+    const invoiceDocRef = doc(firestore, 'invoices', invoiceId);
+
+    // Check if the document exists before attempting to update
+    const invoiceDocSnapshot = await getDoc(invoiceDocRef);
+
+    if (invoiceDocSnapshot.exists()) {
+      // Use setDoc to update the entire document
+      await setDoc(invoiceDocRef, {
+        ...invoiceDocSnapshot.data(), // Preserve existing data
+        ...updatedData, // Update specified fields
+      });
+
+      console.log('Invoice updated successfully.');
+    } else {
+      console.warn(
+        `Document with ID ${invoiceId} not found. No update performed.`
+      );
+      // Handle the case where the document is not found (optional)
+    }
+  } catch (error) {
+    console.error('Error updating invoice:', error);
+    throw error; // Re-throw the error to handle it in the calling component if needed
+  }
+};
