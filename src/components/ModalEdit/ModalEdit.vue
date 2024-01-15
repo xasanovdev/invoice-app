@@ -1,6 +1,6 @@
 <template>
   <Transition>
-    <ModalVue :isVisible="isVisible">
+    <Modal :isVisible="isVisible">
       <div
         class="relative lg:w-1/2 sm:w-4/5 h-screen overflow-y-auto bg-white dark:bg-bgDark"
       >
@@ -312,7 +312,7 @@
           </div>
         </div>
       </div>
-    </ModalVue>
+    </Modal>
   </Transition>
 </template>
 
@@ -327,7 +327,7 @@ import Button from '../Button/Button.vue';
 import DatePicker from '../Form/DatePicker/DatePicker.vue';
 import DropDown from '../Form/DropDown/DropDown.vue';
 import Input from '../Form/Input/Input.vue';
-import ModalVue from '../modal/Modal.vue';
+import Modal from '../Modal/ModalContent.vue';
 
 const props = defineProps({
   isVisible: Boolean,
