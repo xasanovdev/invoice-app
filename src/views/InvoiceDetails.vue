@@ -1,7 +1,8 @@
 <template>
-  <div class="w-full overflow-y-auto">
-  <ModalEdit ></ModalEdit>
-    <div class="flex flex-col max-w-[730px] mx-auto">
+  <div class="w-full">
+    <ModalEdit :isVisible="isModalVisible" :closeModalFunction="closeModal"></ModalEdit>
+
+    <div class="flex flex-col max-w-[730px] mx-auto mt-[30px]">
       <div
         @click="router.push('/')"
         class="inline-flex p-8 cursor-pointer items-center gap-6 hover:gap-7 duration-200"
@@ -56,7 +57,9 @@
             </div>
           </div>
           <div class="w-full hidden sm:flex gap-2">
-            <Button class="hover:bg-light1 text-light3 bg-[#F9FAFE]"
+            <Button
+              @click="openModal"
+              class="hover:bg-light1 text-light3 bg-[#F9FAFE]"
               >Edit</Button
             >
             <Button class="bg-danger text-white hover:bg-[#FF9797]"
@@ -184,7 +187,9 @@
           class="fixed sm:hidden w-full left-0 bottom-0 backdrop-blur-md bg-opacity-50 p-4"
         >
           <div class="w-full flex justify-between gap-2 px-4">
-            <Button class="hover:bg-light1 text-light3 bg-[#F9FAFE]"
+            <Button
+              @click="openModal"
+              class="hover:bg-light1 text-light3 bg-[#F9FAFE]"
               >Edit</Button
             >
             <Button class="bg-danger text-white hover:bg-[#FF9797]"
@@ -234,6 +239,18 @@ const route = useRoute();
 const invoiceId = route.params.id;
 
 let newStatusText = ref('');
+
+const isModalVisible = ref(false);
+
+const openModal = () => {
+  console.log('openModal');
+  isModalVisible.value = true;
+};
+
+const closeModal = () => {
+  console.log("asf");
+  isModalVisible.value = false;
+};
 
 const toggleInvoiceStatus = async () => {
   try {

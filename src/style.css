@@ -7,6 +7,8 @@
 html,
 body {
   font-family: 'League Spartan', sans-serif;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 :root {
@@ -58,4 +60,15 @@ body {
 .date {
   appearance: none;
   -webkit-appearance: none;
+}
+
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
