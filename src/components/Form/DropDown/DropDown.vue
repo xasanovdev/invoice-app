@@ -1,6 +1,8 @@
 <template>
   <!-- write me dropdown using vue -->
-  <div class="w-[240px] border border-light1 focus:border-primary dark:border-dark2">
+  <div
+    class="w-[240px] border border-light1 rounded-md focus:border-primary dark:border-dark2"
+  >
     <div class="relative w-full inline-block text-left">
       <div class="">
         <button
@@ -46,11 +48,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { defineProps, ref, watch } from 'vue';
 
+const { paymentTerms } = defineProps(['paymentTerms']);
+const paymentTermsText = ref(`Net ${paymentTerms} Days`);
 const isDropDownOpen = ref(false);
 const selectedOption = ref('Select Option');
 const options = ref(['Net 1 Day', 'Net 7 Days', 'Net 14 Days', 'Net 30 Days']);
+
+// Watch for changes in paymentTerms and update paymentTermsText accordingly
+if (typeof paymentTerms !== 'undefined') {
+  paymentTermsText.value = `Net ${paymentTerms} Days`;
+  selectedOption.value = paymentTermsText.value;
+}
 
 const selectOption = (option) => {
   selectedOption.value = option;

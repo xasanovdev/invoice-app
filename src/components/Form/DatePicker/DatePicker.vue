@@ -1,14 +1,18 @@
 <template>
-  <div class="relative w-full border border-light1 focus:border-primary dark:border-dark2">
+  <div
+    class="relative w-full border border-light1 focus:border-primary dark:border-dark2"
+  >
     <div class="relative">
       <input
         placeholder="Select a date"
         class="border date cursor-pointer w-full rounded-md font-bold dark:bg-dark1 dark:text-white outline-none border-none py-3 px-4 appearance-none"
         v-model="formattedSelectedDate"
-        @focus="openDatePicker"
+        @click="openDatePicker"
         readonly
       />
-      <i class="fa-regular pointer-events-none fa-calendar absolute text-light3 top-4 right-4"></i>
+      <i
+        class="fa-regular pointer-events-none fa-calendar absolute text-light3 top-4 right-4"
+      ></i>
     </div>
 
     <div
@@ -22,7 +26,9 @@
           ></i>
         </button>
 
-        <div class="flex items-center dark:text-light1 justify-center gap-2 font-bold">
+        <div
+          class="flex items-center dark:text-light1 justify-center gap-2 font-bold"
+        >
           <p>{{ currentMonthName }}</p>
           <p>{{ currentYear }}</p>
         </div>
@@ -53,6 +59,11 @@
 import { formatDate } from '../../../libs/useDataRedakotor';
 
 export default {
+  props: {
+    createdAt: {
+      type: String,
+    },
+  },
   data() {
     return {
       days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
@@ -103,8 +114,8 @@ export default {
         num
       ).toDateString();
       const currentFullDate = new Date().toDateString();
-      const selectedDate = this.selectedDate
-        ? new Date(this.selectedDate).toDateString()
+      const selectedDate = this.inputSelectedDate
+        ? new Date(this.inputSelectedDate).toDateString()
         : null;
 
       if (calendarFullDate === currentFullDate) {
@@ -115,11 +126,12 @@ export default {
         return 'cursor-pointer';
       }
     },
+
     updateSelectedDate() {
       this.selectedDate = this.inputSelectedDate;
     },
     openDatePicker() {
-      this.isDatePickerOpen = true;
+      this.isDatePickerOpen = !this.isDatePickerOpen;
     },
   },
   watch: {
@@ -127,16 +139,29 @@ export default {
       this.$emit('selectedDate', this.selectedDate);
     },
   },
-  computed: {
-    formattedSelectedDate() {
-      return formatDate(this.inputSelectedDate);
-    },
+  created() {
+    // Set initial value of inputSelectedDate based on createdAt prop
+    this.inputSelectedDate = this.createdAt ? formatDate(this.createdAt) : null;
 
+    // Set initial month and year for the calendar
+    const currentDate = this.inputSelectedDate
+      ? new Date(this.inputSelectedDate)
+      : new Date();
+    this.currentMonth = currentDate.getMonth();
+    this.currentYear = currentDate.getFullYear();
+  },
+  computed: {
     currentMonthName() {
       return new Date(this.currentYear, this.currentMonth).toLocaleString(
         'en-US',
         { month: 'long' }
       );
+    },
+    formattedSelectedDate() {
+      return formatDate(this.inputSelectedDate);
+    },
+    formattedCreatedAt() {
+      return formatDate(this.inputSelectedDate);
     },
   },
 };
