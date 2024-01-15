@@ -7,8 +7,6 @@
 html,
 body {
   font-family: 'League Spartan', sans-serif;
-  overflow-x: hidden;
-  overflow-y: hidden;
 }
 * {
   scrollbar-width: auto;

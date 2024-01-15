@@ -2,7 +2,7 @@
   <Transition>
     <Modal :isVisible="isVisible">
       <div
-        class="relative lg:w-1/2 sm:w-4/5 h-screen overflow-y-auto bg-white dark:bg-bgDark"
+        class="relative lg:w-2/3 sm:w-4/5 h-screen overflow-y-auto bg-white dark:bg-bgDark"
       >
         <div
           class="w-full sm:rounded-r-[20px] p-6 md:p-8 flex flex-col gap-[45px]"
@@ -22,7 +22,7 @@
           </div>
 
           <h1 class="text-light4 text-[24px] font-bold dark:text-white">
-            Edit<span class="text-light2">#</span> 1232
+            Edit<span class="text-light2">#</span> {{dataInvoice[0].title}}
           </h1>
 
           <div class="flex flex-col items-start gap-6">

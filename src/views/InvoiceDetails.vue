@@ -215,6 +215,7 @@ import {
   ref,
 } from 'vue'; // Assuming you are using Vue 3
 
+import { doc } from 'firebase/firestore';
 import { useRoute } from 'vue-router';
 
 import Button from '../components/Button/Button.vue';
@@ -243,12 +244,12 @@ let newStatusText = ref('');
 const isModalVisible = ref(false);
 
 const openModal = () => {
-  console.log('openModal');
+  document.body.classList.add('overflow-hidden');
   isModalVisible.value = true;
 };
 
 const closeModal = () => {
-  console.log("asf");
+  document.body.classList.remove('overflow-hidden');
   isModalVisible.value = false;
 };
 
