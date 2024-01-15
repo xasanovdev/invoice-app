@@ -1,6 +1,6 @@
 <template>
   <Transition>
-    <div v-if="isVisible" class="modal absolute overflow-hidden w-full h-full bg-black bg-opacity-45">
+    <div v-if="isVisible" class="modal z-40 absolute overflow-hidden w-full h-full bg-black bg-opacity-45">
       <div class="modal-content overflow-hidden">
         <slot></slot>
       </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full">
+  <div class="w-full overflow-auto">
     <ModalEdit :isVisible="isModalVisible" :closeModalFunction="closeModal"></ModalEdit>
 
     <div class="flex flex-col max-w-[730px] mx-auto mt-[30px]">
@@ -184,7 +184,7 @@
         </div>
 
         <div
-          class="fixed sm:hidden w-full left-0 bottom-0 backdrop-blur-md bg-opacity-50 p-4"
+          class="fixed sm:hidden z-20 w-full left-0 bottom-0 backdrop-blur-md bg-opacity-50 p-4"
         >
           <div class="w-full flex justify-between gap-2 px-4">
             <Button

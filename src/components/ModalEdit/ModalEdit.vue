@@ -208,7 +208,7 @@
             </div>
             <div class="flex items-start flex-col w-full gap-[9px]">
               <h3 class="text-[15px] text-primary font-bold">Item List</h3>
-              <div class="w-full mb-[150px] sm:mb-0">
+              <div class="w-full mb-[70px] sm:mb-0">
                 <table
                   class="w-full text-left border-separate border-spacing-4"
                 >
@@ -299,7 +299,7 @@
         </div>
 
         <div
-          class="w-full sticky left-0 bottom-0 backdrop-blur-md bg-opacity-50 p-4"
+          class="w-full sticky z-50 left-0 bottom-[68px] md:bottom-0 backdrop-blur-md bg-opacity-50 p-4"
         >
           <div class="w-full flex justify-between gap-2 px-4">
             <Button @click="closeModalFunction" class="bg-danger text-white hover:bg-[#FF9797]"
