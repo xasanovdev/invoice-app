@@ -284,7 +284,7 @@
                         />
                       </td>
                       <td>
-                        <button><i class="fa-solid fa-trash"></i></button>
+                        <button class="text-light2 hover:text-danger duration-200"><i class="fa-solid fa-trash"></i></button>
                       </td>
                     </tr>
                   </tbody>
