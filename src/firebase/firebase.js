@@ -5,6 +5,7 @@ import { getAnalytics } from 'firebase/analytics';
 import { initializeApp } from 'firebase/app';
 // Reference to the "invoices" collection
 import {
+  addDoc,
   collection,
   doc,
   getDoc,
@@ -152,3 +153,45 @@ export const updateInvoiceFunction = async (invoiceId, updatedData) => {
     throw error; // Re-throw the error to handle it in the calling component if needed
   }
 };
+
+// ...
+
+export const addInvoiceFunction = async (newInvoice) => {
+  try {
+    const firestore = getFirestore(app);
+    const invoicesCollection = collection(firestore, 'invoices');
+
+    // Use addDoc to add a new document to the "invoices" collection
+    const addedDocRef = await addDoc(invoicesCollection, newInvoice);
+
+    console.log('Invoice added successfully with ID:', addedDocRef.id);
+
+    // Return the ID of the added document
+    return addedDocRef.id;
+  } catch (error) {
+    console.error('Error adding invoice to Firestore:', error);
+    throw error;
+  }
+};
+
+// export const generateFirebaseId = async () => {
+//   try {
+//     const firestore = getFirestore(app);
+//     const invoicesCollection = collection(firestore, 'invoices');
+
+//     // Use addDoc to add a temporary document to the "invoices" collection
+//     const addedDocRef = await addDoc(invoicesCollection, {
+//       dummyData: 'dummy',
+//     });
+
+//     console.log('Firebase generated ID:', addedDocRef.id);
+
+//     // Delete the temporary document immediately after getting the ID
+//     await deleteDoc(doc(invoicesCollection, addedDocRef.id));
+
+//     return addedDocRef.id;
+//   } catch (error) {
+//     console.error('Error generating Firebase ID:', error);
+//     throw error;
+//   }
+// };

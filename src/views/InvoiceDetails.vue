@@ -163,7 +163,7 @@
                   >
                 </p>
                 <p class="text-[15px] text-light4 font-bold dark:text-white">
-                  &#x00A3;{{ item.total }}
+                  &#x00A3;{{ dataInvoice[0].total = item.quantity * item.price }}
                 </p>
               </li>
             </ul>

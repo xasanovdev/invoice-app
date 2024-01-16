@@ -1,4 +1,9 @@
 <template>
+  <ModalAdd
+    :isVisible="isModalVisible"
+    :closeModalFunction="closeModal"
+  ></ModalAdd>
+
   <main class="overflow-y-auto w-full h-full sm:px-8 px-6 md:mb-[105px]">
     <div class="max-w-[730px] mx-auto">
       <header>
@@ -17,7 +22,9 @@
           </div>
           <div>
             <div></div>
-            <Button class="bg-primary text-white hover:bg-secondary">New Item Button</Button>
+            <Button @click="openModal()" class="bg-primary text-white hover:bg-secondary"
+              >New Item Button</Button
+            >
           </div>
         </nav>
       </header>
@@ -28,14 +35,30 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import {
+  computed,
+  ref,
+} from 'vue';
 
 import Button from '../components/Button/Button.vue';
 import InvoiceWrapper from '../components/InvoiceWrapper.vue';
+import ModalAdd from '../components/ModalAdd/ModalAdd.vue';
 import {
   dataInvoices,
   getInvoicesData,
 } from '../firebase/firebase';
+
+const isModalVisible = ref(false);
+
+const openModal = () => {
+  document.body.classList.add('overflow-hidden');
+  isModalVisible.value = true;
+};
+
+const closeModal = () => {
+  document.body.classList.remove('overflow-hidden');
+  isModalVisible.value = false;
+};
 
 const dataInvoiceCount = computed(() => dataInvoices.value.length);
 </script>

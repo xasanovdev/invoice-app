@@ -48,7 +48,11 @@
 </template>
 
 <script setup>
-import { defineModel, ref, watch } from 'vue';
+import {
+  defineModel,
+  ref,
+  watch,
+} from 'vue';
 
 const updateInvoice = defineModel('updateInvoice');
 const isDropDownOpen = ref(false);
