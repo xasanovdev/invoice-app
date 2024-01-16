@@ -209,16 +209,17 @@
             <div class="flex items-start flex-col w-full gap-[9px]">
               <h3 class="text-[15px] text-primary font-bold">Item List</h3>
               <div class="w-full mb-[70px] sm:mb-0">
-                <div class="w-full mb-[150px] sm:mb-0">
-                  <ul class="list-none p-0">
+                <div class="w-full sm:mb-0">
+                  <ul class="list-none p-0 flex flex-wrap items-center gap-4">
                     <li
+                      class="w-full"
                       v-for="(item, index) in updateInvoice[0]?.items"
                       :key="index"
                     >
                       <div
-                        class="flex items-center justify-between gap-3 sm:gap-6"
+                        class="flex items-center sm:flex-row flex-col justify-between gap-3 sm:gap-6"
                       >
-                        <div class="flex flex-col w-[80%]">
+                        <div class="flex flex-col gap-2 w-[100%]">
                           <label
                             class="text-[13px] text-light3 font-medium"
                             for="projectDescription"
@@ -232,49 +233,53 @@
                             :dataObject="[item]"
                           />
                         </div>
-                        <div class="flex flex-col">
-                          <label
-                            class="text-[13px] text-light3 font-medium"
-                            for="projectDescription"
-                          >
-                            Qty.
-                          </label>
-                          <Input
-                            class="w-full"
-                            type="text"
-                            property="quantity"
-                            :dataObject="[item]"
-                          />
-                        </div>
-                        <div class="flex flex-col">
-                          <label
-                            class="text-[13px] text-light3 font-medium"
-                            for="projectDescription"
-                          >
-                            Price
-                          </label>
-                          <Input
-                            class="w-full"
-                            type="text"
-                            property="price"
-                            :dataObject="[item]"
-                          />
-                        </div>
-                        <div class="flex flex-col flex-1">
-                          <label
-                            class="text-[13px] text-light3 font-medium"
-                            for="projectDescription"
-                          >
-                            Total
-                          </label>
-                          <span class="font-bold text-light4">
-                            {{
-                              (
-                                parseInt(item.quantity).toFixed(2) *
-                                parseInt(item.price).toFixed(2)
-                              ).toFixed(2)
-                            }}
-                          </span>
+                        <div
+                          class="flex items-center w-full justify-between gap-3 sm:gap-6"
+                        >
+                          <div class="flex flex-col gap-2">
+                            <label
+                              class="text-[13px] text-light3 font-medium"
+                              for="projectDescription"
+                            >
+                              Qty.
+                            </label>
+                            <Input
+                              class="w-full"
+                              type="text"
+                              property="quantity"
+                              :dataObject="[item]"
+                            />
+                          </div>
+                          <div class="flex flex-col gap-2">
+                            <label
+                              class="text-[13px] text-light3 font-medium"
+                              for="projectDescription"
+                            >
+                              Price
+                            </label>
+                            <Input
+                              class="w-full"
+                              type="text"
+                              property="price"
+                              :dataObject="[item]"
+                            />
+                          </div>
+                          <div class="flex flex-col gap-2">
+                            <label
+                              class="text-[13px] text-light3 font-medium"
+                              for="projectDescription"
+                            >
+                              Total
+                            </label>
+                            <span class="font-bold text-light4">
+                              {{
+                                (
+                                  parseInt(item.quantity).toFixed(2) *
+                                  parseInt(item.price).toFixed(2)
+                                ).toFixed(2)
+                              }}
+                            </span>
+                          </div>
                         </div>
                         <div
                           class="flex flex-col h-full items-center justify-center"
@@ -290,7 +295,8 @@
                   </ul>
                 </div>
 
-                <Button class="hover:bg-light1 text-light3 bg-[#F9FAFE]"
+                <Button
+                  class="hover:bg-light1 text-light3 mt-4 mb-[80px] bg-[#F9FAFE]"
                   >+Add New Item</Button
                 >
               </div>
@@ -299,7 +305,7 @@
         </div>
 
         <div
-          class="w-full sticky z-50 left-0 bottom-[68px] md:bottom-0 backdrop-blur-md bg-opacity-50 p-4"
+          class="w-full fixed sm:sticky z-50 left-0 bottom-[0px] backdrop-blur-md bg-opacity-50 p-4"
         >
           <div class="w-full flex justify-between gap-2 px-4">
             <Button
@@ -346,6 +352,9 @@ const saveChanges = async () => {
     });
 
     console.log('Invoice updated successfully.');
+
+    // Close the modal after updating the invoice
+    props.closeModalFunction();
   } catch (error) {
     console.error('Error updating invoice:', error);
   }

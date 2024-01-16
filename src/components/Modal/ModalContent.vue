@@ -14,7 +14,6 @@ import { ref } from 'vue';
 const props = defineProps({
   "isVisible": Boolean,
 });
-console.log(props);
 </script>
 
 <style>
