@@ -217,6 +217,7 @@
                       v-for="(item, index) in updateInvoice[0]?.items"
                       :key="index"
                     >
+                    {{item}}
                       <div
                         class="flex items-center sm:flex-row flex-col justify-between gap-3 sm:gap-6"
                       >
@@ -286,6 +287,7 @@
                           class="flex flex-col h-full items-center justify-center"
                         >
                           <button
+                            @click="deleteItem(index)"
                             class="text-light2 hover:text-danger duration-200"
                           >
                             <i class="fa-solid fa-trash"></i>
@@ -297,6 +299,7 @@
                 </div>
 
                 <Button
+                  @click="addItemFunction"
                   class="hover:bg-light1 text-light3 mt-4 mb-[80px] bg-[#F9FAFE]"
                   >+Add New Item</Button
                 >
@@ -316,9 +319,11 @@
             >
             <Button
               @click="saveChanges"
-              :class="['bg-primary text-white hover:bg-[#9277FF]', { 'opacity-50': isLoading }]"
+              :class="[
+                'bg-primary text-white hover:bg-[#9277FF]',
+                { 'opacity-50': isLoading },
+              ]"
             >
-              
               <span v-if="isLoading">Saving...</span>
               <span v-else>Save all Changes</span>
             </Button>
@@ -348,6 +353,11 @@ import DropDown from '../Form/DropDown/DropDown.vue';
 import Input from '../Form/Input/Input.vue';
 import Modal from '../Modal/ModalContent.vue';
 
+const props = defineProps({
+  isVisible: Boolean,
+  closeModalFunction: Function,
+});
+
 let isLoading = ref(false);
 const saveChanges = async () => {
   try {
@@ -369,34 +379,17 @@ const saveChanges = async () => {
 // Initialize updateInvoice with a default value
 const updateInvoice = ref(dataInvoice);
 
-// Use watch to log changes in paymentTerms
-watch(
-  () => updateInvoice.value[0]?.paymentTerms,
-  (newValue) => {
-    console.log(newValue); // Log the updated value
-  }
-);
+const addItemFunction = () => {
+  // Push a new item with default values directly to the original array
+  updateInvoice.value[0].items.push({
+    name: '',
+    quantity: '',
+    price: '',
+    total: '',
+  });
+};
 
-// Use a computed property to handle optional chaining
-const selectedPaymentTerm = computed({
-  get: () => updateInvoice.value[0]?.paymentTerms,
-  set: (value) => {
-    // Handle the case where updateInvoice.value[0] is undefined
-    if (updateInvoice.value[0]) {
-      updateInvoice.value[0].paymentTerms = value;
-    }
-  },
-});
-
-const loading = ref(false);
-onMounted(async () => {
-  loading.value = true;
-  await getInvoiceById(invoiceId);
-  loading.value = false;
-});
-
-const props = defineProps({
-  isVisible: Boolean,
-  closeModalFunction: Function,
-});
+const deleteItem = (index) => {
+  updateInvoice.value[0].items.splice(index, 1);
+};
 </script>
