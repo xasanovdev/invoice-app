@@ -20,7 +20,7 @@
           `${formatDate(invoice.paymentDue)}`
         }}</span>
         <span class="text-light4 dark:text-white text-[15px] font-bold">{{
-          `£ ${invoice.total}`
+          `£ ${parseFloat(invoice.total).toFixed(2)}`
         }}</span>
       </div>
 

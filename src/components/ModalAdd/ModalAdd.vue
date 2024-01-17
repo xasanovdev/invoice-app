@@ -1,7 +1,7 @@
 <template>
   <Transition>
     <Modal :isVisible="isVisible">
-      <div
+      <!-- <div
         class="relative lg:w-2/3 sm:w-4/5 h-screen overflow-y-auto bg-white dark:bg-bgDark"
       >
         <div
@@ -179,7 +179,7 @@
                 </label>
                 <DatePicker
                   class="w-full"
-                  :createdAt="newInvoice[0]?.createdAt"
+                  v-model:createdAt="newInvoice[0]?.createdAt"
                 />
               </div>
               <div class="flex items-start w-full sm:w-1/2 flex-col gap-[9px]">
@@ -312,7 +312,7 @@
             </div>
           </div>
 
-          <!-- Add other sections for Bill To, Invoice Date, Payment Terms, Project Description, and Item List using the structure in the EditInvoiceModal -->
+          Add other sections for Bill To, Invoice Date, Payment Terms, Project Description, and Item List using the structure in the EditInvoiceModal
         </div>
 
         <div
@@ -332,7 +332,7 @@
             </Button>
           </div>
         </div>
-      </div>
+      </div> -->
     </Modal>
   </Transition>
 </template>

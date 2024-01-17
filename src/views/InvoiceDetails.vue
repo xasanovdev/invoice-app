@@ -146,7 +146,6 @@
 
           <div class="mt-9 flex flex-col rounded-lg overflow-hidden">
             <ul class="flex flex-col gap-6 p-6 bg-bgLight dark:bg-dark2">
-              <!-- {name: 'Web Design', quantity: 1, price: 6155.91, total: 6155.91} -->
               <li
                 class="flex items-center justify-between"
                 v-for="(item, index) in dataInvoice[0].items"
@@ -163,7 +162,7 @@
                   >
                 </p>
                 <p class="text-[15px] text-light4 font-bold dark:text-white">
-                  &#x00A3;{{ dataInvoice[0].total = item.quantity * item.price }}
+                  &#x00A3;{{ dataInvoice[0].total = parseFloat(item.quantity * item.price).toFixed(2) }}
                 </p>
               </li>
             </ul>
@@ -177,7 +176,7 @@
               <p
                 class="text-light3 sm:text-left text-[24px] font-bold text-white"
               >
-                &#x00A3;{{ dataInvoice[0].total }}
+                &#x00A3;{{ parseFloat(dataInvoice[0].total).toFixed(2) }}
               </p>
             </div>
           </div>

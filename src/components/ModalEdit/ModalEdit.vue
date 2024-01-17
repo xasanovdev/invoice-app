@@ -179,7 +179,8 @@
                 </label>
                 <DatePicker
                   class="w-full"
-                  :createdAt="updateInvoice[0]?.createdAt"
+                  v-model:createdAt="updateInvoice[0].createdAt"
+                  onUpdate:createdAt="($event) => (newInvoice[0]?.createdAt = $event)"
                 />
               </div>
               <div class="flex items-start w-full sm:w-1/2 flex-col gap-[9px]">
@@ -315,9 +316,11 @@
             >
             <Button
               @click="saveChanges"
-              class="bg-primary text-white hover:bg-[#9277FF]"
+              :class="['bg-primary text-white hover:bg-[#9277FF]', { 'opacity-50': isLoading }]"
             >
-              Save all Changes
+              
+              <span v-if="isLoading">Saving...</span>
+              <span v-else>Save all Changes</span>
             </Button>
           </div>
         </div>
@@ -330,6 +333,7 @@
 import {
   computed,
   defineProps,
+  onMounted,
   ref,
   watch,
 } from 'vue';
@@ -344,13 +348,15 @@ import DropDown from '../Form/DropDown/DropDown.vue';
 import Input from '../Form/Input/Input.vue';
 import Modal from '../Modal/ModalContent.vue';
 
+let isLoading = ref(false);
 const saveChanges = async () => {
   try {
     // Example: Update the title and amount of the invoice
+    isLoading.value = true;
     await updateInvoiceFunction(updateInvoice.value[0].id, {
       ...updateInvoice.value[0], // Ensure to pass the entire updated invoice data
     });
-
+    isLoading.value = false;
     console.log('Invoice updated successfully.');
 
     // Close the modal after updating the invoice
@@ -380,6 +386,13 @@ const selectedPaymentTerm = computed({
       updateInvoice.value[0].paymentTerms = value;
     }
   },
+});
+
+const loading = ref(false);
+onMounted(async () => {
+  loading.value = true;
+  await getInvoiceById(invoiceId);
+  loading.value = false;
 });
 
 const props = defineProps({
