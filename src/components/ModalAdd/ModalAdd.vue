@@ -344,12 +344,6 @@ import {
 } from 'vue';
 
 import {
-  addDoc,
-  collection,
-  getFirestore,
-} from 'firebase/firestore';
-
-import {
   addInvoiceFunction,
   dataInvoices,
 } from '../../firebase/firebase'; // Importing dataInvoices from Firebase
