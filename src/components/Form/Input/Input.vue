@@ -1,57 +1,38 @@
+<!-- Input.vue -->
 <template>
   <input
-    type="text"
-    :value="getPropertyValue()"
-    @input="updateValue"
     class="py-3 px-4 w-full rounded-md duration-200 dark:bg-dark1 outline-none font-bold border border-light1 hover:border-indigo-400 dark:border-dark2 dark:hover:border-indigo-400 text-light4 dark:text-white"
+    :value="modelValue"
+    @input="updateModelValue"
+    :type="type"
+    :id="id"
+    :placeholder="placeholder"
   />
 </template>
 
 <script setup>
-import {
-  defineProps,
-  onMounted,
-  ref,
-} from 'vue';
+import { defineEmits, defineProps, ref } from 'vue';
 
-const props = defineProps(['property', 'dataObject']);
+let { modelValue, type, placeholder, id } = defineProps([
+  'modelValue',
+  'type',
+  'id',
+  'placeholder',
+]);
+const emit = defineEmits();
 
-const getPropertyValue = () => {
-  const properties = props.property ? props.property.split('.') : [];
-  let value = props.dataObject?.[0];
+const updateModelValue = (event) => {
+  if (typeof modelValue === 'string') {
+    console.log(modelValue);
+    const refModelValue = ref(modelValue);
 
-  for (const prop of properties) {
-    value = value?.[prop];
+    emit('update:modelValue', refModelValue.value);
+
+    modelValue = refModelValue;
   }
 
-  return value;
+  modelValue.value = event.target.value;
+
+  emit('update:modelValue', modelValue.value);
 };
-
-const updateValue = (event) => {
-  if (props.dataObject && props.dataObject[0]) {
-    const properties = props.property ? props.property.split('.') : [];
-    let nestedObject = props.dataObject[0];
-
-    for (let i = 0; i < properties.length - 1; i++) {
-      nestedObject = nestedObject?.[properties[i]];
-
-      if (!nestedObject) {
-        console.warn(
-          `Nested object is null or undefined for property ${props.property}`
-        );
-        return;
-      }
-    }
-
-    nestedObject[properties[properties.length - 1]] = event.target.value;
-  } else {
-    console.warn(
-      `dataObject or dataObject[0] is null or undefined for property ${props.property}`
-    );
-  }
-};
-
-// Log initial props and property value on component mount
 </script>
-
-<style></style>

@@ -35,8 +35,9 @@
               </label>
               <Input
                 id="addressBillFrom"
-                property="senderAddress.street"
-                :dataObject="updateInvoice"
+                type="text"
+                placeholder="salom"
+                v-model="updateInvoice[0].senderAddress.street"
               />
             </div>
             <div class="w-full grid sm:grid-cols-3 grid-cols-2 gap-6">
@@ -51,7 +52,8 @@
                 <Input
                   id="cityBillFrom"
                   property="senderAddress.city"
-                  :dataObject="updateInvoice"
+                  placeholder="salom"
+                  v-model="updateInvoice[0].senderAddress.city"
                 />
               </div>
               <div
@@ -64,8 +66,9 @@
                 >
                 <Input
                   id="costCodeBillFrom"
-                  property="senderAddress.zipcode"
-                  :dataObject="updateInvoice"
+                  type="text"
+                  placeholder="salom"
+                  v-model="updateInvoice[0].senderAddress.zipcode"
                 />
               </div>
               <div
@@ -78,8 +81,9 @@
                 </label>
                 <Input
                   id="countryBillFrom"
-                  property="senderAddress.country"
-                  :dataObject="updateInvoice"
+                  type="text"
+                  placeholder="salom"
+                  v-model="updateInvoice[0].senderAddress.country"
                 />
               </div>
             </div>
@@ -95,8 +99,9 @@
               >
               <Input
                 id="clientName"
-                property="clientName"
-                :dataObject="updateInvoice"
+                type="text"
+                placeholder="salom"
+                v-model="updateInvoice[0].clientName"
               />
             </div>
             <div class="flex items-start flex-col w-full gap-[9px]">
@@ -107,8 +112,9 @@
               >
               <Input
                 id="clientEmail"
-                property="clientEmail"
-                :dataObject="updateInvoice"
+                type="text"
+                placeholder="salom"
+                v-model="updateInvoice[0].clientEmail"
               />
             </div>
             <div class="flex items-start flex-col w-full gap-[9px]">
@@ -119,8 +125,9 @@
               >
               <Input
                 id="addressBillTo"
-                property="clientAddress.street"
-                :dataObject="updateInvoice"
+                type="text"
+                placeholder="salom"
+                v-model="updateInvoice[0].clientAddress.street"
               />
             </div>
             <div class="w-full grid sm:grid-cols-3 grid-cols-2 gap-6">
@@ -134,8 +141,9 @@
                 >
                 <Input
                   id="cityBillTo"
-                  property="clientAddress.city"
-                  :dataObject="updateInvoice"
+                  type="text"
+                  placeholder="salom"
+                  v-model="updateInvoice[0].clientAddress.city"
                 />
               </div>
               <div
@@ -147,9 +155,10 @@
                   >Post Code</label
                 >
                 <Input
+                  type="text"
+                  placeholder="salom"
+                  v-model="updateInvoice[0].clientAddress.zipcode"
                   id="postCodeBillTo"
-                  property="clientAddress.zipcode"
-                  :dataObject="updateInvoice"
                 />
               </div>
               <div
@@ -161,9 +170,10 @@
                   >Country
                 </label>
                 <Input
+                  type="text"
+                  placeholder="salom"
+                  v-model="updateInvoice[0].clientAddress.country"
                   id="countryBillTo"
-                  property="clientAddress.country"
-                  :dataObject="updateInvoice"
                 />
               </div>
             </div>
@@ -202,9 +212,10 @@
                 >Project Description
               </label>
               <Input
+                type="text"
+                placeholder="salom"
+                v-model="updateInvoice[0].description"
                 id="projectDescription"
-                property="description"
-                :dataObject="updateInvoice"
               />
             </div>
             <div class="flex items-start flex-col w-full gap-[9px]">
@@ -217,22 +228,22 @@
                       v-for="(item, index) in updateInvoice[0]?.items"
                       :key="index"
                     >
-                    {{item}}
+                      {{ item }}
                       <div
                         class="flex items-center sm:flex-row flex-col justify-between gap-3 sm:gap-6"
                       >
                         <div class="flex flex-col gap-2 w-[100%]">
                           <label
                             class="text-[13px] text-light3 font-medium"
-                            for="projectDescription"
+                            for="invoiceListItemName"
                           >
                             Item Name
                           </label>
                           <Input
-                            class="w-full"
                             type="text"
-                            property="name"
-                            :dataObject="[item]"
+                            placeholder="salom"
+                            v-model="item.name"
+                            id="invoiceListItemName"
                           />
                         </div>
                         <div
@@ -241,35 +252,33 @@
                           <div class="flex flex-col gap-2">
                             <label
                               class="text-[13px] text-light3 font-medium"
-                              for="projectDescription"
+                              for="invoiceListItemQuantity"
                             >
                               Qty.
                             </label>
                             <Input
-                              class="w-full"
                               type="text"
-                              property="quantity"
-                              :dataObject="[item]"
+                              id="invoiceListItemQuantity"
+                              v-model="item.quantity"
                             />
                           </div>
                           <div class="flex flex-col gap-2">
                             <label
                               class="text-[13px] text-light3 font-medium"
-                              for="projectDescription"
+                              for="invoiceListItemPrice"
                             >
                               Price
                             </label>
                             <Input
-                              class="w-full"
+                              id="invoiceListItemPrice"
                               type="text"
-                              property="price"
-                              :dataObject="[item]"
+                              v-model="item.price"
                             />
                           </div>
                           <div class="flex flex-col gap-2">
                             <label
                               class="text-[13px] text-light3 font-medium"
-                              for="projectDescription"
+                              for="invoiceListItemTotal"
                             >
                               Total
                             </label>
