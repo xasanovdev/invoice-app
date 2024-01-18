@@ -368,28 +368,25 @@ const props = defineProps({
 });
 
 let isLoading = ref(false);
+
+const updateInvoice = ref(dataInvoice);
+
 const saveChanges = async () => {
   try {
-    // Example: Update the title and amount of the invoice
     isLoading.value = true;
     await updateInvoiceFunction(updateInvoice.value[0].id, {
-      ...updateInvoice.value[0], // Ensure to pass the entire updated invoice data
+      ...updateInvoice.value[0],
     });
     isLoading.value = false;
     console.log('Invoice updated successfully.');
 
-    // Close the modal after updating the invoice
     props.closeModalFunction();
   } catch (error) {
     console.error('Error updating invoice:', error);
   }
 };
 
-// Initialize updateInvoice with a default value
-const updateInvoice = ref(dataInvoice);
-
 const addItemFunction = () => {
-  // Push a new item with default values directly to the original array
   updateInvoice.value[0].items.push({
     name: '',
     quantity: '',

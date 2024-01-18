@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { formatDate } from '../../../libs/useDataRedakotor';
+import { formatDate } from '../../../utils/useDataRedakotor';
 
 export default {
   props: {

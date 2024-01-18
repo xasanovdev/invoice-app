@@ -1,6 +1,9 @@
 <template>
   <div class="w-full overflow-auto">
-    <ModalEdit :isVisible="isModalVisible" :closeModalFunction="closeModal"></ModalEdit>
+    <ModalEdit
+      :isVisible="isModalVisible"
+      :closeModalFunction="closeModal"
+    ></ModalEdit>
 
     <div class="flex flex-col max-w-[730px] mx-auto mt-[30px]">
       <div
@@ -162,7 +165,11 @@
                   >
                 </p>
                 <p class="text-[15px] text-light4 font-bold dark:text-white">
-                  &#x00A3;{{ dataInvoice[0].total = parseFloat(item.quantity * item.price).toFixed(2) }}
+                  &#x00A3;{{
+                    (dataInvoice[0].total = parseFloat(
+                      item.quantity * item.price
+                    ).toFixed(2))
+                  }}
                 </p>
               </li>
             </ul>
@@ -226,12 +233,12 @@ import {
   getInvoicesData,
   updateInvoiceStatus,
 } from '../firebase/firebase';
-import { formatDate } from '../libs/useDataRedakotor';
+import router from '../routers';
+import { formatDate } from '../utils/useDataRedakotor';
 import {
   getStatusBgColorClass,
   getStatusTextColorClass,
-} from '../libs/useStatusColors';
-import router from '../routers';
+} from '../utils/useStatusColors';
 
 const isLoading = ref(true);
 

@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { useDarkMode } from '../libs/useDarkMode';
+import { useDarkMode } from '../composables/useDarkMode';
 import router from '../routers';
 import DarkModeToggle from './darkMode/DarkModeToggle.vue';
 
