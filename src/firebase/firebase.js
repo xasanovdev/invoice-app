@@ -50,7 +50,7 @@ export const getInvoicesData = async () => {
     querySnapshot.forEach((doc) => {
       dataInvoices.value.push(doc.data());
     });
-
+    console.log(dataInvoices.value);
     console.log('Invoices data loaded successfully.');
   } catch (error) {
     console.error('Error loading invoices data:', error);

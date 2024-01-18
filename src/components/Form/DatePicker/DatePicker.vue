@@ -103,7 +103,7 @@ export default {
         this.currentYear,
         this.currentMonth,
         num
-      ).toLocaleDateString('en-US');
+      ).toLocaleDateString('en-US'); // Consider using your formatDate function here
       this.inputSelectedDate = this.selectedDate;
       this.isDatePickerOpen = false;
     },
@@ -140,8 +140,10 @@ export default {
     },
   },
   created() {
-    // Set initial value of inputSelectedDate based on createdAt prop
-    this.inputSelectedDate = this.createdAt ? formatDate(this.createdAt) : null;
+    if (this.createdAt) {
+      const parsedDate = formatDate(this.createdAt);
+      this.inputSelectedDate = parsedDate ? parsedDate : null;
+    }
 
     // Set initial month and year for the calendar
     const currentDate = this.inputSelectedDate

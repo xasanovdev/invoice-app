@@ -20,7 +20,11 @@
           `${formatDate(invoice.paymentDue)}`
         }}</span>
         <span class="text-light4 dark:text-white text-[15px] font-bold">{{
-          `£ ${parseFloat(invoice.total).toFixed(2)}`
+          `£ ${
+            isNaN(parseFloat(invoice.total))
+              ? '0.00'
+              : parseFloat(invoice.total).toFixed(2)
+          }`
         }}</span>
       </div>
 

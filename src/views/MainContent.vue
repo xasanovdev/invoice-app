@@ -1,8 +1,8 @@
 <template>
-  <!-- <ModalAdd
+  <ModalAdd
     :isVisible="isModalVisible"
     :closeModalFunction="closeModal"
-  ></ModalAdd> -->
+  ></ModalAdd>
 
   <main class="overflow-y-auto w-full h-full sm:px-8 px-6 md:mb-[105px]">
     <div class="max-w-[730px] mx-auto">
@@ -51,6 +51,7 @@ import {
 const isModalVisible = ref(false);
 
 const openModal = () => {
+  console.log('openModal');
   document.body.classList.add('overflow-hidden');
   isModalVisible.value = true;
 };

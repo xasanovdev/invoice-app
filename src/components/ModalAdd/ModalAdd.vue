@@ -1,7 +1,7 @@
 <template>
   <Transition>
     <Modal :isVisible="isVisible">
-      <!-- <div
+      <div
         class="relative lg:w-2/3 sm:w-4/5 h-screen overflow-y-auto bg-white dark:bg-bgDark"
       >
         <div
@@ -35,8 +35,9 @@
               </label>
               <Input
                 id="addressBillFrom"
-                property="senderAddress.street"
-                :dataObject="newInvoice"
+                type="text"
+                placeholder="salom"
+                v-model="newInvoice.senderAddress.street"
               />
             </div>
             <div class="w-full grid sm:grid-cols-3 grid-cols-2 gap-6">
@@ -51,7 +52,8 @@
                 <Input
                   id="cityBillFrom"
                   property="senderAddress.city"
-                  :dataObject="newInvoice"
+                  placeholder="salom"
+                  v-model="newInvoice.senderAddress.city"
                 />
               </div>
               <div
@@ -64,8 +66,9 @@
                 >
                 <Input
                   id="costCodeBillFrom"
-                  property="senderAddress.zipcode"
-                  :dataObject="newInvoice"
+                  type="text"
+                  placeholder="salom"
+                  v-model="newInvoice.senderAddress.zipcode"
                 />
               </div>
               <div
@@ -78,8 +81,9 @@
                 </label>
                 <Input
                   id="countryBillFrom"
-                  property="senderAddress.country"
-                  :dataObject="newInvoice"
+                  type="text"
+                  placeholder="salom"
+                  v-model="newInvoice.senderAddress.country"
                 />
               </div>
             </div>
@@ -95,8 +99,9 @@
               >
               <Input
                 id="clientName"
-                property="clientName"
-                :dataObject="newInvoice"
+                type="text"
+                placeholder="salom"
+                v-model="newInvoice.clientName"
               />
             </div>
             <div class="flex items-start flex-col w-full gap-[9px]">
@@ -107,8 +112,9 @@
               >
               <Input
                 id="clientEmail"
-                property="clientEmail"
-                :dataObject="newInvoice"
+                type="text"
+                placeholder="salom"
+                v-model="newInvoice.clientEmail"
               />
             </div>
             <div class="flex items-start flex-col w-full gap-[9px]">
@@ -119,8 +125,9 @@
               >
               <Input
                 id="addressBillTo"
-                property="clientAddress.street"
-                :dataObject="newInvoice"
+                type="text"
+                placeholder="salom"
+                v-model="newInvoice.clientAddress.street"
               />
             </div>
             <div class="w-full grid sm:grid-cols-3 grid-cols-2 gap-6">
@@ -134,8 +141,9 @@
                 >
                 <Input
                   id="cityBillTo"
-                  property="clientAddress.city"
-                  :dataObject="newInvoice"
+                  type="text"
+                  placeholder="salom"
+                  v-model="newInvoice.clientAddress.city"
                 />
               </div>
               <div
@@ -147,9 +155,10 @@
                   >Post Code</label
                 >
                 <Input
+                  type="text"
+                  placeholder="salom"
+                  v-model="newInvoice.clientAddress.zipcode"
                   id="postCodeBillTo"
-                  property="clientAddress.zipcode"
-                  :dataObject="newInvoice"
                 />
               </div>
               <div
@@ -161,16 +170,17 @@
                   >Country
                 </label>
                 <Input
+                  type="text"
+                  placeholder="salom"
+                  v-model="newInvoice.clientAddress.country"
                   id="countryBillTo"
-                  property="clientAddress.country"
-                  :dataObject="newInvoice"
                 />
               </div>
             </div>
           </div>
 
           <div class="flex flex-col w-full items-start gap-6">
-            <div class="flex items-center sm:flex-row flex-col w-full gap-6">
+            <!-- <div class="flex items-center sm:flex-row flex-col w-full gap-6">
               <div class="flex items-start w-full sm:w-1/2 flex-col gap-[9px]">
                 <label
                   class="text-[13px] text-light3 font-medium"
@@ -179,7 +189,8 @@
                 </label>
                 <DatePicker
                   class="w-full"
-                  v-model:createdAt="newInvoice[0]?.createdAt"
+                  v-model:createdAt="newInvoice.createdAt"
+                  onUpdate:createdAt="($event) => (newInvoice?.createdAt = $event)"
                 />
               </div>
               <div class="flex items-start w-full sm:w-1/2 flex-col gap-[9px]">
@@ -188,9 +199,10 @@
                   for="countryBillTo"
                   >Payment Terms</label
                 >
+
                 <DropDown class="w-full" v-model:newInvoice="newInvoice" />
               </div>
-            </div>
+            </div> -->
             <div class="flex items-start flex-col w-full gap-[9px]">
               <label
                 class="text-[13px] text-light3 font-medium"
@@ -198,9 +210,10 @@
                 >Project Description
               </label>
               <Input
+                type="text"
+                placeholder="salom"
+                v-model="newInvoice.description"
                 id="projectDescription"
-                property="description"
-                :dataObject="newInvoice"
               />
             </div>
             <div class="flex items-start flex-col w-full gap-[9px]">
@@ -210,36 +223,41 @@
                 >Project Title
               </label>
               <Input
+                type="text"
+                placeholder="salom"
+                v-model="newInvoice.title"
                 id="projectTitle"
-                property="title"
-                :dataObject="newInvoice"
               />
             </div>
             <div class="flex items-start flex-col w-full gap-[9px]">
               <h3 class="text-[15px] text-primary font-bold">Item List</h3>
               <div class="w-full mb-[70px] sm:mb-0">
                 <div class="w-full sm:mb-0">
-                  <ul class="list-none p-0 flex flex-wrap items-center gap-4">
+                  <ul
+                    v-if="newInvoice.items.length > 0"
+                    class="list-none p-0 flex flex-wrap items-center gap-4"
+                  >
                     <li
                       class="w-full"
-                      v-for="(item, index) in newInvoice[0]?.items"
+                      v-for="(item, index) in newInvoice?.items"
                       :key="index"
                     >
+                      {{ item }}
                       <div
                         class="flex items-center sm:flex-row flex-col justify-between gap-3 sm:gap-6"
                       >
                         <div class="flex flex-col gap-2 w-[100%]">
                           <label
                             class="text-[13px] text-light3 font-medium"
-                            for="projectDescription"
+                            for="invoiceListItemName"
                           >
                             Item Name
                           </label>
                           <Input
-                            class="w-full"
                             type="text"
-                            property="name"
-                            :dataObject="[item]"
+                            placeholder="salom"
+                            v-model="item.name"
+                            id="invoiceListItemName"
                           />
                         </div>
                         <div
@@ -248,43 +266,42 @@
                           <div class="flex flex-col gap-2">
                             <label
                               class="text-[13px] text-light3 font-medium"
-                              for="projectDescription"
+                              for="invoiceListItemQuantity"
                             >
                               Qty.
                             </label>
                             <Input
-                              class="w-full"
                               type="text"
-                              property="quantity"
-                              :dataObject="[item]"
+                              id="invoiceListItemQuantity"
+                              v-model="item.quantity"
                             />
                           </div>
                           <div class="flex flex-col gap-2">
                             <label
                               class="text-[13px] text-light3 font-medium"
-                              for="projectDescription"
+                              for="invoiceListItemPrice"
                             >
                               Price
                             </label>
                             <Input
-                              class="w-full"
+                              id="invoiceListItemPrice"
                               type="text"
-                              property="price"
-                              :dataObject="[item]"
+                              v-model="item.price"
                             />
                           </div>
                           <div class="flex flex-col gap-2">
                             <label
                               class="text-[13px] text-light3 font-medium"
-                              for="projectDescription"
+                              for="invoiceListItemTotal"
                             >
                               Total
                             </label>
                             <span class="font-bold text-light4">
                               {{
-                                (
-                                  parseInt(item.quantity).toFixed(2) *
-                                  parseInt(item.price).toFixed(2)
+                                (isNaN(parseFloat(invoice.total))
+                                  ? '0.00'
+                                  : parseInt(item.quantity).toFixed(2) *
+                                    parseInt(item.price).toFixed(2)
                                 ).toFixed(2)
                               }}
                             </span>
@@ -294,6 +311,7 @@
                           class="flex flex-col h-full items-center justify-center"
                         >
                           <button
+                            @click="deleteItem(index)"
                             class="text-light2 hover:text-danger duration-200"
                           >
                             <i class="fa-solid fa-trash"></i>
@@ -302,17 +320,17 @@
                       </div>
                     </li>
                   </ul>
+                  <p v-else class="text-dark1">No items added yet.</p>
                 </div>
 
                 <Button
+                  @click="addItemFunction"
                   class="hover:bg-light1 text-light3 mt-4 mb-[80px] bg-[#F9FAFE]"
                   >+Add New Item</Button
                 >
               </div>
             </div>
           </div>
-
-          Add other sections for Bill To, Invoice Date, Payment Terms, Project Description, and Item List using the structure in the EditInvoiceModal
         </div>
 
         <div
@@ -332,7 +350,7 @@
             </Button>
           </div>
         </div>
-      </div> -->
+      </div>
     </Modal>
   </Transition>
 </template>
@@ -368,6 +386,11 @@ function generateRandomId() {
 
 const saveChanges = async () => {
   try {
+    newInvoice.value.total = newInvoice.value.items.reduce(
+      (acc, item) => acc + parseFloat(item.total),
+      0
+    );
+
     const newInvoiceValue = { ...newInvoice.value }; // Create a copy to avoid modifying the original object
 
     // Example: Create a new invoice
@@ -406,6 +429,7 @@ const newInvoice = ref({
   paymentTerms: '',
   description: '',
   items: [],
+  total: '',
   status: 'pending',
 });
 
@@ -414,5 +438,34 @@ const props = defineProps({
   closeModalFunction: Function,
 });
 
-console.log(newInvoice.value);
+const addItemFunction = () => {
+  const newItem = {
+    name: '',
+    quantity: '',
+    price: '',
+    total: '',
+  };
+
+  // Push the new item to the items array
+  newInvoice.value.items.push(newItem);
+
+  // Recalculate totals
+  recalculateTotals();
+};
+
+// Assuming you have a function to recalculate totals
+const recalculateTotals = () => {
+  newInvoice.value.items.forEach((item) => {
+    // Convert quantity and price to numbers (you might want to validate them)
+    const quantity = parseFloat(item.quantity) || 0;
+    const price = parseFloat(item.price) || 0;
+
+    // Calculate total and update the item
+    item.total = (quantity * price).toFixed(2);
+  });
+};
+
+const deleteItem = (index) => {
+  newInvoice.value[0].items.splice(index, 1);
+};
 </script>
