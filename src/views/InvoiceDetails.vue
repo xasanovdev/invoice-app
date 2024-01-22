@@ -35,7 +35,9 @@
             class="w-full flex items-center gap-5 justify-between md:justify-start"
           >
             <p class="text-light2 dark:text-light1 text-[13px]">Status</p>
+            <div v-if="markAsPaidLoading" class="badge-loading"></div>
             <div
+              v-else
               :class="[
                 'w-[103px] py-[14px] rounded-md flex items-center justify-center gap-2 bg-opacity-10',
                 getStatusBgColorClass(dataInvoice[0].status),
@@ -72,9 +74,12 @@
 
             <Button
               @click="toggleInvoiceStatus"
+              :class="{ 'opacity-40': markAsPaidLoading }"
               class="bg-primary text-white hover:bg-[#9277FF]"
-              >Mark as {{ currentStatusText }}</Button
             >
+              <span v-if="markAsPaidLoading">Loading...</span>
+              <span v-else>Mark as {{ currentStatusText }}</span>
+            </Button>
           </div>
         </div>
 
@@ -207,9 +212,12 @@
 
             <Button
               @click="toggleInvoiceStatus"
+              :class="{ 'opacity-40': markAsPaidLoading }"
               class="bg-primary text-white hover:bg-[#9277FF]"
-              >Mark as {{ currentStatusText }}</Button
             >
+              <span v-if="markAsPaidLoading">Loading...</span>
+              <span v-else>Mark as {{ currentStatusText }}</span>
+            </Button>
           </div>
         </div>
       </div>
@@ -218,11 +226,7 @@
 </template>
 
 <script setup>
-import {
-  computed,
-  onMounted,
-  ref,
-} from 'vue'; // Assuming you are using Vue 3
+import { computed, onMounted, ref } from 'vue'; // Assuming you are using Vue 3
 
 import { doc } from 'firebase/firestore';
 import { useRoute } from 'vue-router';
@@ -245,6 +249,7 @@ import {
 } from '../utils/useStatusColors';
 
 const isLoading = ref(true);
+const markAsPaidLoading = ref(false);
 
 const route = useRoute();
 const invoiceId = route.params.id;
@@ -276,12 +281,10 @@ const toggleInvoiceStatus = async () => {
       const newStatus = currentStatus === 'paid' ? 'pending' : 'paid';
       newStatusText.value = currentStatus;
 
-      isLoading.value = true;
-
+      markAsPaidLoading.value = true;
       await updateInvoiceStatus(invoiceId, newStatus);
       await getInvoiceById(invoiceId);
-
-      isLoading.value = false;
+      markAsPaidLoading.value = false;
     } else {
       console.warn('Invoice data is not available.');
     }

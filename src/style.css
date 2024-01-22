@@ -68,6 +68,13 @@ body {
   border-radius: 8px; /* Add border-radius for rounded corners */
   animation: loading-animation 0.4s infinite alternate; /* Apply a simple animation */
 }
+.badge-loading {
+  width: 103px; /* Set the width to match the card */
+  padding: 21.5px 0;
+  background-color: #dfdfdf; /* Set the background color as a light gray */
+  border-radius: 8px; /* Add border-radius for rounded corners */
+  animation: loading-animation 0.4s infinite alternate; /* Apply a simple animation */
+}
 
 @keyframes loading-animation {
   to {
