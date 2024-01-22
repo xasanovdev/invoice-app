@@ -240,6 +240,8 @@ import {
   getStatusTextColorClass,
 } from '../utils/useStatusColors';
 
+console.log(dataInvoice.value);
+
 const isLoading = ref(true);
 
 const route = useRoute();

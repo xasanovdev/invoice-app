@@ -431,6 +431,7 @@ const newInvoice = ref({
   items: [],
   total: '',
   status: 'pending',
+  id: generateRandomId(),
 });
 
 const props = defineProps({
