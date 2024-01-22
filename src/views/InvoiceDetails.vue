@@ -35,7 +35,6 @@
             class="w-full flex items-center gap-5 justify-between md:justify-start"
           >
             <p class="text-light2 dark:text-light1 text-[13px]">Status</p>
-
             <div
               :class="[
                 'w-[103px] py-[14px] rounded-md flex items-center justify-center gap-2 bg-opacity-10',
@@ -65,7 +64,9 @@
               class="hover:bg-light1 text-light3 bg-[#F9FAFE]"
               >Edit</Button
             >
-            <Button class="bg-danger text-white hover:bg-[#FF9797]"
+            <Button
+              @click="deleteInvoiceFunction(dataInvoice[0].id)"
+              class="bg-danger text-white hover:bg-[#FF9797]"
               >Delete</Button
             >
 
@@ -198,7 +199,9 @@
               class="hover:bg-light1 text-light3 bg-[#F9FAFE]"
               >Edit</Button
             >
-            <Button class="bg-danger text-white hover:bg-[#FF9797]"
+            <Button
+              @click="deleteInvoiceFunction(dataInvoice[0].id)"
+              class="bg-danger text-white hover:bg-[#FF9797]"
               >Delete</Button
             >
 
@@ -229,6 +232,7 @@ import ModalEdit from '../components/ModalEdit/ModalEdit.vue';
 import {
   dataInvoice,
   dataInvoices,
+  deleteInvoiceFunction,
   getInvoiceById,
   getInvoicesData,
   updateInvoiceStatus,
@@ -239,8 +243,6 @@ import {
   getStatusBgColorClass,
   getStatusTextColorClass,
 } from '../utils/useStatusColors';
-
-console.log(dataInvoice.value);
 
 const isLoading = ref(true);
 
@@ -263,18 +265,23 @@ const closeModal = () => {
 
 const toggleInvoiceStatus = async () => {
   try {
-    console.log();
-
-    if (dataInvoice && dataInvoice.value[0].id) {
+    if (
+      dataInvoice &&
+      Array.isArray(dataInvoice.value) &&
+      dataInvoice.value.length > 0 &&
+      dataInvoice.value[0].id
+    ) {
       const invoiceId = dataInvoice.value[0].id;
       const currentStatus = dataInvoice.value[0].status;
       const newStatus = currentStatus === 'paid' ? 'pending' : 'paid';
       newStatusText.value = currentStatus;
+
       isLoading.value = true;
+
       await updateInvoiceStatus(invoiceId, newStatus);
       await getInvoiceById(invoiceId);
+
       isLoading.value = false;
-      console.log('Invoice status updated successfully');
     } else {
       console.warn('Invoice data is not available.');
     }

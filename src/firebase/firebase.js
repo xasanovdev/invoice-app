@@ -7,16 +7,17 @@ import { initializeApp } from 'firebase/app';
 import {
   addDoc,
   collection,
-  doc,
+  deleteDoc,
   doc as firestoreDoc,
   getDoc,
   getDocs,
   getFirestore,
   query,
   setDoc,
-  updateDoc,
   where,
 } from 'firebase/firestore';
+
+import router from '../routers';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -60,61 +61,16 @@ export const getInvoicesData = async () => {
     console.error('Error loading invoices data:', error);
   }
 };
-
 export const updateInvoiceStatus = async (invoiceId, newStatus) => {
   try {
-    console.log(
-      'Updating invoice status. ID:',
-      invoiceId,
-      'New Status:',
-      newStatus
-    );
-
     const firestore = getFirestore(app);
-    const invoiceDocRef = doc(firestore, 'invoices', invoiceId);
 
-    // Check if the document exists before attempting to update
-    const invoiceDocSnapshot = await getDoc(invoiceDocRef);
+    // Use the simple update function with the specific field to update
+    await updateInvoiceFunction(invoiceId, { status: newStatus });
 
-    if (invoiceDocSnapshot.exists()) {
-      // Use setDoc to update the entire document
-      await setDoc(invoiceDocRef, {
-        ...invoiceDocSnapshot.data(), // Preserve existing data
-        status: newStatus, // Update the status field
-      });
-
-      console.log(`Invoice status updated to ${newStatus} successfully.`);
-    } else {
-      console.warn(
-        `Document with ID ${invoiceId} not found. No update performed.`
-      );
-      // Handle the case where the document is not found (optional)
-    }
+    console.log(`Invoice status updated to ${newStatus} successfully.`);
   } catch (error) {
     console.error('Error updating invoice status:', error);
-    throw error; // Re-throw the error to handle it in the calling component if needed
-  }
-};
-
-export const getInvoiceById = async (invoiceId) => {
-  try {
-    const firestore = getFirestore(app);
-    const invoicesCollection = collection(firestore, 'invoices');
-
-    // Query for documents where the 'id' field is equal to the specified itemId
-    const q = query(invoicesCollection, where('id', '==', invoiceId));
-    const querySnapshot = await getDocs(q);
-
-    if (!querySnapshot.empty) {
-      // The querySnapshot will contain the documents that match the query
-      const items = querySnapshot.docs.map((doc) => doc.data());
-      dataInvoice.value.push(items[0]);
-    } else {
-      console.warn(`No item found with id: ${invoiceId}`);
-      return null;
-    }
-  } catch (error) {
-    console.error('Error fetching item:', error);
     throw error;
   }
 };
@@ -132,16 +88,102 @@ export const updateInvoiceFunction = async (itemId, updatedData) => {
       // Update each matching document with the specified updatedData
       querySnapshot.docs.forEach(async (doc) => {
         const invoiceDocRef = firestoreDoc(firestore, 'invoices', doc.id);
-        await updateDoc(invoiceDocRef, updatedData);
-      });
 
-      console.log('Item updated successfully.');
+        // Check if the document exists before attempting to update
+        const invoiceDocSnapshot = await getDoc(invoiceDocRef);
+        if (invoiceDocSnapshot.exists()) {
+          // Use setDoc to update the entire document with the new data
+          await setDoc(invoiceDocRef, {
+            ...invoiceDocSnapshot.data(), // Preserve existing data
+            ...updatedData, // Update specified fields
+          });
+
+          console.log('Item updated successfully.');
+
+          // Update dataInvoice.value with the updated data
+          const updatedInvoiceSnapshot = await getDoc(invoiceDocRef);
+          dataInvoice.value = [updatedInvoiceSnapshot.data()];
+        } else {
+          console.warn(
+            `Document with ID ${itemId} not found. No update performed.`
+          );
+          // Handle the case where the document is not found (optional)
+        }
+      });
     } else {
       console.warn(`No item found with id: ${itemId}. No update performed.`);
       // Handle the case where no matching document is found (optional)
     }
   } catch (error) {
     console.error('Error updating item:', error);
+    throw error;
+  }
+};
+
+
+export const deleteInvoiceFunction = async (invoiceId) => {
+  try {
+    const firestore = getFirestore(app);
+    const invoicesCollection = collection(firestore, 'invoices');
+
+    // Query for documents where the 'id' field is equal to the specified itemId
+    const q = query(invoicesCollection, where('id', '==', invoiceId));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      // Use Promise.all to wait for all asynchronous updates
+      await Promise.all(
+        querySnapshot.docs.map(async (doc) => {
+          const invoiceDocRef = firestoreDoc(firestore, 'invoices', doc.id);
+
+          // Check if the document exists before attempting to delete
+          const invoiceDocSnapshot = await getDoc(invoiceDocRef);
+          if (invoiceDocSnapshot.exists()) {
+            // Use deleteDoc to delete the document
+            await deleteDoc(invoiceDocRef);
+
+            console.log('Item deleted successfully.');
+          } else {
+            console.warn(
+              `Document with ID ${invoiceId} not found. No delete performed.`
+            );
+            // Handle the case where the document is not found (optional)
+          }
+        })
+      );
+      router.push('/');
+    } else {
+      console.warn(`No item found with id: ${invoiceId}. No delete performed.`);
+      // Handle the case where no matching document is found (optional)
+    }
+  } catch (error) {
+    console.error('Error deleting item:', error);
+    throw error;
+  }
+};
+
+export const getInvoiceById = async (invoiceId) => {
+  try {
+    const firestore = getFirestore(app);
+    const invoicesCollection = collection(firestore, 'invoices');
+
+    dataInvoice.value.length = 0;
+
+    // Query for documents where the 'id' field is equal to the specified itemId
+    const q = query(invoicesCollection, where('id', '==', invoiceId));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      // The querySnapshot will contain the documents that match the query
+      const items = querySnapshot.docs.map((doc) => doc.data());
+      dataInvoice.value.push(items[0]);
+      return items[0];
+    } else {
+      console.warn(`No item found with id: ${invoiceId}`);
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching item:', error);
     throw error;
   }
 };

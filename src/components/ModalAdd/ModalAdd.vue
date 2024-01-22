@@ -180,18 +180,21 @@
           </div>
 
           <div class="flex flex-col w-full items-start gap-6">
-            <!-- <div class="flex items-center sm:flex-row flex-col w-full gap-6">
+            <div class="flex items-center sm:flex-row flex-col w-full gap-6">
               <div class="flex items-start w-full sm:w-1/2 flex-col gap-[9px]">
                 <label
                   class="text-[13px] text-light3 font-medium"
                   for="countryBillTo"
                   >Invoice Date
                 </label>
+
                 <DatePicker
                   class="w-full"
-                  v-model:createdAt="newInvoice.createdAt"
-                  onUpdate:createdAt="($event) => (newInvoice?.createdAt = $event)"
+                  v-model="newInvoice.createdAt"
                 />
+
+                {{ newInvoice.createdAt }}
+
               </div>
               <div class="flex items-start w-full sm:w-1/2 flex-col gap-[9px]">
                 <label
@@ -200,9 +203,10 @@
                   >Payment Terms</label
                 >
 
-                <DropDown class="w-full" v-model:newInvoice="newInvoice" />
+                <!-- <DropDown class="w-full" v-model="newInvoice.paymentTerms" /> -->
+              
               </div>
-            </div> -->
+            </div>
             <div class="flex items-start flex-col w-full gap-[9px]">
               <label
                 class="text-[13px] text-light3 font-medium"

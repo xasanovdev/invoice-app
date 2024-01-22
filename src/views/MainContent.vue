@@ -22,7 +22,9 @@
           </div>
           <div>
             <div></div>
-            <Button @click="openModal()" class="bg-primary text-white hover:bg-secondary"
+            <Button
+              @click="openModal()"
+              class="bg-primary text-white hover:bg-secondary"
               >New Item Button</Button
             >
           </div>
@@ -51,7 +53,6 @@ import {
 const isModalVisible = ref(false);
 
 const openModal = () => {
-  console.log('openModal');
   document.body.classList.add('overflow-hidden');
   isModalVisible.value = true;
 };

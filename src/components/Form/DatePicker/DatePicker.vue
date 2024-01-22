@@ -6,7 +6,8 @@
       <input
         placeholder="Select a date"
         class="border date cursor-pointer w-full rounded-md font-bold dark:bg-dark1 dark:text-white outline-none border-none py-3 px-4 appearance-none"
-        v-model="formattedSelectedDate"
+        :value="formattedSelectedDate"
+        @input="selectDate"
         @click="openDatePicker"
         readonly
       />
@@ -63,6 +64,9 @@ export default {
     createdAt: {
       type: String,
     },
+    modelValue: {
+      type: String, // Assuming the modelValue prop will be used for v-model
+    },
   },
   data() {
     return {
@@ -99,14 +103,21 @@ export default {
       }
     },
     selectDate(num) {
-      this.selectedDate = new Date(
+      const newDate = new Date(
         this.currentYear,
         this.currentMonth,
         num
-      ).toLocaleDateString('en-US'); // Consider using your formatDate function here
-      this.inputSelectedDate = this.selectedDate;
+      ).toLocaleDateString('en-US');
+      this.selectedDate = newDate;
+      this.inputSelectedDate = newDate;
       this.isDatePickerOpen = false;
+
+      console.log('Selected date:', newDate);
+
+      // Emit "update:value" event with the selected date
+      this.$emit('update:modelValue', newDate);
     },
+
     currentDateValidation(num) {
       const calendarFullDate = new Date(
         this.currentYear,
@@ -126,7 +137,6 @@ export default {
         return 'cursor-pointer';
       }
     },
-
     updateSelectedDate() {
       this.selectedDate = this.inputSelectedDate;
     },
@@ -136,7 +146,16 @@ export default {
   },
   watch: {
     selectedDate() {
-      this.$emit('selectedDate', this.selectedDate);
+      console.log('Selected date changed:', this.selectedDate);
+      this.$emit('update:modelValue', this.selectedDate);
+    },
+    modelValue(newVal) {
+      console.log('modelValue prop changed:', newVal);
+      this.inputSelectedDate = newVal;
+    },
+    value(newVal) {
+      console.log('value prop changed:', newVal);
+      this.inputSelectedDate = newVal;
     },
   },
   created() {
