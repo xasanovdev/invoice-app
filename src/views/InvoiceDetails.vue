@@ -121,10 +121,10 @@
               </div>
               <div class="flex flex-col gap-3">
                 <p class="text-[15px] text-light4 font-bold dark:text-white">
-                  Payment Due
+                  Payment Terms
                 </p>
                 <p class="text-light3 text-[13px] dark:text-white">
-                  {{ formatDate(dataInvoice[0].paymentDue) }}
+                  {{ dataInvoice[0].paymentTerms }} Days
                 </p>
               </div>
             </div>
@@ -226,7 +226,11 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'; // Assuming you are using Vue 3
+import {
+  computed,
+  onMounted,
+  ref,
+} from 'vue'; // Assuming you are using Vue 3
 
 import { doc } from 'firebase/firestore';
 import { useRoute } from 'vue-router';

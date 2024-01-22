@@ -200,8 +200,7 @@ export const addInvoiceFunction = async (newInvoice) => {
 
     console.log('Invoice added successfully with ID:', addedDocRef.id);
 
-    // Return the ID of the added document
-    return addedDocRef.id;
+    dataInvoices.value.push(newInvoice);
   } catch (error) {
     console.error('Error adding invoice to Firestore:', error);
     throw error;
