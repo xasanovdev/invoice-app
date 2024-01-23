@@ -146,7 +146,7 @@ export const useFirebase = () => {
         );
 
         const router = useRouter();
-        router.push('/');
+        router.push({ name: 'Home' });
       } else {
         console.warn(
           `No item found with id: ${invoiceId}. No delete performed.`
