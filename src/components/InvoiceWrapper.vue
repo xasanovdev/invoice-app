@@ -14,7 +14,7 @@
     <template v-else-if="dataInvoices.length === 0">
       <div class="w-full h-full flex items-center text-center mt-[50px] sm:mt-[90px] md:mt-[150px] flex-col justify-center">
         <img src="/qizcha.svg" alt="" />
-        <h3 class="text-[24px] text-light4 font-bold mt-12">There is nothing here</h3>
+        <h3 class="text-[24px] text-light4 dark:text-white font-bold mt-12">There is nothing here</h3>
         <h6 class="text-light2 whitespace-normal mt-6">
           Create an invoice by clicking the New Invoice button and get started
         </h6>
