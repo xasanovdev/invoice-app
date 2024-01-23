@@ -13,6 +13,7 @@ import {
   getDocs,
   getFirestore,
   query,
+  setDoc,
   where,
 } from 'firebase/firestore';
 import { useRouter } from 'vue-router';
@@ -37,8 +38,8 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const analytics = getAnalytics(app);
 
-export let dataInvoices = ref([]);
-export let dataInvoice = ref([]);
+let dataInvoices = ref([]);
+let dataInvoice = ref([]);
 
 // Get a reference to the Firestore database
 
@@ -198,6 +199,7 @@ export const useFirebase = () => {
   return {
     getInvoicesData,
     updateInvoiceStatus,
+    updateInvoiceFunction,
     deleteInvoiceFunction,
     getInvoiceById,
     addInvoiceFunction,

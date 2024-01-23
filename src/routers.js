@@ -11,13 +11,14 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'Home',
       component: MainContent,
     },
     {
-      path: '/invoice/:id', // Use a dynamic parameter for the invoice ID
+      path: '/invoice/:id', 
       component: InvoiceDetailsVue,
       name: 'InvoiceDetails',
-      props: true, // Pass the invoice ID as a prop
+      props: true,
     },
   ],
 });

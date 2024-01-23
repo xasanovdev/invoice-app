@@ -9,6 +9,5 @@
 </template>
 
 <script setup>
-import ModalEdit from './components/ModalEdit/ModalEdit.vue';
 import Sidebar from './components/SidebarComponent.vue';
 </script>
