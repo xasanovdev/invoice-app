@@ -12,9 +12,13 @@
 
     <!-- Use v-else to render the invoices once the data is loaded -->
     <template v-else-if="dataInvoices.length === 0">
-      <div class="w-full h-full flex items-center text-center mt-[50px] sm:mt-[90px] md:mt-[150px] flex-col justify-center">
+      <div
+        class="w-full h-full flex items-center text-center mt-[50px] sm:mt-[90px] md:mt-[150px] flex-col justify-center"
+      >
         <img src="/qizcha.svg" alt="" />
-        <h3 class="text-[24px] text-light4 dark:text-white font-bold mt-12">There is nothing here</h3>
+        <h3 class="text-[24px] text-light4 dark:text-white font-bold mt-12">
+          There is nothing here
+        </h3>
         <h6 class="text-light2 whitespace-normal mt-6">
           Create an invoice by clicking the New Invoice button and get started
         </h6>
@@ -34,17 +38,13 @@
 </template>
 
 <script setup>
-import {
-  onMounted,
-  ref,
-} from 'vue';
+import { onMounted, ref } from 'vue';
 
-import {
-  dataInvoices,
-  getInvoicesData,
-} from '../firebase/firebase';
+import { useFirebase } from '../firebase/firebase';
 import router from '../routers';
 import Card from './card/Card.vue';
+
+const { dataInvoices, getInvoicesData } = useFirebase();
 
 const isLoading = ref(true); // Set initial loading state
 

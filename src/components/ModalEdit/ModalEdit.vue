@@ -353,15 +353,14 @@ import {
   watch,
 } from 'vue';
 
-import {
-  dataInvoice,
-  updateInvoiceFunction,
-} from '../../firebase/firebase';
+import { useFirebase } from '../../firebase/firebase';
 import Button from '../Button/Button.vue';
 import DatePicker from '../Form/DatePicker/DatePicker.vue';
 import DropDown from '../Form/DropDown/DropDown.vue';
 import Input from '../Form/Input/Input.vue';
 import Modal from '../Modal/ModalContent.vue';
+
+const { dataInvoice, updateInvoiceFunction } = useFirebase();
 
 const props = defineProps({
   isVisible: Boolean,

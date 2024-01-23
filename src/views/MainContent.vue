@@ -26,7 +26,10 @@
               @click="openModal()"
               class="bg-primary text-white p-2 hover:opacity-80 flex items-center justify-center gap-2 sm:gap-4"
             >
-              <span class="bg-white text-primary text-[20px] flex items-center justify-center rounded-full w-8 h-8">+</span>
+              <span
+                class="bg-white text-primary text-[20px] flex items-center justify-center rounded-full w-8 h-8"
+                >+</span
+              >
               <span
                 >New
 
@@ -43,18 +46,14 @@
 </template>
 
 <script setup>
-import {
-  computed,
-  ref,
-} from 'vue';
+import { computed, ref } from 'vue';
 
 import Button from '../components/Button/Button.vue';
 import InvoiceWrapper from '../components/InvoiceWrapper.vue';
 import ModalAdd from '../components/ModalAdd/ModalAdd.vue';
-import {
-  dataInvoices,
-  getInvoicesData,
-} from '../firebase/firebase';
+import { useFirebase } from '../firebase/firebase';
+
+const { dataInvoices, getInvoicesData } = useFirebase();
 
 const isModalVisible = ref(false);
 

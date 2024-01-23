@@ -229,31 +229,22 @@
 </template>
 
 <script setup>
-import {
-  computed,
-  onMounted,
-  ref,
-} from 'vue'; // Assuming you are using Vue 3
+import { computed, onMounted, ref } from 'vue'; // Assuming you are using Vue 3
 
 import { doc } from 'firebase/firestore';
 import { useRoute } from 'vue-router';
 
 import Button from '../components/Button/Button.vue';
 import ModalEdit from '../components/ModalEdit/ModalEdit.vue';
-import {
-  dataInvoice,
-  dataInvoices,
-  deleteInvoiceFunction,
-  getInvoiceById,
-  getInvoicesData,
-  updateInvoiceStatus,
-} from '../firebase/firebase';
+import { useFirebase } from '../firebase/firebase';
 import router from '../routers';
 import { formatDate } from '../utils/useDataRedakotor';
 import {
   getStatusBgColorClass,
   getStatusTextColorClass,
 } from '../utils/useStatusColors';
+
+const { dataInvoice, updateInvoiceStatus, getInvoiceById } = useFirebase();
 
 const isLoading = ref(true);
 const markAsPaidLoading = ref(false);

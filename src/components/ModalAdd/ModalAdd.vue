@@ -363,14 +363,15 @@ import {
 } from 'vue';
 
 import {
-  addInvoiceFunction,
-  dataInvoices,
+  useFirebase,
 } from '../../firebase/firebase'; // Importing dataInvoices from Firebase
 import Button from '../Button/Button.vue';
 import DatePicker from '../Form/DatePicker/DatePicker.vue';
 import DropDown from '../Form/DropDown/DropDown.vue';
 import Input from '../Form/Input/Input.vue';
 import Modal from '../Modal/ModalContent.vue';
+
+const { addInvoiceFunction, dataInvoices } = useFirebase();
 
 function generateRandomId() {
   const characters =
