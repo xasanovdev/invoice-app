@@ -244,7 +244,12 @@ import {
   getStatusTextColorClass,
 } from '../utils/useStatusColors';
 
-const { dataInvoice, updateInvoiceStatus, getInvoiceById } = useFirebase();
+const {
+  dataInvoice,
+  updateInvoiceStatus,
+  getInvoiceById,
+  deleteInvoiceFunction,
+} = useFirebase();
 
 const isLoading = ref(true);
 const markAsPaidLoading = ref(false);
