@@ -24,9 +24,15 @@
             <div></div>
             <Button
               @click="openModal()"
-              class="bg-primary text-white hover:bg-secondary"
-              >New Item Button</Button
+              class="bg-primary text-white p-2 hover:opacity-80 flex items-center justify-center gap-2 sm:gap-4"
             >
+              <span class="bg-white text-primary text-[20px] flex items-center justify-center rounded-full w-8 h-8">+</span>
+              <span
+                >New
+
+                <span class="hidden sm:inline-block">Invoice</span>
+              </span>
+            </Button>
           </div>
         </nav>
       </header>
