@@ -11,9 +11,10 @@
             @click="closeModalFunction"
             class="inline-flex cursor-pointer items-center gap-6 hover:gap-7 duration-200"
           >
-            <i
+            <font-awesome-icon
               class="fa-solid fa-angle-left text-[9px] text-primary font-bold"
-            ></i>
+              :icon="['fas', 'angle-left']"
+            />
             <h4
               class="text-[15px] text-light4 leading-[15px] dark:text-white font-bold"
             >
@@ -299,7 +300,7 @@
                             @click="deleteItem(index)"
                             class="text-light2 hover:text-danger duration-200"
                           >
-                            <i class="fa-solid fa-trash"></i>
+                            <font-awesome-icon :icon="['fas', 'trash']" />
                           </button>
                         </div>
                       </div>

@@ -11,9 +11,11 @@
             @click="closeModalFunction"
             class="inline-flex cursor-pointer items-center gap-6 hover:gap-7 duration-200"
           >
-            <i
+            <font-awesome-icon
               class="fa-solid fa-angle-left text-[9px] text-primary font-bold"
-            ></i>
+              :icon="['fas', 'angle-left']"
+            />
+
             <h4
               class="text-[15px] text-light4 leading-[15px] dark:text-white font-bold"
             >
@@ -188,13 +190,9 @@
                   >Invoice Date
                 </label>
 
-                <DatePicker
-                  class="w-full"
-                  v-model="newInvoice.createdAt"
-                />
+                <DatePicker class="w-full" v-model="newInvoice.createdAt" />
 
                 {{ newInvoice.createdAt }}
-
               </div>
               <div class="flex items-start w-full sm:w-1/2 flex-col gap-[9px]">
                 <label
@@ -204,7 +202,6 @@
                 >
 
                 <!-- <DropDown class="w-full" v-model="newInvoice.paymentTerms" /> -->
-              
               </div>
             </div>
             <div class="flex items-start flex-col w-full gap-[9px]">
@@ -318,7 +315,7 @@
                             @click="deleteItem(index)"
                             class="text-light2 hover:text-danger duration-200"
                           >
-                            <i class="fa-solid fa-trash"></i>
+                            <font-awesome-icon :icon="['fas', 'trash']" />
                           </button>
                         </div>
                       </div>
@@ -431,12 +428,27 @@ const newInvoice = ref({
   },
   createdAt: null,
   paymentTerms: '',
+  paymentDue: '',
   description: '',
   items: [],
   total: '',
   status: 'pending',
   id: generateRandomId(),
 });
+
+let currentDate = new Date();
+
+// Format the outslite property as a string "1/28/2024"
+newInvoice.outslite = '1/28/2024';
+
+var formattedDate =
+  currentDate.getMonth() +
+  1 +
+  '/' +
+  currentDate.getDate() +
+  '/' +
+  currentDate.getFullYear();
+newInvoice.value.paymentDue = formattedDate;
 
 const props = defineProps({
   isVisible: Boolean,

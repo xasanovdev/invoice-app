@@ -15,7 +15,11 @@
         >
           {{ selectedOption }}
           <!-- Heroicon name: chevron-down -->
-          <i class="fa-solid fa-chevron-down text-primary"></i>
+
+          <font-awesome-icon
+            class="fa-solid fa-chevron-down text-primary"
+            :icon="['fas', 'chevron-down']"
+          />
         </button>
       </div>
 

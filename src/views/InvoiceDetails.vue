@@ -10,7 +10,10 @@
         @click="router.push('/')"
         class="inline-flex p-8 cursor-pointer items-center gap-6 hover:gap-7 duration-200"
       >
-        <i class="fa-solid fa-angle-left text-[9px] text-primary font-bold"></i>
+        <font-awesome-icon
+          class="fa-solid fa-angle-left text-[9px] text-primary font-bold"
+          :icon="['fas', 'angle-left']"
+        />
         <h4
           class="text-[15px] text-light4 leading-[15px] dark:text-white font-bold"
         >

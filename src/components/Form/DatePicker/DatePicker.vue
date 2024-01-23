@@ -22,9 +22,10 @@
     >
       <section class="flex gap-2 justify-between items-center">
         <button class="" @click="prev">
-          <i
-            class="fa-solid fa-chevron-left text-[13px] font-bold text-primary"
-          ></i>
+          <font-awesome-icon
+            class="fa-solid fa-angle-left text-[9px] text-primary font-bold"
+            :icon="['fas', 'angle-left']"
+          />
         </button>
 
         <div
@@ -35,9 +36,10 @@
         </div>
 
         <button class="" @click="next">
-          <i
-            class="fa-solid fa-chevron-right text-[13px] font-bold text-primary"
-          ></i>
+          <font-awesome-icon
+            class="fa-solid fa-angle-left text-[9px] text-primary font-bold"
+            :icon="['fas', 'angle-right']"
+          />
         </button>
       </section>
       <section class="grid grid-cols-7 gap-1 mt-8">
@@ -188,4 +190,5 @@ export default {
 };
 </script>
 
+<style></style>
 <style></style>
