@@ -38,9 +38,7 @@
             class="w-full flex items-center gap-5 justify-between md:justify-start"
           >
             <p class="text-light2 dark:text-light1 text-[13px]">Status</p>
-            <div v-if="markAsPaidLoading" class="badge-loading"></div>
             <div
-              v-else
               :class="[
                 'w-[103px] py-[14px] rounded-md flex items-center justify-center gap-2 bg-opacity-10',
                 getStatusBgColorClass(dataInvoice[0].status),
@@ -275,10 +273,9 @@ const toggleInvoiceStatus = async () => {
     const newStatus = currentStatus === 'paid' ? 'pending' : 'paid';
     newStatusText.value = currentStatus;
 
-    // markAsPaidLoading.value = true;
+    markAsPaidLoading.value = true;
     await updateInvoiceStatus(invoiceId, newStatus);
-    // await getInvoiceById(invoiceId);
-    // markAsPaidLoading.value = false;
+    markAsPaidLoading.value = false;
   } catch (error) {
     console.error('Error updating invoice status', error);
   }
@@ -292,6 +289,4 @@ onMounted(async () => {
   await getInvoiceById(invoiceId);
   isLoading.value = false;
 });
-
-
 </script>

@@ -16,7 +16,8 @@ import {
   setDoc,
   where,
 } from 'firebase/firestore';
-import { useRouter } from 'vue-router';
+
+import router from '../routers';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -146,7 +147,6 @@ export const useFirebase = () => {
           })
         );
 
-        const router = useRouter();
         router.push({ name: 'Home' });
       } else {
         console.warn(

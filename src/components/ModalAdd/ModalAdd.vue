@@ -299,7 +299,7 @@
                             </label>
                             <span class="font-bold text-light4">
                               {{
-                                (isNaN(parseFloat(invoice.total))
+                                (isNaN(parseFloat(item.total))
                                   ? '0.00'
                                   : parseInt(item.quantity).toFixed(2) *
                                     parseInt(item.price).toFixed(2)
@@ -353,9 +353,14 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from 'vue';
+import {
+  defineProps,
+  ref,
+} from 'vue';
 
-import { useFirebase } from '../../firebase/firebase'; // Importing dataInvoices from Firebase
+import {
+  useFirebase,
+} from '../../firebase/firebase'; // Importing dataInvoices from Firebase
 import Button from '../Button/Button.vue';
 import DatePicker from '../Form/DatePicker/DatePicker.vue';
 import DropDown from '../Form/DropDown/DropDown.vue';

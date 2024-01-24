@@ -227,7 +227,7 @@
                   <ul class="list-none p-0 flex flex-wrap items-center gap-4">
                     <li
                       class="w-full"
-                      v-for="(item, index) in updateInvoice?.items"
+                      v-for="(item, index) in updateInvoice.items"
                       :key="index"
                     >
                       {{ item }}
@@ -375,6 +375,8 @@ const invoiceId = route.params.id;
 onMounted(async () => {
   await getInvoiceById(invoiceId);
   isLoadingInvoice.value = false;
+
+  console.log(updateInvoice.value);
 });
 
 const saveChanges = async () => {
