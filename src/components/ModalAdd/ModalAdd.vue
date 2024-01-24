@@ -201,7 +201,7 @@
                   >Payment Terms</label
                 >
 
-                <!-- <DropDown class="w-full" v-model="newInvoice.paymentTerms" /> -->
+                <DropDown class="w-full" v-model="newInvoice" />
               </div>
             </div>
             <div class="flex items-start flex-col w-full gap-[9px]">

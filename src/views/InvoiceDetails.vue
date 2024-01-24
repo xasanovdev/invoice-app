@@ -238,11 +238,11 @@ import Button from '../components/Button/Button.vue';
 import ModalEdit from '../components/ModalEdit/ModalEdit.vue';
 import { useFirebase } from '../firebase/firebase';
 import router from '../routers';
-import { formatDate } from '../utils/useDataRedakotor';
+import { formatDate } from '../utils/dateFormatter';
 import {
   getStatusBgColorClass,
   getStatusTextColorClass,
-} from '../utils/useStatusColors';
+} from '../utils/statusColor';
 
 const {
   dataInvoice,

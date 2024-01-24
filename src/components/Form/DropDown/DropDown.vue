@@ -52,17 +52,16 @@
 </template>
 
 <script setup>
-import {
-  defineModel,
-  ref,
-  watch,
-} from 'vue';
+import { defineModel, ref, watch } from 'vue';
 
-const updateInvoice = defineModel('updateInvoice');
+const updateInvoice = defineModel();
+
+console.log(updateInvoice.value);
+
 const isDropDownOpen = ref(false);
 const selectedOption = ref(
-  updateInvoice.value[0]?.paymentTerms
-    ? `Net ${updateInvoice.value[0]?.paymentTerms} Days`
+  updateInvoice.value?.paymentTerms
+    ? `Net ${updateInvoice.value?.paymentTerms} Days`
     : 'Select Option'
 );
 const options = ref(['Net 1 Day', 'Net 7 Days', 'Net 14 Days', 'Net 30 Days']);
@@ -80,7 +79,7 @@ watch(
 
 // Watch for changes in paymentTerms and log the value
 watch(
-  () => updateInvoice.value[0]?.paymentTerms,
+  () => updateInvoice.value?.paymentTerms,
   (newValue) => {
     console.log('Payment Terms changed:', newValue);
     if (newValue !== undefined) {
@@ -95,10 +94,10 @@ const selectOption = (option) => {
   isDropDownOpen.value = false;
   console.log('Selected Option changed:', option);
   const numberOfDays = option.split(' ')[1];
-  updateInvoice.value[0].paymentTerms = +numberOfDays;
+  updateInvoice.value.paymentTerms = +numberOfDays;
   console.log(
     'Payment Terms after selection:',
-    updateInvoice.value[0]?.paymentTerms
+    updateInvoice.value.paymentTerms
   );
 };
 </script>

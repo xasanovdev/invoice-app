@@ -57,11 +57,11 @@
 <script setup>
 import { defineProps } from 'vue';
 
-import { formatDate } from '../../utils/useDataRedakotor';
+import { formatDate } from '../../utils/dateFormatter';
 import {
   getStatusBgColorClass,
   getStatusTextColorClass,
-} from '../../utils/useStatusColors';
+} from '../../utils/statusColor';
 
 const props = defineProps(['invoice']);
 </script>

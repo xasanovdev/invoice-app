@@ -202,7 +202,7 @@
                 >
                 <DropDown
                   class="w-full"
-                  v-model:updateInvoice="updateInvoice"
+                  v-model="updateInvoice[0]"
                 />
               </div>
             </div>
