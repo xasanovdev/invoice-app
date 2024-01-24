@@ -270,24 +270,15 @@ const closeModal = () => {
 
 const toggleInvoiceStatus = async () => {
   try {
-    if (
-      dataInvoice &&
-      Array.isArray(dataInvoice.value) &&
-      dataInvoice.value.length > 0 &&
-      dataInvoice.value[0].id
-    ) {
-      const invoiceId = dataInvoice.value[0].id;
-      const currentStatus = dataInvoice.value[0].status;
-      const newStatus = currentStatus === 'paid' ? 'pending' : 'paid';
-      newStatusText.value = currentStatus;
+    const invoiceId = dataInvoice.value[0].id;
+    const currentStatus = dataInvoice.value[0].status;
+    const newStatus = currentStatus === 'paid' ? 'pending' : 'paid';
+    newStatusText.value = currentStatus;
 
-      markAsPaidLoading.value = true;
-      await updateInvoiceStatus(invoiceId, newStatus);
-      await getInvoiceById(invoiceId);
-      markAsPaidLoading.value = false;
-    } else {
-      console.warn('Invoice data is not available.');
-    }
+    // markAsPaidLoading.value = true;
+    await updateInvoiceStatus(invoiceId, newStatus);
+    // await getInvoiceById(invoiceId);
+    // markAsPaidLoading.value = false;
   } catch (error) {
     console.error('Error updating invoice status', error);
   }
@@ -301,4 +292,6 @@ onMounted(async () => {
   await getInvoiceById(invoiceId);
   isLoading.value = false;
 });
+
+
 </script>

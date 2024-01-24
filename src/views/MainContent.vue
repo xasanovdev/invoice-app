@@ -3,7 +3,6 @@
     :isVisible="isModalVisible"
     :closeModalFunction="closeModal"
   ></ModalAdd>
-
   <main class="overflow-y-auto w-full h-full sm:px-8 px-6">
     <div class="max-w-[730px] h-full mx-auto">
       <header>

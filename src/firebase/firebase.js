@@ -40,6 +40,7 @@ export const analytics = getAnalytics(app);
 
 let dataInvoices = ref([]);
 let dataInvoice = ref([]);
+let updateInvoice = ref([]);
 
 // Get a reference to the Firestore database
 
@@ -171,6 +172,8 @@ export const useFirebase = () => {
         // The querySnapshot will contain the documents that match the query
         const items = querySnapshot.docs.map((doc) => doc.data());
         dataInvoice.value.push(items[0]);
+        updateInvoice.value = { ...dataInvoice.value[0] };
+
         return items[0];
       } else {
         console.warn(`No item found with id: ${invoiceId}`);
@@ -198,6 +201,7 @@ export const useFirebase = () => {
 
   return {
     getInvoicesData,
+    updateInvoice,
     updateInvoiceStatus,
     updateInvoiceFunction,
     deleteInvoiceFunction,

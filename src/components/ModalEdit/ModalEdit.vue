@@ -1,6 +1,9 @@
 <template>
-  <Transition>
-    <Modal :isVisible="isVisible">
+  <Modal :isVisible="isVisible">
+    <template v-if="isLoadingInvoice">
+      <div>Loading...</div>
+    </template>
+    <template v-else>
       <div
         class="relative lg:w-2/3 sm:w-4/5 h-screen overflow-y-auto bg-white dark:bg-bgDark"
       >
@@ -23,7 +26,7 @@
           </div>
 
           <h1 class="text-light4 text-[24px] font-bold dark:text-white">
-            Edit<span class="text-light2">#</span> {{ updateInvoice[0].title }}
+            Edit<span class="text-light2">#</span> {{ updateInvoice.title }}
           </h1>
 
           <div class="flex flex-col items-start gap-6">
@@ -34,11 +37,12 @@
                 for="addressBillFrom"
                 >Street Address
               </label>
+              {{ console.log(updateInvoice) }}
               <Input
                 id="addressBillFrom"
                 type="text"
                 placeholder="salom"
-                v-model="updateInvoice[0].senderAddress.street"
+                v-model="updateInvoice.senderAddress.street"
               />
             </div>
             <div class="w-full grid sm:grid-cols-3 grid-cols-2 gap-6">
@@ -54,7 +58,7 @@
                   id="cityBillFrom"
                   property="senderAddress.city"
                   placeholder="salom"
-                  v-model="updateInvoice[0].senderAddress.city"
+                  v-model="updateInvoice.senderAddress.city"
                 />
               </div>
               <div
@@ -69,7 +73,7 @@
                   id="costCodeBillFrom"
                   type="text"
                   placeholder="salom"
-                  v-model="updateInvoice[0].senderAddress.zipcode"
+                  v-model="updateInvoice.senderAddress.zipcode"
                 />
               </div>
               <div
@@ -84,7 +88,7 @@
                   id="countryBillFrom"
                   type="text"
                   placeholder="salom"
-                  v-model="updateInvoice[0].senderAddress.country"
+                  v-model="updateInvoice.senderAddress.country"
                 />
               </div>
             </div>
@@ -102,7 +106,7 @@
                 id="clientName"
                 type="text"
                 placeholder="salom"
-                v-model="updateInvoice[0].clientName"
+                v-model="updateInvoice.clientName"
               />
             </div>
             <div class="flex items-start flex-col w-full gap-[9px]">
@@ -115,7 +119,7 @@
                 id="clientEmail"
                 type="text"
                 placeholder="salom"
-                v-model="updateInvoice[0].clientEmail"
+                v-model="updateInvoice.clientEmail"
               />
             </div>
             <div class="flex items-start flex-col w-full gap-[9px]">
@@ -128,7 +132,7 @@
                 id="addressBillTo"
                 type="text"
                 placeholder="salom"
-                v-model="updateInvoice[0].clientAddress.street"
+                v-model="updateInvoice.clientAddress.street"
               />
             </div>
             <div class="w-full grid sm:grid-cols-3 grid-cols-2 gap-6">
@@ -144,7 +148,7 @@
                   id="cityBillTo"
                   type="text"
                   placeholder="salom"
-                  v-model="updateInvoice[0].clientAddress.city"
+                  v-model="updateInvoice.clientAddress.city"
                 />
               </div>
               <div
@@ -158,7 +162,7 @@
                 <Input
                   type="text"
                   placeholder="salom"
-                  v-model="updateInvoice[0].clientAddress.zipcode"
+                  v-model="updateInvoice.clientAddress.zipcode"
                   id="postCodeBillTo"
                 />
               </div>
@@ -173,7 +177,7 @@
                 <Input
                   type="text"
                   placeholder="salom"
-                  v-model="updateInvoice[0].clientAddress.country"
+                  v-model="updateInvoice.clientAddress.country"
                   id="countryBillTo"
                 />
               </div>
@@ -190,8 +194,8 @@
                 </label>
                 <DatePicker
                   class="w-full"
-                  v-model:createdAt="updateInvoice[0].createdAt"
-                  onUpdate:createdAt="($event) => (newInvoice[0]?.createdAt = $event)"
+                  v-model:createdAt="updateInvoice.createdAt"
+                  onUpdate:createdAt="($event) => (newInvoice?.createdAt = $event)"
                 />
               </div>
               <div class="flex items-start w-full sm:w-1/2 flex-col gap-[9px]">
@@ -200,7 +204,7 @@
                   for="countryBillTo"
                   >Payment Terms</label
                 >
-                <DropDown class="w-full" v-model="updateInvoice[0]" />
+                <DropDown class="w-full" v-model="updateInvoice" />
               </div>
             </div>
             <div class="flex items-start flex-col w-full gap-[9px]">
@@ -212,7 +216,7 @@
               <Input
                 type="text"
                 placeholder="salom"
-                v-model="updateInvoice[0].description"
+                v-model="updateInvoice.description"
                 id="projectDescription"
               />
             </div>
@@ -223,7 +227,7 @@
                   <ul class="list-none p-0 flex flex-wrap items-center gap-4">
                     <li
                       class="w-full"
-                      v-for="(item, index) in updateInvoice[0]?.items"
+                      v-for="(item, index) in updateInvoice?.items"
                       :key="index"
                     >
                       {{ item }}
@@ -335,12 +339,18 @@
           </div>
         </div>
       </div>
-    </Modal>
-  </Transition>
+    </template>
+  </Modal>
 </template>
 
 <script setup>
-import { computed, defineProps, onMounted, ref, watch } from 'vue';
+import {
+  defineProps,
+  onMounted,
+  ref,
+} from 'vue';
+
+import { useRoute } from 'vue-router';
 
 import { useFirebase } from '../../firebase/firebase';
 import Button from '../Button/Button.vue';
@@ -349,7 +359,7 @@ import DropDown from '../Form/DropDown/DropDown.vue';
 import Input from '../Form/Input/Input.vue';
 import Modal from '../Modal/ModalContent.vue';
 
-const { dataInvoice, updateInvoiceFunction } = useFirebase();
+const { getInvoiceById, updateInvoice, updateInvoiceFunction } = useFirebase();
 
 const props = defineProps({
   isVisible: Boolean,
@@ -357,16 +367,24 @@ const props = defineProps({
 });
 
 let isLoading = ref(false);
+let isLoadingInvoice = ref(true);
 
-const updateInvoice = ref(dataInvoice);
+const route = useRoute();
+const invoiceId = route.params.id;
+
+onMounted(async () => {
+  await getInvoiceById(invoiceId);
+  isLoadingInvoice.value = false;
+});
 
 const saveChanges = async () => {
   try {
     isLoading.value = true;
-    await updateInvoiceFunction(updateInvoice.value[0].id, {
-      ...updateInvoice.value[0],
+    await updateInvoiceFunction(updateInvoice.value.id, {
+      ...updateInvoice.value,
     });
     isLoading.value = false;
+
     console.log('Invoice updated successfully.');
 
     props.closeModalFunction();
@@ -376,7 +394,7 @@ const saveChanges = async () => {
 };
 
 const addItemFunction = () => {
-  updateInvoice.value[0].items.push({
+  updateInvoice.value.items.push({
     name: '',
     quantity: '',
     price: '',
@@ -385,6 +403,6 @@ const addItemFunction = () => {
 };
 
 const deleteItem = (index) => {
-  updateInvoice.value[0].items.splice(index, 1);
+  updateInvoice.value.items.splice(index, 1);
 };
 </script>

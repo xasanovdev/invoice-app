@@ -353,14 +353,9 @@
 </template>
 
 <script setup>
-import {
-  defineProps,
-  ref,
-} from 'vue';
+import { defineProps, ref } from 'vue';
 
-import {
-  useFirebase,
-} from '../../firebase/firebase'; // Importing dataInvoices from Firebase
+import { useFirebase } from '../../firebase/firebase'; // Importing dataInvoices from Firebase
 import Button from '../Button/Button.vue';
 import DatePicker from '../Form/DatePicker/DatePicker.vue';
 import DropDown from '../Form/DropDown/DropDown.vue';
