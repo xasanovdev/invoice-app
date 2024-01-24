@@ -227,7 +227,7 @@
                   <ul class="list-none p-0 flex flex-wrap items-center gap-4">
                     <li
                       class="w-full"
-                      v-for="(item, index) in updateInvoice.items"
+                      v-for="(item, index) in listItems"
                       :key="index"
                     >
                       {{ item }}
@@ -345,6 +345,7 @@
 
 <script setup>
 import {
+  computed,
   defineProps,
   onMounted,
   ref,
@@ -372,11 +373,17 @@ let isLoadingInvoice = ref(true);
 const route = useRoute();
 const invoiceId = route.params.id;
 
+let listItems;
+
 onMounted(async () => {
   await getInvoiceById(invoiceId);
-  isLoadingInvoice.value = false;
 
-  console.log(updateInvoice.value);
+  listItems = computed(() => {
+    return updateInvoice.value.items;
+  });
+
+  isLoadingInvoice.value = false;
+  console.log(listItems.value);
 });
 
 const saveChanges = async () => {
@@ -396,7 +403,7 @@ const saveChanges = async () => {
 };
 
 const addItemFunction = () => {
-  updateInvoice.value.items.push({
+  listItems.value.push({
     name: '',
     quantity: '',
     price: '',
@@ -405,6 +412,6 @@ const addItemFunction = () => {
 };
 
 const deleteItem = (index) => {
-  updateInvoice.value.items.splice(index, 1);
+  listItems.value.splice(index, 1);
 };
 </script>
