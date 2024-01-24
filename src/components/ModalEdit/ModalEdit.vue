@@ -200,10 +200,7 @@
                   for="countryBillTo"
                   >Payment Terms</label
                 >
-                <DropDown
-                  class="w-full"
-                  v-model="updateInvoice[0]"
-                />
+                <DropDown class="w-full" v-model="updateInvoice[0]" />
               </div>
             </div>
             <div class="flex items-start flex-col w-full gap-[9px]">
@@ -310,7 +307,9 @@
 
                 <Button
                   @click="addItemFunction"
-                  class="hover:bg-light1 text-light3 mt-4 mb-[80px] bg-[#F9FAFE]"
+                  variant="primary"
+                  size="md"
+                  class="mt-4 mb-[80px]"
                   >+Add New Item</Button
                 >
               </div>
@@ -322,20 +321,16 @@
           class="w-full fixed sm:sticky z-50 left-0 bottom-[0px] backdrop-blur-md bg-opacity-50 p-4"
         >
           <div class="w-full flex justify-between gap-2 px-4">
-            <Button
-              @click="closeModalFunction"
-              class="bg-danger text-white hover:bg-[#FF9797]"
+            <Button @click="closeModalFunction" variant="danger" size="md"
               >Cancel</Button
             >
             <Button
               @click="saveChanges"
-              :class="[
-                'bg-primary text-white hover:bg-[#9277FF]',
-                { 'opacity-50': isLoading },
-              ]"
+              variant="violet"
+              size="md"
+              :loading="isLoading"
             >
-              <span v-if="isLoading">Saving...</span>
-              <span v-else>Save all Changes</span>
+              <span>Save all Changes</span>
             </Button>
           </div>
         </div>
@@ -345,13 +340,7 @@
 </template>
 
 <script setup>
-import {
-  computed,
-  defineProps,
-  onMounted,
-  ref,
-  watch,
-} from 'vue';
+import { computed, defineProps, onMounted, ref, watch } from 'vue';
 
 import { useFirebase } from '../../firebase/firebase';
 import Button from '../Button/Button.vue';

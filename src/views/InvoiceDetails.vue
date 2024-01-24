@@ -64,24 +64,20 @@
             </div>
           </div>
           <div class="w-full hidden sm:flex gap-2">
-            <Button
-              @click="openModal"
-              class="hover:bg-light1 text-light3 bg-[#F9FAFE]"
-              >Edit</Button
-            >
+            <Button variant="primary" size="md" @click="openModal">Edit</Button>
             <Button
               @click="deleteInvoiceFunction(dataInvoice[0].id)"
-              class="bg-danger text-white hover:bg-[#FF9797]"
+              variant="danger"
+              size="md"
               >Delete</Button
             >
-
             <Button
               @click="toggleInvoiceStatus"
-              :class="{ 'opacity-40': markAsPaidLoading }"
-              class="bg-primary text-white hover:bg-[#9277FF]"
+              :loading="markAsPaidLoading"
+              variant="violet"
+              size="md"
             >
-              <span v-if="markAsPaidLoading">Loading...</span>
-              <span v-else>Mark as {{ currentStatusText }}</span>
+              <span>Mark as {{ currentStatusText }}</span>
             </Button>
           </div>
         </div>
@@ -202,24 +198,21 @@
           class="fixed sm:hidden z-20 w-full left-0 bottom-0 backdrop-blur-md bg-opacity-50 p-4"
         >
           <div class="w-full flex justify-between gap-2 px-4">
+            <Button @click="openModal" variant="primary" size="md">Edit</Button>
             <Button
-              @click="openModal"
-              class="hover:bg-light1 text-light3 bg-[#F9FAFE]"
-              >Edit</Button
-            >
-            <Button
+              variant="danger"
+              size="md"
               @click="deleteInvoiceFunction(dataInvoice[0].id)"
-              class="bg-danger text-white hover:bg-[#FF9797]"
               >Delete</Button
             >
 
             <Button
               @click="toggleInvoiceStatus"
-              :class="{ 'opacity-40': markAsPaidLoading }"
-              class="bg-primary text-white hover:bg-[#9277FF]"
+              :loading="markAsPaidLoading"
+              variant="violet"
+              size="md"
             >
-              <span v-if="markAsPaidLoading">Loading...</span>
-              <span v-else>Mark as {{ currentStatusText }}</span>
+              Mark as {{ currentStatusText }}
             </Button>
           </div>
         </div>
@@ -229,7 +222,11 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'; // Assuming you are using Vue 3
+import {
+  computed,
+  onMounted,
+  ref,
+} from 'vue'; // Assuming you are using Vue 3
 
 import { doc } from 'firebase/firestore';
 import { useRoute } from 'vue-router';

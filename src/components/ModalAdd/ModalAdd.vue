@@ -323,10 +323,11 @@
                   </ul>
                   <p v-else class="text-dark1">No items added yet.</p>
                 </div>
-
                 <Button
                   @click="addItemFunction"
-                  class="hover:bg-light1 text-light3 mt-4 mb-[80px] bg-[#F9FAFE]"
+                  variant="primary"
+                  size="md"
+                  class="mt-4 mb-[80px]"
                   >+Add New Item</Button
                 >
               </div>
@@ -338,15 +339,10 @@
           class="w-full fixed sm:sticky z-50 left-0 bottom-[0px] backdrop-blur-md bg-opacity-50 p-4"
         >
           <div class="w-full flex justify-between gap-2 px-4">
-            <Button
-              @click="closeModalFunction"
-              class="bg-danger text-white hover:bg-[#FF9797]"
+            <Button @click="closeModalFunction" variant="danger" size="md"
               >Cancel</Button
             >
-            <Button
-              @click="saveChanges"
-              class="bg-primary text-white hover:bg-[#9277FF]"
-            >
+            <Button @click="saveChanges" variant="violet" size="md">
               Save Invoice
             </Button>
           </div>

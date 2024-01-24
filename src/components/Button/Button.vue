@@ -1,11 +1,34 @@
 <template>
   <button
-    class="text-[15px] font-semibold tracking-wide p-4 w-full rounded-full duration-200"
+    :class="[
+      'font-semibold w-full tracking-wide rounded-full duration-200',
+      styles[variant],
+      sizes[size],
+      { 'cursor-not-allowed opacity-50': loading },
+    ]"
+    :disabled="loading"
   >
-    <slot></slot>
+    <template v-if="!loading">
+      <slot></slot>
+    </template>
+    <template v-else> Loading... </template>
   </button>
 </template>
 
-<script setup></script>
+<script setup>
+const props = defineProps(['variant', 'size', 'loading']);
+
+const styles = {
+  primary: 'hover:bg-light1 bg-[#F9FAFE] text-light3',
+  violet: 'bg-primary text-white hover:bg-[#9277FF]',
+  danger: 'bg-danger text-white hover:bg-[#FF9797]',
+};
+
+const sizes = {
+  sm: 'text-md p-2',
+  md: 'text-md p-4',
+  lg: 'text-lg p-6',
+};
+</script>
 
 <style></style>

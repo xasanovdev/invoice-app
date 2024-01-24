@@ -15,7 +15,6 @@
         >
           {{ selectedOption }}
           <!-- Heroicon name: chevron-down -->
-
           <font-awesome-icon
             class="fa-solid fa-chevron-down text-primary"
             :icon="['fas', 'chevron-down']"
@@ -52,11 +51,9 @@
 </template>
 
 <script setup>
-import { defineModel, ref, watch } from 'vue';
+import { defineModel, ref } from 'vue';
 
 const updateInvoice = defineModel();
-
-console.log(updateInvoice.value);
 
 const isDropDownOpen = ref(false);
 const selectedOption = ref(
@@ -66,38 +63,11 @@ const selectedOption = ref(
 );
 const options = ref(['Net 1 Day', 'Net 7 Days', 'Net 14 Days', 'Net 30 Days']);
 
-// Log the structure of updateInvoice
-console.log('Initial updateInvoice:', updateInvoice.value);
-
-// Watch for changes in updateInvoice and log the structure
-watch(
-  () => updateInvoice.value,
-  (newValue) => {
-    console.log('updateInvoice changed:', newValue);
-  }
-);
-
-// Watch for changes in paymentTerms and log the value
-watch(
-  () => updateInvoice.value?.paymentTerms,
-  (newValue) => {
-    console.log('Payment Terms changed:', newValue);
-    if (newValue !== undefined) {
-      selectedOption.value = `Net ${newValue} Days`;
-      console.log('Selected Option updated:', selectedOption.value);
-    }
-  }
-);
-
 const selectOption = (option) => {
   selectedOption.value = option;
   isDropDownOpen.value = false;
-  console.log('Selected Option changed:', option);
+
   const numberOfDays = option.split(' ')[1];
   updateInvoice.value.paymentTerms = +numberOfDays;
-  console.log(
-    'Payment Terms after selection:',
-    updateInvoice.value.paymentTerms
-  );
 };
 </script>
