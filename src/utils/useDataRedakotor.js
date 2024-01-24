@@ -1,7 +1,7 @@
 export function formatDate(inputDate) {
   // Check if inputDate is undefined, null, or an empty string
   if (inputDate === undefined || inputDate === null || inputDate === '') {
-    console.warn('Input date is undefined, null, or an empty string.');
+    // console.warn('Input date is undefined, null, or an empty string.');
     return '';
   }
 

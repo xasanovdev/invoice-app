@@ -2,7 +2,7 @@
   <Transition>
     <Modal :isVisible="isVisible">
       <div
-        class="relative lg:w-2/3 sm:w-4/5 h-screen overflow-y-auto bg-white dark:bg-bgDark"
+        class="relative lg:w-1/2 sm:w-2/3 h-screen overflow-y-auto bg-white dark:bg-bgDark"
       >
         <div
           class="w-full sm:rounded-r-[20px] p-6 md:p-8 flex flex-col gap-[45px]"
@@ -38,7 +38,7 @@
               <Input
                 id="addressBillFrom"
                 type="text"
-                placeholder="salom"
+                placeholder="Address"
                 v-model="newInvoice.senderAddress.street"
               />
             </div>
@@ -54,7 +54,7 @@
                 <Input
                   id="cityBillFrom"
                   property="senderAddress.city"
-                  placeholder="salom"
+                  placeholder="City"
                   v-model="newInvoice.senderAddress.city"
                 />
               </div>
@@ -69,7 +69,7 @@
                 <Input
                   id="costCodeBillFrom"
                   type="text"
-                  placeholder="salom"
+                  placeholder="Post Code"
                   v-model="newInvoice.senderAddress.zipcode"
                 />
               </div>
@@ -84,7 +84,7 @@
                 <Input
                   id="countryBillFrom"
                   type="text"
-                  placeholder="salom"
+                  placeholder="Country"
                   v-model="newInvoice.senderAddress.country"
                 />
               </div>
@@ -102,7 +102,7 @@
               <Input
                 id="clientName"
                 type="text"
-                placeholder="salom"
+                placeholder="Client Name"
                 v-model="newInvoice.clientName"
               />
             </div>
@@ -115,7 +115,7 @@
               <Input
                 id="clientEmail"
                 type="text"
-                placeholder="salom"
+                placeholder="Client Email"
                 v-model="newInvoice.clientEmail"
               />
             </div>
@@ -128,7 +128,7 @@
               <Input
                 id="addressBillTo"
                 type="text"
-                placeholder="salom"
+                placeholder="Address"
                 v-model="newInvoice.clientAddress.street"
               />
             </div>
@@ -144,7 +144,7 @@
                 <Input
                   id="cityBillTo"
                   type="text"
-                  placeholder="salom"
+                  placeholder="City"
                   v-model="newInvoice.clientAddress.city"
                 />
               </div>
@@ -158,7 +158,7 @@
                 >
                 <Input
                   type="text"
-                  placeholder="salom"
+                  placeholder="Post Code"
                   v-model="newInvoice.clientAddress.zipcode"
                   id="postCodeBillTo"
                 />
@@ -173,7 +173,7 @@
                 </label>
                 <Input
                   type="text"
-                  placeholder="salom"
+                  placeholder="Country"
                   v-model="newInvoice.clientAddress.country"
                   id="countryBillTo"
                 />
@@ -212,7 +212,7 @@
               </label>
               <Input
                 type="text"
-                placeholder="salom"
+                placeholder="Project Description"
                 v-model="newInvoice.description"
                 id="projectDescription"
               />
@@ -225,7 +225,7 @@
               </label>
               <Input
                 type="text"
-                placeholder="salom"
+                placeholder="Project Title"
                 v-model="newInvoice.title"
                 id="projectTitle"
               />
@@ -256,7 +256,7 @@
                           </label>
                           <Input
                             type="text"
-                            placeholder="salom"
+                            placeholder="Item Name"
                             v-model="item.name"
                             id="invoiceListItemName"
                           />
