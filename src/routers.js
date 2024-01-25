@@ -8,15 +8,29 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'Home',
+      name: 'HomePage',
       component: () => import('./views/MainContent.vue'),
+      meta: {
+        title: 'HomePage',
+      },
     },
     {
       path: '/invoice/:id',
-
       component: () => import('./views/InvoiceDetails.vue'),
       name: 'InvoiceDetails',
       props: true,
+      meta: {
+        title: 'InvoiceDetails',
+      },
+    },
+    {
+      path: '/auth',
+      component: () => import('./views/Auth/Login.Vue'),
+      name: 'Auth',
+      props: true,
+      meta: {
+        title: 'Login',
+      },
     },
   ],
 });

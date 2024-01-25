@@ -1,4 +1,6 @@
 <template>
+  <SidebarComponent />
+
   <div class="w-full h-full overflow-auto">
     <ModalAdd
       :isVisible="isModalVisible"
@@ -46,14 +48,12 @@
 </template>
 
 <script setup>
-import {
-  computed,
-  ref,
-} from 'vue';
+import { computed, ref } from 'vue';
 
 import Button from '../components/Button/Button.vue';
 import InvoiceWrapper from '../components/InvoiceWrapper.vue';
 import ModalAdd from '../components/ModalAdd/ModalAdd.vue';
+import SidebarComponent from '../components/SidebarComponent.vue';
 import { useFirebase } from '../firebase/firebase';
 
 const { dataInvoices, getInvoicesData } = useFirebase();

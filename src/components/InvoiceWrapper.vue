@@ -38,7 +38,10 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import {
+  onMounted,
+  ref,
+} from 'vue';
 
 import { useFirebase } from '../firebase/firebase';
 import router from '../routers';
