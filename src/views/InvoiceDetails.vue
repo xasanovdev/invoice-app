@@ -65,8 +65,10 @@
           </div>
           <div class="w-full hidden sm:flex gap-2">
             <Button variant="primary" size="md" @click="openModal">Edit</Button>
+
             <Button
-              @click="deleteInvoiceFunction(dataInvoice[0].id)"
+              @click="deleteInvoice"
+              :loading="deleteLoading"
               variant="danger"
               size="md"
               >Delete</Button
@@ -202,7 +204,8 @@
             <Button
               variant="danger"
               size="md"
-              @click="deleteInvoiceFunction(dataInvoice[0].id)"
+              @click="deleteInvoice"
+              :loading="deleteLoading"
               >Delete</Button
             >
 
@@ -263,6 +266,14 @@ const openModal = () => {
 const closeModal = () => {
   document.body.classList.remove('overflow-hidden');
   isModalVisible.value = false;
+};
+
+let deleteLoading = ref(false);
+
+const deleteInvoice = async () => {
+  deleteLoading.value = true;
+  await deleteInvoiceFunction(dataInvoice.value[0].id);
+  deleteLoading.value = false;
 };
 
 const toggleInvoiceStatus = async () => {

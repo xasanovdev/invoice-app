@@ -417,11 +417,7 @@
 </template>
 
 <script setup>
-import {
-  computed,
-  defineProps,
-  ref,
-} from 'vue';
+import { computed, defineProps, ref } from 'vue';
 
 import { useForm } from '../../composables/useForm';
 import { useFirebase } from '../../firebase/firebase';
