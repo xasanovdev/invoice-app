@@ -188,11 +188,15 @@ export const useFirebase = () => {
   const addInvoiceFunction = async (newInvoice) => {
     try {
       // Use addDoc to add a new document to the "invoices" collection
-      const addedDocRef = await addDoc(invoicesCollection, newInvoice);
+      const addedDocRef = await addDoc(invoicesCollection, newInvoice.value);
 
       console.log('Invoice added successfully with ID:', addedDocRef.id);
 
-      dataInvoices.value.push(newInvoice);
+      console.log(newInvoice.value);
+
+      dataInvoices.value.push({ ...newInvoice.value });
+
+      console.log(dataInvoices.value);
     } catch (error) {
       console.error('Error adding invoice to Firestore:', error);
       throw error;

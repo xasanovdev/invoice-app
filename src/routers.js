@@ -3,20 +3,18 @@ import {
   createWebHistory,
 } from 'vue-router';
 
-import InvoiceDetailsVue from './views/InvoiceDetails.vue';
-import MainContent from './views/MainContent.vue';
-
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
       path: '/',
       name: 'Home',
-      component: MainContent,
+      component: () => import('./views/MainContent.vue'),
     },
     {
-      path: '/invoice/:id', 
-      component: InvoiceDetailsVue,
+      path: '/invoice/:id',
+
+      component: () => import('./views/InvoiceDetails.vue'),
       name: 'InvoiceDetails',
       props: true,
     },

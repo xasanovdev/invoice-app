@@ -466,7 +466,8 @@ const saveChanges = async () => {
   if (isFormValid.value) {
     try {
       // Example: Create a new invoice
-      const addedInvoiceId = await addInvoiceFunction(newInvoice.value);
+      console.log(newInvoice.value);
+      const addedInvoiceId = await addInvoiceFunction(newInvoice);
 
       // Update the form.id with the added document ID
       form.id = addedInvoiceId;
