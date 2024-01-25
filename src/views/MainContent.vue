@@ -2,10 +2,11 @@
   <SidebarComponent />
 
   <div class="w-full h-full overflow-auto">
-    <ModalAdd
+    <Modal
       :isVisible="isModalVisible"
+      modalMode="add"
       :closeModalFunction="closeModal"
-    ></ModalAdd>
+    ></Modal>
     <div class="max-w-[730px] h-full mx-auto sm:px-8 px-6">
       <header>
         <nav
@@ -52,6 +53,7 @@ import { computed, ref } from 'vue';
 
 import Button from '../components/Button/Button.vue';
 import InvoiceWrapper from '../components/InvoiceWrapper.vue';
+import Modal from '../components/Modal/ModalContent.vue';
 import ModalAdd from '../components/ModalAdd/ModalAdd.vue';
 import SidebarComponent from '../components/SidebarComponent.vue';
 import { useFirebase } from '../firebase/firebase';
@@ -61,13 +63,14 @@ const { dataInvoices, getInvoicesData } = useFirebase();
 const isModalVisible = ref(false);
 
 const openModal = () => {
-  document.body.classList.add('overflow-hidden');
   isModalVisible.value = true;
+  document.body.classList.add('overflow-hidden');
 };
 
 const closeModal = () => {
-  document.body.classList.remove('overflow-hidden');
   isModalVisible.value = false;
+
+  document.body.classList.remove('overflow-hidden');
 };
 
 const dataInvoiceCount = computed(() => dataInvoices.value.length);

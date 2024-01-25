@@ -2,10 +2,7 @@
   <SidebarComponent />
 
   <div class="w-full overflow-auto">
-    <ModalEdit
-      :isVisible="isModalVisible"
-      :closeModalFunction="closeModal"
-    ></ModalEdit>
+    <Modal :isVisible="isModalVisible" :closeModalFunction="closeModal"></Modal>
 
     <div class="flex flex-col max-w-[730px] mx-auto mt-[30px]">
       <div
@@ -231,6 +228,7 @@ import { doc } from 'firebase/firestore';
 import { useRoute } from 'vue-router';
 
 import Button from '../components/Button/Button.vue';
+import Modal from '../components/Modal/ModalContent.vue';
 import ModalEdit from '../components/ModalEdit/ModalEdit.vue';
 import SidebarComponent from '../components/SidebarComponent.vue';
 import { useFirebase } from '../firebase/firebase';
