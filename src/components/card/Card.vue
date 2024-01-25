@@ -14,18 +14,14 @@
       class="flex items-center justify-between mt-6 md:gap-3 lg:gap-5 md:mt-0"
     >
       <div
-        class="flex flex-col w-[150px] md:justify-between md:flex-row md:items-center items-start gap-2"
+        class="flex flex-col md:justify-between md:flex-row md:items-center items-start gap-2"
       >
         <span class="text-light2 dark:text-light1 text-[13px]">{{
           `${formatDate(invoice.paymentDue)}`
         }}</span>
-        <span class="text-light4 dark:text-white text-[15px] font-bold">{{
-          `£ ${
-            isNaN(parseFloat(invoice.total))
-              ? '0.00'
-              : parseFloat(invoice.total).toFixed(2)
-          }`
-        }}</span>
+        <span class="text-light4 dark:text-white text-[15px] font-bold">
+          {{ totalAmount.toFixed(2) }}</span
+        >
       </div>
 
       <div
@@ -55,7 +51,10 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
+import {
+  computed,
+  defineProps,
+} from 'vue';
 
 import { formatDate } from '../../utils/dateFormatter';
 import {
@@ -63,7 +62,19 @@ import {
   getStatusTextColorClass,
 } from '../../utils/statusColor';
 
+const totalAmount = computed(() => {
+  return props.invoice.items.reduce((total, item) => {
+    const quantity = parseFloat(item.quantity) || 0;
+    const price = parseFloat(item.price) || 0;
+    const itemTotal = quantity * price;
+
+    return total + itemTotal;
+  }, 0);
+});
+
 const props = defineProps(['invoice']);
+
+console.log(props.invoice);
 </script>
 
 <style></style>

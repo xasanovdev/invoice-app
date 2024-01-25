@@ -37,7 +37,6 @@
                 for="addressBillFrom"
                 >Street Address
               </label>
-              {{ console.log(updateInvoice) }}
               <Input
                 id="addressBillFrom"
                 type="text"
@@ -286,9 +285,8 @@
                             </label>
                             <span class="font-bold text-light4">
                               {{
-                                (
-                                  parseInt(item.quantity).toFixed(2) *
-                                  parseInt(item.price).toFixed(2)
+                                parseFloat(
+                                  parseInt(item.quantity) * parseInt(item.price)
                                 ).toFixed(2)
                               }}
                             </span>
@@ -344,12 +342,7 @@
 </template>
 
 <script setup>
-import {
-  computed,
-  defineProps,
-  onMounted,
-  ref,
-} from 'vue';
+import { computed, defineProps, onMounted, ref, watch } from 'vue';
 
 import { useRoute } from 'vue-router';
 
