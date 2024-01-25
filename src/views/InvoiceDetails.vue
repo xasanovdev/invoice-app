@@ -2,7 +2,7 @@
   <SidebarComponent />
 
   <div class="w-full overflow-auto">
-    <Modal :isVisible="isModalVisible" :closeModalFunction="closeModal"></Modal>
+    <Modal :isVisible="isModalVisible" modalMode="edit" :closeModalFunction="closeModal"></Modal>
 
     <div class="flex flex-col max-w-[730px] mx-auto mt-[30px]">
       <div
@@ -222,7 +222,11 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'; // Assuming you are using Vue 3
+import {
+  computed,
+  onMounted,
+  ref,
+} from 'vue'; // Assuming you are using Vue 3
 
 import { doc } from 'firebase/firestore';
 import { useRoute } from 'vue-router';

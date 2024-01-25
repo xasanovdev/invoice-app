@@ -2,7 +2,7 @@
   <Transition>
     <div
       v-if="isVisible"
-      @click="closeModalFunction"
+      @click="closeModal"
       class="modal z-40 absolute overflow-hidden w-full h-full bg-black bg-opacity-45"
     >
       <template v-if="isLoadingInvoice">
@@ -481,15 +481,28 @@ const {
 let newInvoice = ref([]);
 let saveChangesClicked = ref(false);
 let isLoading = ref(false);
-let isLoadingInvoice = ref(true);
+let isLoadingInvoice = ref(false);
 
 const route = useRoute();
 const invoiceId = route.params.id;
 
+newInvoice.value = form.value;
+
+console.log(newInvoice.value);
+
 let listItems = [];
 
+const closeModal = (e) => {
+  if (e.target.classList.contains('modal-content')) {
+    props.closeModalFunction();
+  }
+};
+
 onMounted(async () => {
+  console.log();
   if (props.modalMode === 'edit') {
+    isLoadingInvoice.value = true;
+
     await getInvoiceById(invoiceId);
 
     listItems = computed(() => {
@@ -502,8 +515,6 @@ onMounted(async () => {
     form.value = {
       ...dataInvoice.value[0],
     };
-
-    console.log('newInvoice.value', newInvoice.value);
 
     isLoadingInvoice.value = false;
 
@@ -527,21 +538,46 @@ const saveChanges = async () => {
   try {
     isLoading.value = true;
 
-    if (modalMode.value === 'edit') {
+    if (props.modalMode === 'edit') {
       await updateInvoiceFunction(newInvoice.value.id, {
         ...newInvoice.value,
       });
     } else {
-      // Assuming 'add' is the default mode
-      const addedInvoiceId = await addInvoiceFunction(newInvoice);
-      form.id = addedInvoiceId;
+      saveChangesClicked.value = true;
+
+      if (isFormValid.value) {
+        try {
+          // Example: Create a new invoice
+          console.log(newInvoice.value);
+          const addedInvoiceId = await addInvoiceFunction(newInvoice);
+
+          // Update the form.id with the added document ID
+          form.id = addedInvoiceId;
+
+          console.log('Invoice added successfully with ID:', newInvoice.value);
+
+          saveChangesClicked.value = false;
+
+          // Close the modal after adding the new invoice
+          props.closeModalFunction();
+
+          resetForm();
+        } catch (error) {
+          console.error('Error adding new invoice:', error);
+        }
+      } else {
+        console.log('Form validation failed. Please check your inputs.');
+        // Optionally, you can show an error message or highlight invalid fields.
+      }
     }
 
     isLoading.value = false;
 
     console.log('Invoice updated/added successfully.');
 
-    props.closeModalFunction();
+    if (props.modalMode === 'edit') {
+      props.closeModalFunction();
+    }
   } catch (error) {
     console.error('Error updating/adding invoice:', error);
   }
