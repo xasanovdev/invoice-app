@@ -7,17 +7,26 @@
     :type="type"
     :id="id"
     :placeholder="placeholder"
+    :class="{
+      'border-red-500': isValid === false,
+      'border-green-500': isValid === true,
+    }"
   />
 </template>
 
 <script setup>
-import { defineEmits, defineProps, ref } from 'vue';
+import {
+  defineEmits,
+  defineProps,
+  ref,
+} from 'vue';
 
 let { modelValue, type, placeholder, id } = defineProps([
   'modelValue',
   'type',
   'id',
   'placeholder',
+  'isValid',
 ]);
 const emit = defineEmits();
 

@@ -38,6 +38,11 @@
               <Input
                 id="addressBillFrom"
                 type="text"
+                :isValid="
+                  saveChangesClicked
+                    ? validationObject.isSenderAddressValid
+                    : null
+                "
                 placeholder="Address"
                 v-model="newInvoice.senderAddress.street"
               />
@@ -54,6 +59,11 @@
                 <Input
                   id="cityBillFrom"
                   property="senderAddress.city"
+                  :isValid="
+                    saveChangesClicked
+                      ? validationObject.isSenderAddressValid
+                      : null
+                  "
                   placeholder="City"
                   v-model="newInvoice.senderAddress.city"
                 />
@@ -70,6 +80,11 @@
                   id="costCodeBillFrom"
                   type="text"
                   placeholder="Post Code"
+                  :isValid="
+                    saveChangesClicked
+                      ? validationObject.isSenderAddressValid
+                      : null
+                  "
                   v-model="newInvoice.senderAddress.zipcode"
                 />
               </div>
@@ -84,6 +99,11 @@
                 <Input
                   id="countryBillFrom"
                   type="text"
+                  :isValid="
+                    saveChangesClicked
+                      ? validationObject.isSenderAddressValid
+                      : null
+                  "
                   placeholder="Country"
                   v-model="newInvoice.senderAddress.country"
                 />
@@ -103,6 +123,9 @@
                 id="clientName"
                 type="text"
                 placeholder="Client Name"
+                :isValid="
+                  saveChangesClicked ? validationObject.isClientNameValid : null
+                "
                 v-model="newInvoice.clientName"
               />
             </div>
@@ -115,6 +138,11 @@
               <Input
                 id="clientEmail"
                 type="text"
+                :isValid="
+                  saveChangesClicked
+                    ? validationObject.isClientEmailValid
+                    : null
+                "
                 placeholder="Client Email"
                 v-model="newInvoice.clientEmail"
               />
@@ -128,6 +156,11 @@
               <Input
                 id="addressBillTo"
                 type="text"
+                :isValid="
+                  saveChangesClicked
+                    ? validationObject.isClientAddressValid
+                    : null
+                "
                 placeholder="Address"
                 v-model="newInvoice.clientAddress.street"
               />
@@ -144,6 +177,11 @@
                 <Input
                   id="cityBillTo"
                   type="text"
+                  :isValid="
+                    saveChangesClicked
+                      ? validationObject.isClientAddressValid
+                      : null
+                  "
                   placeholder="City"
                   v-model="newInvoice.clientAddress.city"
                 />
@@ -158,6 +196,11 @@
                 >
                 <Input
                   type="text"
+                  :isValid="
+                    saveChangesClicked
+                      ? validationObject.isClientAddressValid
+                      : null
+                  "
                   placeholder="Post Code"
                   v-model="newInvoice.clientAddress.zipcode"
                   id="postCodeBillTo"
@@ -173,6 +216,11 @@
                 </label>
                 <Input
                   type="text"
+                  :isValid="
+                    saveChangesClicked
+                      ? validationObject.isClientAddressValid
+                      : null
+                  "
                   placeholder="Country"
                   v-model="newInvoice.clientAddress.country"
                   id="countryBillTo"
@@ -191,8 +239,6 @@
                 </label>
 
                 <DatePicker class="w-full" v-model="newInvoice.createdAt" />
-
-                {{ newInvoice.createdAt }}
               </div>
               <div class="flex items-start w-full sm:w-1/2 flex-col gap-[9px]">
                 <label
@@ -200,7 +246,6 @@
                   for="countryBillTo"
                   >Payment Terms</label
                 >
-
                 <DropDown class="w-full" v-model="newInvoice" />
               </div>
             </div>
@@ -213,6 +258,11 @@
               <Input
                 type="text"
                 placeholder="Project Description"
+                :isValid="
+                  saveChangesClicked
+                    ? validationObject.isProjectDescriptionValid
+                    : null
+                "
                 v-model="newInvoice.description"
                 id="projectDescription"
               />
@@ -225,6 +275,11 @@
               </label>
               <Input
                 type="text"
+                :isValid="
+                  saveChangesClicked
+                    ? validationObject.isProjectTitleValid
+                    : null
+                "
                 placeholder="Project Title"
                 v-model="newInvoice.title"
                 id="projectTitle"
@@ -258,6 +313,11 @@
                             type="text"
                             placeholder="Item Name"
                             v-model="item.name"
+                            :isValid="
+                              saveChangesClicked
+                                ? validationObject.areItemsValid
+                                : null
+                            "
                             id="invoiceListItemName"
                           />
                         </div>
@@ -273,6 +333,11 @@
                             </label>
                             <Input
                               type="text"
+                              :isValid="
+                                saveChangesClicked
+                                  ? validationObject.areItemsValid
+                                  : null
+                              "
                               id="invoiceListItemQuantity"
                               v-model="item.quantity"
                             />
@@ -287,6 +352,11 @@
                             <Input
                               id="invoiceListItemPrice"
                               type="text"
+                              :isValid="
+                                saveChangesClicked
+                                  ? validationObject.areItemsValid
+                                  : null
+                              "
                               v-model="item.price"
                             />
                           </div>
@@ -298,13 +368,7 @@
                               Total
                             </label>
                             <span class="font-bold text-light4">
-                              {{
-                                (isNaN(parseFloat(item.total))
-                                  ? '0.00'
-                                  : parseInt(item.quantity).toFixed(2) *
-                                    parseInt(item.price).toFixed(2)
-                                ).toFixed(2)
-                              }}
+                              {{ (item.quantity * item.price).toFixed(2) }}
                             </span>
                           </div>
                         </div>
@@ -354,13 +418,13 @@
 
 <script setup>
 import {
+  computed,
   defineProps,
   ref,
 } from 'vue';
 
-import {
-  useFirebase,
-} from '../../firebase/firebase'; // Importing dataInvoices from Firebase
+import { useForm } from '../../composables/useForm';
+import { useFirebase } from '../../firebase/firebase';
 import Button from '../Button/Button.vue';
 import DatePicker from '../Form/DatePicker/DatePicker.vue';
 import DropDown from '../Form/DropDown/DropDown.vue';
@@ -369,75 +433,66 @@ import Modal from '../Modal/ModalContent.vue';
 
 const { addInvoiceFunction, dataInvoices } = useFirebase();
 
-function generateRandomId() {
-  const characters =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let result = '';
+// Initialize the form using the useForm composable
+const {
+  form,
+  validation,
+  isFormValid,
+  updateForm,
+  addItem,
+  validateField,
+  deleteItem,
+  resetForm,
+} = useForm();
 
-  for (let i = 0; i < 10; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    result += characters.charAt(randomIndex);
-  }
-
-  return result;
-}
+const newInvoice = ref(form.value);
+let saveChangesClicked = ref(false);
 
 const saveChanges = async () => {
-  try {
-    newInvoice.value.total = newInvoice.value.items.reduce(
-      (acc, item) => acc + parseFloat(item.total),
-      0
-    );
+  newInvoice.value.total = newInvoice.value.items.reduce(
+    (acc, item) => acc + parseFloat(item.total),
+    0
+  );
 
-    const newInvoiceValue = { ...newInvoice.value }; // Create a copy to avoid modifying the original object
+  // Validate all fields before saving changes
+  for (const key in form.value) {
+    if (Object.hasOwnProperty.call(form.value, key)) {
+      validateField(key, form.value[key]);
+    }
+  }
 
-    // Example: Create a new invoice
-    const addedInvoiceId = await addInvoiceFunction(newInvoiceValue);
+  saveChangesClicked.value = true;
 
-    // Update the newInvoice.value.id with the added document ID
-    newInvoice.value.id = addedInvoiceId;
+  if (isFormValid.value) {
+    try {
+      // Example: Create a new invoice
+      const addedInvoiceId = await addInvoiceFunction(newInvoice.value);
 
-    console.log('Invoice added successfully with ID:', addedInvoiceId);
+      // Update the form.id with the added document ID
+      form.id = addedInvoiceId;
 
-    // Close the modal after adding the new invoice
-    props.closeModalFunction();
-  } catch (error) {
-    console.error('Error adding new invoice:', error);
+      console.log('Invoice added successfully with ID:', newInvoice.value);
+
+      saveChangesClicked.value = false;
+
+      // Close the modal after adding the new invoice
+      props.closeModalFunction();
+      resetForm();
+    } catch (error) {
+      console.error('Error adding new invoice:', error);
+    }
+  } else {
+    console.log('Form validation failed. Please check your inputs.');
+    // Optionally, you can show an error message or highlight invalid fields.
   }
 };
-
-// Initialize newInvoice with default values
-const newInvoice = ref({
-  title: '',
-  senderAddress: {
-    street: '',
-    city: '',
-    zipcode: '',
-    country: '',
-  },
-  clientName: '',
-  clientEmail: '',
-  clientAddress: {
-    street: '',
-    city: '',
-    zipcode: '',
-    country: '',
-  },
-  createdAt: null,
-  paymentTerms: '',
-  paymentDue: '',
-  description: '',
-  items: [],
-  total: '',
-  status: 'pending',
-  id: generateRandomId(),
-});
 
 let currentDate = new Date();
 
 // Format the outslite property as a string "1/28/2024"
-newInvoice.outslite = '1/28/2024';
+form.outslite = '1/28/2024';
 
+// Set the paymentDue property with the formatted date
 var formattedDate =
   currentDate.getMonth() +
   1 +
@@ -453,33 +508,25 @@ const props = defineProps({
 });
 
 const addItemFunction = () => {
-  const newItem = {
-    name: '',
-    quantity: '',
-    price: '',
-    total: '',
+  addItem(); // Use the addItem method from useForm
+};
+
+// Update the form when an item is deleted
+const deleteItemFunction = (index) => {
+  deleteItem(index); // Use the deleteItem method from useForm
+};
+
+const validationObject = computed(() => {
+  return {
+    isSenderAddressValid: validation.value.isSenderAddressValid,
+    isClientNameValid: validation.value.isClientNameValid,
+    isClientEmailValid: validation.value.isClientEmailValid,
+    isClientAddressValid: validation.value.isClientAddressValid,
+    isInvoiceDateValid: validation.value.isInvoiceDateValid,
+    isPaymentTermsValid: validation.value.isPaymentTermsValid,
+    isProjectDescriptionValid: validation.value.isProjectDescriptionValid,
+    isProjectTitleValid: validation.value.isProjectTitleValid,
+    areItemsValid: validation.value.areItemsValid,
   };
-
-  // Push the new item to the items array
-  newInvoice.value.items.push(newItem);
-
-  // Recalculate totals
-  recalculateTotals();
-};
-
-// Assuming you have a function to recalculate totals
-const recalculateTotals = () => {
-  newInvoice.value.items.forEach((item) => {
-    // Convert quantity and price to numbers (you might want to validate them)
-    const quantity = parseFloat(item.quantity) || 0;
-    const price = parseFloat(item.price) || 0;
-
-    // Calculate total and update the item
-    item.total = (quantity * price).toFixed(2);
-  });
-};
-
-const deleteItem = (index) => {
-  newInvoice.value[0].items.splice(index, 1);
-};
+});
 </script>

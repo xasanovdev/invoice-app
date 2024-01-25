@@ -259,13 +259,11 @@ const isModalVisible = ref(false);
 const openModal = () => {
   document.body.classList.add('overflow-hidden');
   isModalVisible.value = true;
-  console.log("opened");
 };
 
 const closeModal = () => {
   document.body.classList.remove('overflow-hidden');
   isModalVisible.value = false;
-  console.log("closed");
 };
 
 const toggleInvoiceStatus = async () => {

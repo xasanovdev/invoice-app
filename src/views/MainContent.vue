@@ -1,10 +1,10 @@
 <template>
-  <ModalAdd
-    :isVisible="isModalVisible"
-    :closeModalFunction="closeModal"
-  ></ModalAdd>
-  <main class="overflow-y-auto w-full h-full sm:px-8 px-6">
-    <div class="max-w-[730px] h-full mx-auto">
+  <div class="w-full h-full overflow-auto">
+    <ModalAdd
+      :isVisible="isModalVisible"
+      :closeModalFunction="closeModal"
+    ></ModalAdd>
+    <div class="max-w-[730px] h-full mx-auto sm:px-8 px-6">
       <header>
         <nav
           class="w-full mt-[32px] md:mt-[62px] sm:mt-[36px] flex items-center justify-between"
@@ -42,7 +42,7 @@
 
       <InvoiceWrapper />
     </div>
-  </main>
+  </div>
 </template>
 
 <script setup>

@@ -1,11 +1,11 @@
 <template>
   <div
-    class="relative w-full border border-light1 focus:border-primary dark:border-dark2"
+    class="relative w-full border rounded-md hover:border-primary duration-200 border-light1 focus:border-primary dark:border-dark2"
   >
     <div class="relative">
       <input
         placeholder="Select a date"
-        class="border date cursor-pointer w-full rounded-md font-bold dark:bg-dark1 dark:text-white outline-none border-none py-3 px-4 appearance-none"
+        class="border date h-[48.98px] cursor-pointer w-full rounded-md font-bold dark:bg-dark1 dark:text-white outline-none border-none py-3 px-4 appearance-none"
         :value="formattedSelectedDate"
         @input="selectDate"
         @click="openDatePicker"
