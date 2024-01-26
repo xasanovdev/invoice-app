@@ -13,23 +13,44 @@ const router = createRouter({
       meta: {
         title: 'HomePage',
       },
+      children: [
+        {
+          path: '/create-invoice',
+          name: 'InvoicesCreate',
+          component: () => import('./views/Invoice/InvoiceCreate.vue'),
+          meta: {
+            title: 'InvoicesCreate',
+          },
+        },
+      ],
     },
     {
       path: '/invoice/:id',
-      component: () => import('./views/InvoiceDetails.vue'),
+      component: () => import('./views/Invoice/InvoiceDetails.vue'),
       name: 'InvoiceDetails',
       props: true,
       meta: {
         title: 'InvoiceDetails',
       },
+      children: [
+        {
+          path: 'edit',
+          name: 'InvoiceEdit',
+          component: () => import('./views/Invoice/InvoiceEdit.vue'),
+          meta: {
+            title: 'InvoiceEdit',
+          },
+        },
+      ],
     },
+
     {
       path: '/auth',
       component: () => import('./views/Auth/Login.Vue'),
       name: 'Auth',
       props: true,
       meta: {
-        title: 'Login',
+        title: 'Auth',
       },
     },
   ],

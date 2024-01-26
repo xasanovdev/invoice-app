@@ -1,8 +1,8 @@
 <template>
   <Transition>
     <div
-      v-if="isVisible"
-      @click="closeModal"
+      v-if="modalStore.isModalVisible"
+      @click="modalStore.closeModal"
       class="modal z-40 absolute overflow-hidden w-full h-full bg-black bg-opacity-45"
     >
       <template v-if="isLoadingInvoice">
@@ -17,8 +17,13 @@
             <div
               class="w-full sm:rounded-r-[20px] p-6 md:p-8 flex flex-col gap-[45px]"
             >
-              <div
-                @click="closeModalFunction"
+              <!-- <div
+                @click="modalStore.closeModal"
+                class="inline-flex cursor-pointer items-center gap-6 hover:gap-7 duration-200"
+              > -->
+
+              <RouterLink
+                to="/"
                 class="inline-flex cursor-pointer items-center gap-6 hover:gap-7 duration-200"
               >
                 <font-awesome-icon
@@ -31,7 +36,8 @@
                 >
                   Go back
                 </h4>
-              </div>
+              </RouterLink>
+              <!-- </div> -->
 
               <h1 class="text-light4 text-[24px] font-bold dark:text-white">
                 <span v-if="modalMode === 'add'">New Invoice</span>
@@ -425,7 +431,10 @@
               class="w-full fixed sm:sticky z-50 left-0 bottom-[0px] backdrop-blur-md bg-opacity-50 p-4"
             >
               <div class="w-full flex justify-between gap-2 px-4">
-                <Button @click="closeModalFunction" variant="danger" size="md"
+                <Button
+                  @click="modalStore.closeModal"
+                  variant="danger"
+                  size="md"
                   >Cancel</Button
                 >
                 <Button @click="saveChanges" variant="violet" size="md">
@@ -441,12 +450,19 @@
 </template>
 
 <script setup>
-import { computed, defineProps, onMounted, ref, watch } from 'vue';
+import {
+  computed,
+  defineProps,
+  onMounted,
+  ref,
+  watch,
+} from 'vue';
 
 import { useRoute } from 'vue-router';
 
 import { useForm } from '../../composables/useForm';
 import { useFirebase } from '../../firebase/firebase';
+import { useModal } from '../../store/modal';
 import Button from '../Button/Button.vue';
 import DatePicker from '../Form/DatePicker/DatePicker.vue';
 import DropDown from '../Form/DropDown/DropDown.vue';
@@ -478,6 +494,10 @@ const {
   resetForm,
 } = useForm();
 
+const modalStore = useModal();
+
+console.log(modalStore);
+
 let newInvoice = ref([]);
 let saveChangesClicked = ref(false);
 let isLoading = ref(false);
@@ -486,17 +506,19 @@ let isLoadingInvoice = ref(false);
 const route = useRoute();
 const invoiceId = route.params.id;
 
+console.log(route.meta);
+
 newInvoice.value = form.value;
 
 console.log(newInvoice.value);
 
 let listItems = [];
 
-const closeModal = (e) => {
-  if (e.target.classList.contains('modal-content')) {
-    props.closeModalFunction();
-  }
-};
+// const modalStore.closeModal = (e) => {
+//   if (e.target.classList.contains('modal-content')) {
+//     props.modalStore.closeModalFunction();
+//   }
+// };
 
 onMounted(async () => {
   console.log();
@@ -517,8 +539,6 @@ onMounted(async () => {
     };
 
     isLoadingInvoice.value = false;
-
-    console.log(isLoadingInvoice.value);
   }
 });
 
@@ -559,7 +579,7 @@ const saveChanges = async () => {
           saveChangesClicked.value = false;
 
           // Close the modal after adding the new invoice
-          props.closeModalFunction();
+          modalStore.closeModal();
 
           resetForm();
         } catch (error) {
@@ -576,7 +596,7 @@ const saveChanges = async () => {
     console.log('Invoice updated/added successfully.');
 
     if (props.modalMode === 'edit') {
-      props.closeModalFunction();
+      modalStore.closeModal();
     }
   } catch (error) {
     console.error('Error updating/adding invoice:', error);

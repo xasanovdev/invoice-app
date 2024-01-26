@@ -2,7 +2,9 @@
   <SidebarComponent />
 
   <div class="w-full overflow-auto">
-    <Modal :isVisible="isModalVisible" modalMode="edit" :closeModalFunction="closeModal"></Modal>
+    <Modal></Modal>
+
+    <RouterView></RouterView>
 
     <div class="flex flex-col max-w-[730px] mx-auto mt-[30px]">
       <div
@@ -61,7 +63,9 @@
             </div>
           </div>
           <div class="w-full hidden sm:flex gap-2">
-            <Button variant="primary" size="md" @click="openModal">Edit</Button>
+            <Button variant="primary" size="md" @click="modalStore.openModal"
+              >Edit</Button
+            >
 
             <Button
               @click="deleteInvoice"
@@ -197,7 +201,9 @@
           class="fixed sm:hidden z-20 w-full left-0 bottom-0 backdrop-blur-md bg-opacity-50 p-4"
         >
           <div class="w-full flex justify-between gap-2 px-4">
-            <Button @click="openModal" variant="primary" size="md">Edit</Button>
+            <Button @click="modalStore.openModal" variant="primary" size="md"
+              >Edit</Button
+            >
             <Button
               variant="danger"
               size="md"
@@ -222,26 +228,23 @@
 </template>
 
 <script setup>
-import {
-  computed,
-  onMounted,
-  ref,
-} from 'vue'; // Assuming you are using Vue 3
+import { computed, onMounted, ref } from 'vue'; // Assuming you are using Vue 3
 
 import { doc } from 'firebase/firestore';
 import { useRoute } from 'vue-router';
 
-import Button from '../components/Button/Button.vue';
-import Modal from '../components/Modal/ModalContent.vue';
-import ModalEdit from '../components/ModalEdit/ModalEdit.vue';
-import SidebarComponent from '../components/SidebarComponent.vue';
-import { useFirebase } from '../firebase/firebase';
-import router from '../routers';
-import { formatDate } from '../utils/dateFormatter';
+import Button from '../../components/Button/Button.vue';
+import Modal from '../../components/Modal/ModalContent.vue';
+import ModalEdit from '../../components/ModalEdit/ModalEdit.vue';
+import SidebarComponent from '../../components/SidebarComponent.vue';
+import { useFirebase } from '../../firebase/firebase';
+import router from '../../routers';
+import { useModal } from '../../store/modal';
+import { formatDate } from '../../utils/dateFormatter';
 import {
   getStatusBgColorClass,
   getStatusTextColorClass,
-} from '../utils/statusColor';
+} from '../../utils/statusColor';
 
 const {
   dataInvoice,
@@ -258,17 +261,7 @@ const invoiceId = route.params.id;
 
 let newStatusText = ref('');
 
-const isModalVisible = ref(false);
-
-const openModal = () => {
-  document.body.classList.add('overflow-hidden');
-  isModalVisible.value = true;
-};
-
-const closeModal = () => {
-  document.body.classList.remove('overflow-hidden');
-  isModalVisible.value = false;
-};
+const modalStore = useModal();
 
 let deleteLoading = ref(false);
 

@@ -14,7 +14,7 @@
 
 <script setup>
 import Login from './views/Auth/Login.vue';
-import InvoiceDetails from './views/InvoiceDetails.vue';
+import InvoiceDetails from './views/Invoice/InvoiceDetails.vue';
 import MainContent from './views/MainContent.vue';
 
 // Register components locally
@@ -28,7 +28,7 @@ const components = {
 const getComponentName = (title) => {
   // Map route titles to corresponding component names
   const componentMapping = {
-    Login: 'Auth',
+    Auth: 'Auth',
     InvoiceDetails: 'InvoiceDetails',
     HomePage: 'HomePage',
     // Add more mappings as needed

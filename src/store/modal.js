@@ -2,9 +2,11 @@
 
 import { defineStore } from 'pinia';
 
+import router from '../routers';
+
 export const useModalStore = defineStore('modal', {
   state: () => ({
-    isModalVisible: true,
+    isModalVisible: false,
   }),
 
   actions: {
@@ -15,17 +17,22 @@ export const useModalStore = defineStore('modal', {
         document.body.classList.add('overflow-hidden');
       }
 
+      
+
       this.isModalVisible = true;
+      router.push({ name: 'InvoicesCreate' });
     },
 
-    closeModal() {
-      console.log('closed');
+    closeModal(e) {
+      if (e.target.classList.contains('modal-content')) {
+        console.log('closed');
 
-      if (this.isModalVisible) {
-        document.body.classList.remove('overflow-hidden');
+        if (this.isModalVisible) {
+          document.body.classList.remove('overflow-hidden');
+        }
+
+        this.isModalVisible = false;
       }
-
-      this.isModalVisible = false;
     },
   },
 });
