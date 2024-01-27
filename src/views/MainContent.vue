@@ -47,10 +47,9 @@
 </template>
 
 <script setup>
-import {
-  computed,
-  ref,
-} from 'vue';
+import { computed, ref, watch } from 'vue';
+
+import { useRoute } from 'vue-router';
 
 import Button from '../components/Button/Button.vue';
 import InvoiceWrapper from '../components/InvoiceWrapper.vue';
@@ -62,20 +61,21 @@ import { useModal } from '../store/modal';
 
 const { dataInvoices, getInvoicesData } = useFirebase();
 
+const route = useRoute();
 const modalStore = useModal();
 
-// const isModalVisible = ref(false);
+if (route.meta.title) {
+  modalStore.modalType = route.meta.title;
+}
 
-// const openModal = () => {
-//   isModalVisible.value = true;
-//   document.body.classList.add('overflow-hidden');
-// };
+console.log(modalStore.modalType);
 
-// const closeModal = () => {
-//   isModalVisible.value = false;
-
-//   document.body.classList.remove('overflow-hidden');
-// };
+watch(
+  () => route.meta.title,
+  (newTitle) => {
+    modalStore.modalType = newTitle;
+  }
+);
 
 const dataInvoiceCount = computed(() => dataInvoices.value.length);
 </script>

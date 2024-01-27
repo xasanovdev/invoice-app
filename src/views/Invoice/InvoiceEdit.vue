@@ -1,6 +1,5 @@
 <template>
   <div>
-    Edit !
     <ModalContent />
   </div>
 </template>

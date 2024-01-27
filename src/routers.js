@@ -16,10 +16,10 @@ const router = createRouter({
       children: [
         {
           path: '/create-invoice',
-          name: 'InvoicesCreate',
+          name: 'InvoiceCreate',
           component: () => import('./views/Invoice/InvoiceCreate.vue'),
           meta: {
-            title: 'InvoicesCreate',
+            title: 'InvoiceCreate',
           },
         },
       ],

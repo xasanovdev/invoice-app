@@ -1,8 +1,5 @@
 <template>
-  <div>
-    Add !
-    <ModalContent />
-  </div>
+  <ModalContent />
 </template>
 
 <script setup>

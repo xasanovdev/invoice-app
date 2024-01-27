@@ -2,8 +2,6 @@
   <SidebarComponent />
 
   <div class="w-full overflow-auto">
-    <Modal></Modal>
-
     <RouterView></RouterView>
 
     <div class="flex flex-col max-w-[730px] mx-auto mt-[30px]">
@@ -228,14 +226,11 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'; // Assuming you are using Vue 3
+import { computed, onMounted, ref, watch } from 'vue'; // Assuming you are using Vue 3
 
-import { doc } from 'firebase/firestore';
 import { useRoute } from 'vue-router';
 
 import Button from '../../components/Button/Button.vue';
-import Modal from '../../components/Modal/ModalContent.vue';
-import ModalEdit from '../../components/ModalEdit/ModalEdit.vue';
 import SidebarComponent from '../../components/SidebarComponent.vue';
 import { useFirebase } from '../../firebase/firebase';
 import router from '../../routers';
@@ -264,6 +259,19 @@ let newStatusText = ref('');
 const modalStore = useModal();
 
 let deleteLoading = ref(false);
+
+if (route.meta.title) {
+  modalStore.modalType = route.meta.title;
+}
+
+console.log(modalStore.modalType);
+
+watch(
+  () => route.meta.title,
+  (newTitle) => {
+    modalStore.modalType = newTitle;
+  }
+);
 
 const deleteInvoice = async () => {
   deleteLoading.value = true;

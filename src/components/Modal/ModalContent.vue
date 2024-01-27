@@ -1,8 +1,7 @@
 <template>
   <Transition>
     <div
-      v-if="modalStore.isModalVisible"
-      @click="modalStore.closeModal"
+      @click="modalStore.closeModalOverlay"
       class="modal z-40 absolute overflow-hidden w-full h-full bg-black bg-opacity-45"
     >
       <template v-if="isLoadingInvoice">
@@ -17,13 +16,8 @@
             <div
               class="w-full sm:rounded-r-[20px] p-6 md:p-8 flex flex-col gap-[45px]"
             >
-              <!-- <div
+              <div
                 @click="modalStore.closeModal"
-                class="inline-flex cursor-pointer items-center gap-6 hover:gap-7 duration-200"
-              > -->
-
-              <RouterLink
-                to="/"
                 class="inline-flex cursor-pointer items-center gap-6 hover:gap-7 duration-200"
               >
                 <font-awesome-icon
@@ -36,12 +30,13 @@
                 >
                   Go back
                 </h4>
-              </RouterLink>
-              <!-- </div> -->
+              </div>
 
               <h1 class="text-light4 text-[24px] font-bold dark:text-white">
-                <span v-if="modalMode === 'add'">New Invoice</span>
-                <span v-else-if="modalMode === 'edit'"
+                <span v-if="modalStore.modalType === 'InvoiceCreate'"
+                  >New Invoice</span
+                >
+                <span v-else-if="modalStore.modalType === 'InvoiceEdit'"
                   >Edit #{{ newInvoice.title }}</span
                 >
               </h1>
@@ -467,22 +462,18 @@ import Button from '../Button/Button.vue';
 import DatePicker from '../Form/DatePicker/DatePicker.vue';
 import DropDown from '../Form/DropDown/DropDown.vue';
 import Input from '../Form/Input/Input.vue';
-import Modal from '../Modal/ModalContent.vue';
 
-const props = defineProps({
-  isVisible: Boolean,
-  closeModalFunction: Function,
-  modalMode: String, // Add this prop to control modal mode
-});
+const modalStore = useModal();
 
-const {
-  getInvoiceById,
-  dataInvoice,
-  updateInvoiceFunction,
-  addInvoiceFunction,
-} = useFirebase();
+const route = useRoute();
 
-// Initialize the form using the useForm composable
+if (route.meta.title) {
+  modalStore.modalType = route.meta.title;
+}
+
+const { updateInvoiceFunction, updateInvoice, addInvoiceFunction } =
+  useFirebase();
+
 const {
   form,
   validation,
@@ -494,53 +485,46 @@ const {
   resetForm,
 } = useForm();
 
-const modalStore = useModal();
-
-console.log(modalStore);
-
 let newInvoice = ref([]);
 let saveChangesClicked = ref(false);
 let isLoading = ref(false);
 let isLoadingInvoice = ref(false);
 
-const route = useRoute();
 const invoiceId = route.params.id;
 
-console.log(route.meta);
+// console.log(updateInvoice.value);
 
-newInvoice.value = form.value;
+if (modalStore.modalType === 'InvoiceEdit') {
+  form.value = updateInvoice.value;
+  newInvoice.value = form.value;
+} else if (modalStore.modalType === 'InvoiceCreate') {
+  newInvoice.value = form.value;
+}
 
-console.log(newInvoice.value);
-
-let listItems = [];
-
-// const modalStore.closeModal = (e) => {
-//   if (e.target.classList.contains('modal-content')) {
-//     props.modalStore.closeModalFunction();
-//   }
-// };
-
-onMounted(async () => {
-  console.log();
-  if (props.modalMode === 'edit') {
-    isLoadingInvoice.value = true;
-
-    await getInvoiceById(invoiceId);
-
-    listItems = computed(() => {
-      return dataInvoice.value[0].items;
-    });
-
-    newInvoice.value = {
-      ...dataInvoice.value[0],
-    };
-    form.value = {
-      ...dataInvoice.value[0],
-    };
-
-    isLoadingInvoice.value = false;
-  }
+let listItems = computed(() => {
+  return newInvoice.value.items;
 });
+
+// onMounted(async () => {
+//   console.log();
+//   if (modalStore.modalMode === 'InvoiceEdit') {
+//     isLoadingInvoice.value = true;
+
+//     await getInvoiceById(invoiceId);
+
+//     listItems = computed(() => {
+//       return dataInvoice.value[0].items;
+//     });
+
+//     // newInvoice.value = {
+//     //   ...updateInvoice.value,
+//     // };
+//     console.log('asf');
+//     form.value = updateInvoice.value
+//     newInvoice.value = form.value;
+//     isLoadingInvoice.value = false;
+//   }
+// });
 
 const saveChanges = async () => {
   newInvoice.value.total = newInvoice.value.items.reduce(
@@ -548,7 +532,6 @@ const saveChanges = async () => {
     0
   );
 
-  // Validate all fields before saving changes
   for (const key in form.value) {
     if (Object.hasOwnProperty.call(form.value, key)) {
       validateField(key, form.value[key]);
@@ -558,61 +541,55 @@ const saveChanges = async () => {
   try {
     isLoading.value = true;
 
-    if (props.modalMode === 'edit') {
+    if (modalStore.modalType === 'InvoiceEdit') {
       await updateInvoiceFunction(newInvoice.value.id, {
         ...newInvoice.value,
       });
+      modalStore.closeModal();
+      console.log('asf');
     } else {
       saveChangesClicked.value = true;
 
       if (isFormValid.value) {
         try {
-          // Example: Create a new invoice
           console.log(newInvoice.value);
+
           const addedInvoiceId = await addInvoiceFunction(newInvoice);
 
-          // Update the form.id with the added document ID
           form.id = addedInvoiceId;
 
           console.log('Invoice added successfully with ID:', newInvoice.value);
 
           saveChangesClicked.value = false;
 
-          // Close the modal after adding the new invoice
           modalStore.closeModal();
 
-          resetForm();
+          // resetForm();
         } catch (error) {
           console.error('Error adding new invoice:', error);
         }
       } else {
         console.log('Form validation failed. Please check your inputs.');
-        // Optionally, you can show an error message or highlight invalid fields.
       }
     }
 
     isLoading.value = false;
 
     console.log('Invoice updated/added successfully.');
-
-    if (props.modalMode === 'edit') {
-      modalStore.closeModal();
-    }
   } catch (error) {
     console.error('Error updating/adding invoice:', error);
   }
 
   saveChangesClicked.value = true;
-  form.value = {};
+  // form.value = {};
 };
 
 const addItemFunction = () => {
-  addItem(); // Use the addItem method from useForm
+  addItem();
 };
 
-// Update the form when an item is deleted
 const deleteItemFunction = (index) => {
-  deleteItem(index); // Use the deleteItem method from useForm
+  deleteItem(index);
 };
 
 const validationObject = computed(() => {
