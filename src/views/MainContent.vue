@@ -1,11 +1,10 @@
 <template>
   <SidebarComponent />
-
   <div class="w-full h-full overflow-auto">
-    <ModalAdd
-      :isVisible="isModalVisible"
-      :closeModalFunction="closeModal"
-    ></ModalAdd>
+    <!-- <Modal></Modal> -->
+
+    <router-view></router-view>
+
     <div class="max-w-[730px] h-full mx-auto sm:px-8 px-6">
       <header>
         <nav
@@ -24,7 +23,7 @@
           <div>
             <div></div>
             <Button
-              @click="openModal()"
+              @click="modalStore.openModal()"
               variant="violet"
               size="sm"
               class="flex items-center justify-center gap-2 sm:gap-4"
@@ -48,27 +47,35 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
+
+import { useRoute } from 'vue-router';
 
 import Button from '../components/Button/Button.vue';
 import InvoiceWrapper from '../components/InvoiceWrapper.vue';
+import Modal from '../components/Modal/ModalContent.vue';
 import ModalAdd from '../components/ModalAdd/ModalAdd.vue';
 import SidebarComponent from '../components/SidebarComponent.vue';
 import { useFirebase } from '../firebase/firebase';
+import { useModal } from '../store/modal';
 
 const { dataInvoices, getInvoicesData } = useFirebase();
 
-const isModalVisible = ref(false);
+const route = useRoute();
+const modalStore = useModal();
 
-const openModal = () => {
-  document.body.classList.add('overflow-hidden');
-  isModalVisible.value = true;
-};
+if (route.meta.title) {
+  modalStore.modalType = route.meta.title;
+}
 
-const closeModal = () => {
-  document.body.classList.remove('overflow-hidden');
-  isModalVisible.value = false;
-};
+console.log(modalStore.modalType);
+
+watch(
+  () => route.meta.title,
+  (newTitle) => {
+    modalStore.modalType = newTitle;
+  }
+);
 
 const dataInvoiceCount = computed(() => dataInvoices.value.length);
 </script>

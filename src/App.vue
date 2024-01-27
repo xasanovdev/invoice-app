@@ -14,27 +14,28 @@
 
 <script setup>
 import Login from './views/Auth/Login.vue';
-import InvoiceDetails from './views/InvoiceDetails.vue';
+import InvoiceCreate from './views/Invoice/InvoiceCreate.vue';
+import InvoiceDetails from './views/Invoice/InvoiceDetails.vue';
+import InvoiceEdit from './views/Invoice/InvoiceEdit.vue';
 import MainContent from './views/MainContent.vue';
 
-// Register components locally
 const components = {
   Login,
   InvoiceDetails,
   MainContent,
+  InvoiceCreate,
+  InvoiceEdit,
 };
 
-// Method to get the component name based on the route meta title
 const getComponentName = (title) => {
-  // Map route titles to corresponding component names
   const componentMapping = {
-    Login: 'Auth',
+    Auth: 'Auth',
     InvoiceDetails: 'InvoiceDetails',
     HomePage: 'HomePage',
-    // Add more mappings as needed
+    InvoiceCreate: 'InvoiceCreate',
+    InvoiceEdit: 'InvoiceEdit',
   };
 
-  // Use the mapped component name or default to an empty string
   return componentMapping[title] || '';
 };
 </script>

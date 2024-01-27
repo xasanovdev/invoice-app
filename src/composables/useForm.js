@@ -164,6 +164,7 @@ export const useForm = () => {
       quantity: '',
       price: '',
     };
+    console.log(newItem);
 
     form.value.items.push(newItem);
 

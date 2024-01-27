@@ -1,31 +1,47 @@
 // modal.js
 
 import { defineStore } from 'pinia';
+import { useRoute } from 'vue-router';
+
+import router from '../routers';
+
+const route = useRoute();
 
 export const useModalStore = defineStore('modal', {
   state: () => ({
-    isModalVisible: true,
+    modalType: route?.meta.title,
   }),
 
   actions: {
     openModal() {
       console.log('opened');
 
-      if (!this.isModalVisible) {
-        document.body.classList.add('overflow-hidden');
+      document.body.classList.add('overflow-hidden');
+
+      if (this.modalType === 'InvoiceDetails') {
+        router.push({ name: 'InvoiceEdit' });
       }
 
-      this.isModalVisible = true;
+      if (this.modalType === 'HomePage') {
+        router.push({ name: 'InvoiceCreate' });
+      }
     },
 
-    closeModal() {
-      console.log('closed');
+    closeModal(e) {
+      document.body.classList.remove('overflow-hidden');
 
-      if (this.isModalVisible) {
-        document.body.classList.remove('overflow-hidden');
+      if (this.modalType === 'InvoiceEdit') {
+        router.push({ name: 'InvoiceDetails' });
       }
 
-      this.isModalVisible = false;
+      if (this.modalType === 'InvoiceCreate') {
+        router.push({ name: 'HomePage' });
+      }
+    },
+    closeModalOverlay(e) {
+      if (e.target.classList.contains('modal-content')) {
+        this.closeModal();
+      }
     },
   },
 });

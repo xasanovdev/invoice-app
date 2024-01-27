@@ -2,6 +2,8 @@ import '../src/style.css';
 
 import { createApp } from 'vue';
 
+import { createPinia } from 'pinia';
+
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faAngleLeft,
@@ -17,6 +19,9 @@ import App from './App.vue';
 import router from './routers.js';
 
 const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon);
+const pinia = createPinia();
+
+app.use(pinia);
 
 library.add(faMoon, faSun, faChevronDown, faTrash, faAngleLeft, faAngleRight);
 
